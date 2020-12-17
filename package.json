@@ -1,0 +1,42 @@
+{
+  "name": "cacogen-engine",
+  "version": "0.1.0",
+  "description": "A framework for making RPGs based on the Troika! system in PLaycanvas",
+  "main": "src/index.js",
+  "author": "Tchom",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack --config webpack.config.js && cross-env UPLOAD=no NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8081 --inline --hot",
+    "https": "cross-env NODE_ENV=development webpack --config webpack.config.js && cross-env UPLOAD=no NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8081 --inline --hot --https",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js && yarn upload-playcanvas",
+    "upload-playcanvas": "node ./lib/playcanvas-upload.node.js"
+  },
+  "dependencies": {
+    "@createjs/tweenjs": "^2.0.0-beta.4",
+    "@koreez/pure-mvc": "^4.0.4",
+    "@types/tweenjs": "^1.0.1",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "cross-env": "^7.0.2",
+    "glob": "^7.1.6",
+    "playcanvas": "^1.35.1",
+    "playcanvas-webpack-plugin": "^1.0.8",
+    "ts-loader": "^3.2.0",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.2",
+    "uglify-es": "^3.2.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "uuid": "^8.3.1",
+    "webpack": "^5.2.0",
+    "webpack-dev-server": "^2.9.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@createjs/tweenjs": "^2.0.0-beta.4",
+    "@koreez/pure-mvc": "^4.0.4",
+    "babel-loader": "^8.1.0",
+    "uglify-es": "^3.2.1",
+    "webpack-cli": "^4.1.0"
+  }
+}
