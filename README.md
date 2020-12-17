@@ -1,2 +1,2 @@
 # cacogen
-JS game engine for developing RPG games based on the TROIKA rules system
+A game engine for developing RPG games based on the TROIKA rules system, built on Playcanvas
