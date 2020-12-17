@@ -1,7 +1,8 @@
 const { Facade } = require('@koreez/pure-mvc');
 import { GameCommands } from './controller/GameCommands';
-const { startupCommand } = require('./controller/StartupCommand');
-const { changeSceneCommand } = require('./controller/ChangeSceneCommand');
+import { parseGameMapCommand } from './controller/ParseGameMapCommand';
+import { startupCommand } from './controller/StartupCommand';
+import { changeSceneCommand } from './controller/ChangeSceneCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -27,6 +28,7 @@ export class GameFacade extends Facade {
         super.initializeController();
         this.registerCommand(GameFacade.STARTUP, startupCommand);
         this.registerCommand(GameCommands.CHANGE_SCENE, changeSceneCommand);
+        this.registerCommand(GameCommands.PARSE_GAMEMAP, parseGameMapCommand);
     }
 
 }

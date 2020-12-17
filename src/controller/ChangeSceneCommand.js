@@ -1,5 +1,5 @@
 const { Facade } = require('@koreez/pure-mvc');
-import { GameCommand } from './GameCommand';
+import { GameCommands } from './GameCommands';
 
 export function changeSceneCommand(multitonKey, notificationName, ...args) {
     const app = pc.Application.getApplication();
@@ -21,7 +21,8 @@ export function changeSceneCommand(multitonKey, notificationName, ...args) {
         } else {
             console.error(err);
         }
-        Facade.getInstance(multitonKey).sendNotification(GameCommand.CHANGE_SCENE_COMPLETE, sceneName);
+        Facade.getInstance(multitonKey).sendNotification(GameCommands.CHANGE_SCENE_COMPLETE, sceneName);
+        Facade.getInstance(multitonKey).sendNotification(GameCommands.PARSE_GAMEMAP, sceneName);
 
     });
 }

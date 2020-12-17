@@ -1,4 +1,4 @@
-import { GameCommand } from '../controller/GameCommand';
+import { GameCommands } from '../controller/GameCommands';
 
 const { Mediator } = require('@koreez/pure-mvc');
 
@@ -9,13 +9,13 @@ export class GameMediator extends Mediator {
         console.log("Register mediator - GameMediator");
         const app = pc.Application.getApplication();
         super(GameMediator.NAME, app);
-        this.subscribeNotification(GameCommand.APP_INITIALISED);
+        this.subscribeNotification(GameCommands.APP_INITIALISED);
     }
 
 
     handleNotification(notificationName, ...args) {
         switch (notificationName) {
-            case GameCommand.APP_INITIALISED:
+            case GameCommands.APP_INITIALISED:
 
                 break;
         }
