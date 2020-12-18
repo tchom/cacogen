@@ -10,24 +10,42 @@ export function parseGameMapCommand(multitonKey, notificationName) {
     // Get navigation floors
     const app = pc.Application.getApplication();
     const navigationFloors = app.root.findByTag('navigation_floor');
-    const waypointTemplate = app.root.findByName("Waypoint");
-    console.log("****");
-    console.log(waypointTemplate);
 
+    let completedGrid = [];
+    const waypointTemplate = app.root.findByName("Waypoint");
+
+    const navigationComponents = [];
+    // First parse - create nodes and connections for individual 
+    // navigation components
     for (const floorEntity of navigationFloors) {
+        const navComp = floorEntity.script['NavigationComponent'];
+        navigationComponents.push(navComp);
+
         const floorGrid = createPartialGridFromFloor(floorEntity)
-        console.log(floorGrid);
-        const firstNode = floorGrid[0];
-        const lastNode = floorGrid[floorGrid.length - 1];
-        const path = Astar.calculatePath(firstNode, lastNode);
-        console.log("****");
-        console.log(path);
-        for (const pathPoint of path) {
-            const point = waypointTemplate.clone();
-            point.enabled = true;
-            point.setLocalPosition(pathPoint.x, pathPoint.y, pathPoint.z);
+        navComp.setGrid(floorGrid);
+    }
+
+    // Second parse - stitch together adjacent nodes in 
+    // connected navigation meshes
+    for (const navigationComp of navigationComponents) {
+        for (const connectedCompEntity of navigationComp.connectedComponents) {
+            const connectedNavComp = connectedCompEntity.script['NavigationComponent'];
+
+            joinToAdjacentGrid(navigationComp.getGrid(), connectedNavComp.getGrid());
+            completedGrid = completedGrid.concat(navigationComp.getGrid());
         }
     }
+
+    const firstNode = completedGrid[0];
+    const lastNode = completedGrid[completedGrid.length - 1];
+    const path = Astar.calculatePath(firstNode, lastNode);
+
+    for (const pathPoint of path) {
+        const point = waypointTemplate.clone();
+        point.enabled = true;
+        point.setLocalPosition(pathPoint.x, pathPoint.y, pathPoint.z);
+    }
+
 }
 
 function createPartialGridFromFloor(floorEntity) {
@@ -66,4 +84,18 @@ function createPartialGridFromFloor(floorEntity) {
     }
 
     return grid;
+}
+
+function joinToAdjacentGrid(grid, gridToJoin) {
+    // Connect neighbours
+    for (const node of grid) {
+        for (const otherNode of gridToJoin) {
+            if (otherNode.equalsPoint(node.x - 1, node.y, node.z) ||
+                otherNode.equalsPoint(node.x + 1, node.y, node.z) ||
+                otherNode.equalsPoint(node.x, node.y, node.z - 1) ||
+                otherNode.equalsPoint(node.x, node.y, node.z + 1)) {
+                node.addConnectedNode(otherNode);
+            }
+        }
+    }
 }
