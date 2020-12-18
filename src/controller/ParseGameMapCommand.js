@@ -40,9 +40,9 @@ function createPartialGridFromFloor(floorEntity) {
     const snappedWidth = Math.round(floorSize.x);
     const snappedBreadth = Math.round(floorSize.z);
 
-    const snappedX = Math.round(floorPosition.x) - (snappedWidth / 2);
+    const snappedX = Math.round(floorPosition.x - (snappedWidth / 2));
     const snappedY = floorPosition.y;
-    const snappedZ = Math.round(floorPosition.z) - (snappedBreadth / 2);
+    const snappedZ = Math.round(floorPosition.z - (snappedBreadth / 2));
 
 
 
