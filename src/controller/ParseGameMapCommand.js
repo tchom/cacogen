@@ -1,6 +1,8 @@
 const { GameMediator } = require('../view/GameMediator');
 import { NavigationNode } from '../model/gameMap/navigation/NavigationNode';
 import { Astar } from '../model/gameMap/navigation/Astar';
+import { GameMapMediator } from '../view/gameMap/GameMapMediator';
+import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 const { Facade } = require('@koreez/pure-mvc');
 
 export function parseGameMapCommand(multitonKey, notificationName) {
@@ -12,7 +14,6 @@ export function parseGameMapCommand(multitonKey, notificationName) {
     const navigationFloors = app.root.findByTag('navigation_floor');
 
     let completedGrid = [];
-    const waypointTemplate = app.root.findByName("Waypoint");
 
     const navigationComponents = [];
     // First parse - create nodes and connections for individual 
@@ -36,6 +37,8 @@ export function parseGameMapCommand(multitonKey, notificationName) {
         }
     }
 
+    /*
+    const waypointTemplate = app.root.findByName("Waypoint");
     const firstNode = completedGrid[0];
     const lastNode = completedGrid[completedGrid.length - 1];
     const path = Astar.calculatePath(firstNode, lastNode);
@@ -44,7 +47,11 @@ export function parseGameMapCommand(multitonKey, notificationName) {
         const point = waypointTemplate.clone();
         point.enabled = true;
         point.setLocalPosition(pathPoint.x, pathPoint.y, pathPoint.z);
-    }
+    }*/
+
+    // Register mediators
+    Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(completedGrid));
+    Facade.getInstance(multitonKey).registerMediator(new GameMapMediator());
 
 }
 

@@ -4,4 +4,6 @@ export class GameCommands {
     static get APP_INITIALISED() { return "APP_INITIALISED" };
     static get PARSE_GAMEMAP() { return "PARSE_GAMEMAP" };
 
+    static get NAVIGATE_TO_NODE() { return "NAVIGATE_TO_NODE" };
+
 }
