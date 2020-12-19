@@ -4,6 +4,8 @@ import { GameFacade } from './GameFacade';
 import { CacogenGame } from './view/CacogenGame';
 
 import { NavigationComponent } from './components/navigation/NavigationComponent';
+import { NPCComponent } from './view/npc/NPCComponent';
+
 
 
 class Main {
@@ -15,7 +17,6 @@ class Main {
 
         this.facade = Facade.getInstance(GameFacade.KEY);
         this.facade.startup(this);
-
     }
 }
 

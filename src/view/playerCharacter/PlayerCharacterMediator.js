@@ -53,7 +53,7 @@ export class PlayerCharacterMediator extends Mediator {
         }
 
         const path = Astar.calculatePath(this.currentNode, targetNode);
-        if (path.length > 0) {
+        if (path && path.length > 0) {
             this.currentNode = targetNode;
 
             this.viewComponent.script['PlayerCharacterComponent'].setPath(path)

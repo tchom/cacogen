@@ -20,10 +20,10 @@ export class Astar {
 
             for (let i = 0; i < current.connectedNodes.length; i++) {
                 const next = current.connectedNodes[i];
-                const distValue = this.getDistSquared(next, current);
+                // const distValue = this.getDistSquared(next, current);
                 const newCost = costSoFar.get(current) + 1;
 
-                if (!costSoFar.has(next) || newCost < costSoFar.get(next)) {
+                if (!next.occupied && (!costSoFar.has(next) || newCost < costSoFar.get(next))) {
                     costSoFar.set(next, newCost);
                     let priority = newCost + this.heuristic(next, goal);
                     frontier.push(next, priority);
@@ -34,7 +34,7 @@ export class Astar {
         }
 
         let current = goal;
-        const pathIsBroken = false;
+        let pathIsBroken = false;
         const path = [];
         path.push(current);
 

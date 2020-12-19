@@ -1,28 +1,43 @@
-export const PlayerCharacterComponent = pc.createScript('PlayerCharacterComponent');
+import { Facade } from "@koreez/pure-mvc";
+import { NPCMediator } from './NPCMediator';
+import { GameFacade } from '../../GameFacade';
 
-PlayerCharacterComponent.attributes.add("characterSpeed", {
+export const NPCComponent = pc.createScript('NPCComponent');
+
+NPCComponent.attributes.add("characterId", {
+    type: "string",
+    title: "Character Id"
+});
+
+NPCComponent.attributes.add("characterSpeed", {
     type: "number",
     title: "Character Speed",
     default: 4
 });
 
 // initialize code called once per entity
-PlayerCharacterComponent.prototype.initialize = function () {
+NPCComponent.prototype.initialize = function () {
     this.movementPath = [];
+    this.facade = Facade.getInstance(GameFacade.KEY);
+    if (this.facade.hasMediator(NPCMediator.NAME + this.characterId)) {
+        this.facade.removeMediator(NPCMediator.NAME + this.characterId);
+    }
+
+    this.facade.registerMediator(new NPCMediator(this.characterId, this.entity));
 };
 
 
-PlayerCharacterComponent.prototype.setPath = function (path) {
+NPCComponent.prototype.setPath = function (path) {
     this.movementPath = path;
     this.movementPath.pop();
 };
 
-PlayerCharacterComponent.prototype.update = function (dt) {
+NPCComponent.prototype.update = function (dt) {
     this.moveAlongPath(dt);
 }
 
 
-PlayerCharacterComponent.prototype.moveAlongPath = function (dt) {
+NPCComponent.prototype.moveAlongPath = function (dt) {
     if (this.movementPath.length > 0) {
         const nextPathPoint = this.movementPath[this.movementPath.length - 1];
         const localPos = this.entity.getLocalPosition();

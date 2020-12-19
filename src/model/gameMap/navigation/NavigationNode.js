@@ -4,6 +4,7 @@ export class NavigationNode {
         this.y = y;
         this.z = z;
         this.connectedNodes = [];
+        this.occupied = false;
     }
 
     isConnected(otherNode) {

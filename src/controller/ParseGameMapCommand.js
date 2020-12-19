@@ -3,6 +3,7 @@ import { NavigationNode } from '../model/gameMap/navigation/NavigationNode';
 import { Astar } from '../model/gameMap/navigation/Astar';
 import { GameMapMediator } from '../view/gameMap/GameMapMediator';
 import { GameMapProxy } from '../model/gameMap/GameMapProxy';
+import { GameCommands } from './GameCommands';
 const { Facade } = require('@koreez/pure-mvc');
 
 export function parseGameMapCommand(multitonKey, notificationName) {
@@ -52,6 +53,8 @@ export function parseGameMapCommand(multitonKey, notificationName) {
     // Register mediators
     Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(completedGrid));
     Facade.getInstance(multitonKey).registerMediator(new GameMapMediator());
+
+    Facade.getInstance(multitonKey).sendNotification(GameCommands.MAP_GRID_CREATED);
 
 }
 

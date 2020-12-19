@@ -52,9 +52,10 @@ GameCamera.prototype.update = function (dt) {
 
         const currentPos = this.entity.getLocalPosition();
         const tweenX = (targetPosition.x + currentPos.x * 9) / 10;
+        const tweenY = (this.cameraHeight + currentPos.y * 9) / 10;
         const tweenZ = (targetPosition.z + currentPos.z * 9) / 10;
 
-        this.entity.setLocalPosition(tweenX, this.cameraHeight, tweenZ);
+        this.entity.setLocalPosition(tweenX, tweenY, tweenZ);
 
         this.entity.lookAt(cameraTargetPosition);
     }
