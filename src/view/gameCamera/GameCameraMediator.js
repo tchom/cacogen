@@ -9,7 +9,7 @@ export class GameCameraMediator extends Mediator {
     constructor(viewComponent) {
         super(GameCameraMediator.NAME);
         this.subscribeNotification([
-            GameCommands.CHANGE_SCENE_COMPLETE, GameCommands.SET_CAMERA_TARGET
+            GameCommands.CHANGE_SCENE_COMPLETE, GameCommands.INPUT_DRAG_MOUSE, GameCommands.SET_CAMERA_TARGET
         ]);
         this.viewComponent = viewComponent;
 
@@ -23,6 +23,9 @@ export class GameCameraMediator extends Mediator {
         switch (notificationName) {
             case GameCommands.SET_CAMERA_TARGET:
                 this.viewComponent.script['GameCamera'].setCameraTarget(args[0]);
+                break;
+            case GameCommands.INPUT_DRAG_MOUSE:
+                this.viewComponent.script['GameCamera'].handleDrag(args[0]);
                 break;
         }
     }

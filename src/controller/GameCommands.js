@@ -6,5 +6,6 @@ export class GameCommands {
 
     static get NAVIGATE_TO_NODE() { return "NAVIGATE_TO_NODE" };
     static get SET_CAMERA_TARGET() { return "SET_CAMERA_TARGET" };
+    static get INPUT_DRAG_MOUSE() { return "INPUT_DRAG_MOUSE" };
 
 }

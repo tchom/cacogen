@@ -14,8 +14,8 @@ export class InputLayerMediator extends Mediator {
             GameCommands.CHANGE_SCENE_COMPLETE
         ]);
         this.viewComponent = viewComponent;
-        this.viewComponent.on('validClick', this.handleClick, this);
         this.viewComponent.on('picker:navigation', this.handlePickerNavigation, this);
+        this.viewComponent.on('scrolling', this.handleScrolling, this);
 
     }
 
@@ -30,12 +30,12 @@ export class InputLayerMediator extends Mediator {
         }
     }
 
-    handleClickRaycast(clickPoint) {
-        console.log("Handle valid click");
-        console.log(clickPoint);
-    }
-
     handlePickerNavigation(node) {
         this.facade.sendNotification(GameCommands.NAVIGATE_TO_NODE, node);
+    }
+
+    handleScrolling(direction) {
+        this.facade.sendNotification(GameCommands.INPUT_DRAG_MOUSE, direction);
+
     }
 }

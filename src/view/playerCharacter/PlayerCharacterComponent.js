@@ -44,7 +44,7 @@ PlayerCharacterComponent.prototype.moveAlongPath = function (dt) {
         this.entity.setLocalPosition(newPosition);
 
         const distanceToNextPath = newPosition.distance(nodePoint);
-        if (distanceToNextPath < 0.1) {
+        if (distanceToNextPath < 0.15) {
             const currentNode = this.movementPath.pop();
             this.entity.fire('updateCurrentNode', currentNode);
         }
