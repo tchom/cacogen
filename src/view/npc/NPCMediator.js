@@ -79,7 +79,7 @@ export class NPCMediator extends Mediator {
         for (const searchNode of this.searchArea) {
             if (searchNode.equals(node)) {
                 this.viewComponent.script['NPCComponent'].lookAtPoint(node);
-                this.facade.sendNotification(GameCommands.START_COMBAT)
+                this.facade.sendNotification(GameCommands.START_COMBAT, this.viewComponent);
             }
         }
     }

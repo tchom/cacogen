@@ -39,12 +39,8 @@ PlayerCharacterComponent.prototype.moveAlongPath = function (dt) {
         newPosition.mul(speed);
         newPosition.add(localPos);
 
-        const dx = nextPathPoint.x - localPos.x;
-        const dz = nextPathPoint.z - localPos.z;
-        const angleToDest = Math.atan2(dx, dz) * 180 / Math.PI;
-        this.entity.setEulerAngles(0, angleToDest, 0);
-
         this.entity.setLocalPosition(newPosition);
+        this.lookAtPoint(nextPathPoint);
 
         const distanceToNextPath = newPosition.distance(nodePoint);
         if (distanceToNextPath < 0.15) {
@@ -52,4 +48,13 @@ PlayerCharacterComponent.prototype.moveAlongPath = function (dt) {
             this.entity.fire('updateCurrentNode', currentNode);
         }
     }
+}
+
+PlayerCharacterComponent.prototype.lookAtPoint = function (point) {
+    const localPos = this.entity.getLocalPosition();
+
+    const dx = point.x - localPos.x;
+    const dz = point.z - localPos.z;
+    const angleToDest = Math.atan2(dx, dz) * 180 / Math.PI;
+    this.entity.setEulerAngles(0, angleToDest, 0);
 }
