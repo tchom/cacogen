@@ -5,5 +5,6 @@ export class GameCommands {
     static get PARSE_GAMEMAP() { return "PARSE_GAMEMAP" };
 
     static get NAVIGATE_TO_NODE() { return "NAVIGATE_TO_NODE" };
+    static get SET_CAMERA_TARGET() { return "SET_CAMERA_TARGET" };
 
 }

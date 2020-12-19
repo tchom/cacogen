@@ -52,6 +52,7 @@ export class Astar {
             return null;
         } else {
             //path.push(start);
+            // path.reverse();
             return path;
         }
     }

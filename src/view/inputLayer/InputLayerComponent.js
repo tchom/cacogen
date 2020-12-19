@@ -1,6 +1,7 @@
 import { Facade } from "@koreez/pure-mvc";
 import { GameFacade } from '../../GameFacade';
 import { InputLayerMediator } from './InputLayerMediator';
+import { GameCameraMediator } from '../gameCamera/GameCameraMediator';
 
 export const InputLayerComponent = pc.createScript('InputLayerComponent');
 
@@ -21,6 +22,7 @@ InputLayerComponent.prototype.initialize = function () {
     this.entity.element.on('click', (evt) => {
         this.handleRaycastCollisions(evt.x, evt.y);
     });
+    GameCameraMediator
 
     this.app.on('picker:result', this.handlePickerResult, this);
 }

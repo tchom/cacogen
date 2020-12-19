@@ -30,6 +30,9 @@ export class PlayerCharacterMediator extends Mediator {
             playerCharEntity.setLocalPosition(pos.x, pos.y, pos.z);
             worldObjectsContainer.addChild(playerCharEntity);
             this.viewComponent = playerCharEntity;
+
+            this.viewComponent.on('updateCurrentNode', this.updateCurrentNode, this);
+            this.facade.sendNotification(GameCommands.SET_CAMERA_TARGET, this.viewComponent);
         }
     }
 
@@ -53,7 +56,11 @@ export class PlayerCharacterMediator extends Mediator {
         if (path.length > 0) {
             this.currentNode = targetNode;
 
-            this.viewComponent.script['PlayerCharacterComponent'].moveAlongPath(path)
+            this.viewComponent.script['PlayerCharacterComponent'].setPath(path)
         }
+    }
+
+    updateCurrentNode(newNode) {
+        this.currentNode = newNode;
     }
 }
