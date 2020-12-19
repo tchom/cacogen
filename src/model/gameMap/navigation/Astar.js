@@ -1,6 +1,40 @@
 import { PriorityQueue } from './PriorityQueue';
 
 export class Astar {
+    static breadthFirstSearch(start, rangeLimit) {
+        let frontier = [];
+        const searchedArea = [];
+        frontier.push(start);
+
+        const cameFrom = new Map();
+        cameFrom.set(start, start);
+
+        let range = 0;
+
+        while (frontier.length > 0 && range < rangeLimit) {
+            const newFrontier = [];
+            for (const current of frontier) {
+                for (let i = 0; i < current.connectedNodes.length; i++) {
+                    const next = current.connectedNodes[i];
+                    // const distValue = this.getDistSquared(next, current);
+
+                    if (!next.occupied && (!cameFrom.has(next))) {
+                        newFrontier.push(next);
+                        searchedArea.push(next);
+                        cameFrom.set(next, current);
+                    }
+                }
+            }
+
+            frontier = newFrontier;
+
+            range++;
+        }
+
+        return searchedArea;
+    }
+
+
     static calculatePath(start, goal) {
         const frontier = new PriorityQueue();
         frontier.push(start, 0);

@@ -13,7 +13,8 @@ export class NPCMediator extends Mediator {
         super(NPCMediator.NAME + id);
         this.subscribeNotification([
             GameCommands.MAP_GRID_CREATED,
-            GameCommands.NAVIGATE_TO_NODE
+            GameCommands.NAVIGATE_TO_NODE,
+            GameCommands.PC_MOVED_TO_NODE
         ]);
 
         this.viewComponent = viewComponent;
@@ -31,11 +32,25 @@ export class NPCMediator extends Mediator {
                     const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
                     this.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
                     this.currentNode.occupied = true;
+
+                    this.searchArea = Astar.breadthFirstSearch(this.currentNode, 6);
+                    /*console.log(`Search size ${searchArea.length}`);
+                    const app = pc.Application.getApplication();
+                    const tileTemplate = app.root.findByName('TileMarker');
+                    for (const node of searchArea) {
+                        const newTile = tileTemplate.clone();
+                        newTile.enabled = true;
+                        newTile.setLocalPosition(node.x, node.y, node.z);
+                    }*/
+
                 }
                 break;
             case GameCommands.NAVIGATE_TO_NODE:
                 /*const node = args[0];
                 this.handleNavigateToNode(node);*/
+                break;
+            case GameCommands.PC_MOVED_TO_NODE:
+                this.lookForCharacter(args[0], args[1]);
                 break;
         }
     }
@@ -58,5 +73,14 @@ export class NPCMediator extends Mediator {
     updateCurrentNode(newNode) {
         this.currentNode = newNode;
         this.currentNode.occupied = true;
+    }
+
+    lookForCharacter(id, node) {
+        for (const searchNode of this.searchArea) {
+            if (searchNode.equals(node)) {
+                this.viewComponent.script['NPCComponent'].lookAtPoint(node);
+                this.facade.sendNotification(GameCommands.START_COMBAT)
+            }
+        }
     }
 }

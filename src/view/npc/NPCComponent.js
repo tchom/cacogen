@@ -1,6 +1,7 @@
 import { Facade } from "@koreez/pure-mvc";
 import { NPCMediator } from './NPCMediator';
 import { GameFacade } from '../../GameFacade';
+import { Astar } from '../../model/gameMap/navigation/Astar';
 
 export const NPCComponent = pc.createScript('NPCComponent');
 
@@ -15,6 +16,13 @@ NPCComponent.attributes.add("characterSpeed", {
     default: 4
 });
 
+
+NPCComponent.attributes.add("sightRange", {
+    type: "number",
+    title: "Sight Range",
+    default: 3
+});
+
 // initialize code called once per entity
 NPCComponent.prototype.initialize = function () {
     this.movementPath = [];
@@ -24,6 +32,9 @@ NPCComponent.prototype.initialize = function () {
     }
 
     this.facade.registerMediator(new NPCMediator(this.characterId, this.entity));
+
+    // Setup character properties
+    this.facing = new pc.Vec2(0, -1);
 };
 
 
@@ -49,10 +60,8 @@ NPCComponent.prototype.moveAlongPath = function (dt) {
         newPosition.mul(speed);
         newPosition.add(localPos);
 
-        const dx = nextPathPoint.x - localPos.x;
-        const dz = nextPathPoint.z - localPos.z;
-        const angleToDest = Math.atan2(dx, dz) * 180 / Math.PI;
-        this.entity.setEulerAngles(0, angleToDest, 0);
+
+        this.lookAtPoint(nextPathPoint);
 
         this.entity.setLocalPosition(newPosition);
 
@@ -62,4 +71,14 @@ NPCComponent.prototype.moveAlongPath = function (dt) {
             this.entity.fire('updateCurrentNode', currentNode);
         }
     }
+}
+
+
+NPCComponent.prototype.lookAtPoint = function (point) {
+    const localPos = this.entity.getLocalPosition();
+
+    const dx = point.x - localPos.x;
+    const dz = point.z - localPos.z;
+    const angleToDest = Math.atan2(dx, dz) * 180 / Math.PI;
+    this.entity.setEulerAngles(0, angleToDest, 0);
 }

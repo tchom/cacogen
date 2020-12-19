@@ -17,6 +17,11 @@ PlayerCharacterComponent.prototype.setPath = function (path) {
     this.movementPath.pop();
 };
 
+PlayerCharacterComponent.prototype.stopMovement = function (currentNode) {
+    this.movementPath = [];
+    this.entity.setLocalPosition(currentNode.x, currentNode.y, currentNode.z);
+};
+
 PlayerCharacterComponent.prototype.update = function (dt) {
     this.moveAlongPath(dt);
 }

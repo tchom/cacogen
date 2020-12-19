@@ -9,4 +9,7 @@ export class GameCommands {
     static get SET_CAMERA_TARGET() { return "SET_CAMERA_TARGET" };
     static get INPUT_DRAG_MOUSE() { return "INPUT_DRAG_MOUSE" };
 
+    static get PC_MOVED_TO_NODE() { return "PC_MOVED_TO_NODE" };
+    static get START_COMBAT() { return "START_COMBAT" };
+
 }

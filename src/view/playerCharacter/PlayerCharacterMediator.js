@@ -13,7 +13,8 @@ export class PlayerCharacterMediator extends Mediator {
         super(PlayerCharacterMediator.NAME);
         this.subscribeNotification([
             GameCommands.CHANGE_SCENE_COMPLETE,
-            GameCommands.NAVIGATE_TO_NODE
+            GameCommands.NAVIGATE_TO_NODE,
+            GameCommands.START_COMBAT
         ]);
     }
 
@@ -42,6 +43,9 @@ export class PlayerCharacterMediator extends Mediator {
                 const node = args[0];
                 this.handleNavigateToNode(node);
                 break;
+            case GameCommands.START_COMBAT:
+                this.handleStartCombat();
+                break;
         }
     }
 
@@ -56,11 +60,16 @@ export class PlayerCharacterMediator extends Mediator {
         if (path && path.length > 0) {
             this.currentNode = targetNode;
 
-            this.viewComponent.script['PlayerCharacterComponent'].setPath(path)
+            this.viewComponent.script['PlayerCharacterComponent'].setPath(path);
         }
     }
 
     updateCurrentNode(newNode) {
         this.currentNode = newNode;
+        this.facade.sendNotification(GameCommands.PC_MOVED_TO_NODE, 'player', this.currentNode);
+    }
+
+    handleStartCombat() {
+        this.viewComponent.script['PlayerCharacterComponent'].stopMovement(this.currentNode);
     }
 }
