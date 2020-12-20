@@ -2,7 +2,6 @@
 import { GameCommands } from '../../controller/GameCommands';
 import { GameStateProxy } from '../../model/gameState/GameStateProxy';
 import { InputLayerComponent } from './InputLayerComponent';
-import { PlayerCharacterMediator } from '../playerCharacter/PlayerCharacterMediator';
 const { Mediator } = require('@koreez/pure-mvc');
 
 export class InputLayerMediator extends Mediator {

@@ -7,6 +7,8 @@ import { NavigationComponent } from './components/navigation/NavigationComponent
 import { GameCharacterComponent } from './view/gameCharacter/GameCharacterComponent';
 import { AgroGameCharacterComponent } from './view/gameCharacter/aggro/AgroGameCharacterComponent';
 import { ToastMessageComponent } from './view/toastMessage/ToastMessageComponent';
+import { NavigateToNodeComponent } from './view/gameCharacter/navigateToNode/NavigateToNodeComponent';
+import { SetCameraTargetComponent } from './view/gameCharacter/setCameraTarget/SetCameraTargetComponent';
 
 
 class Main {
