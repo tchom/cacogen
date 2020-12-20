@@ -44,11 +44,7 @@ export class PlayerCharacterMediator extends Mediator {
                 this.handleNavigateToNode(node);
                 break;
             case GameCommands.START_COMBAT:
-                const instigator = args[0];
-                this.viewComponent.script['PlayerCharacterComponent'].lookAtPoint(instigator.getLocalPosition());
-
-                this.handleStartCombat(args);
-
+                this.handleStartCombat();
                 break;
         }
     }

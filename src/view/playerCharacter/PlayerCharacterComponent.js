@@ -1,5 +1,10 @@
 export const PlayerCharacterComponent = pc.createScript('PlayerCharacterComponent');
 
+PlayerCharacterComponent.attributes.add("characterId", {
+    type: "string",
+    title: "Character Id"
+});
+
 PlayerCharacterComponent.attributes.add("characterSpeed", {
     type: "number",
     title: "Character Speed",
