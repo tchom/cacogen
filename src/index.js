@@ -6,6 +6,7 @@ import { CacogenGame } from './view/CacogenGame';
 import { NavigationComponent } from './components/navigation/NavigationComponent';
 import { GameCharacterComponent } from './view/gameCharacter/GameCharacterComponent';
 import { AgroGameCharacterComponent } from './view/gameCharacter/aggro/AgroGameCharacterComponent';
+import { ToastMessageComponent } from './view/toastMessage/ToastMessageComponent';
 
 
 class Main {
@@ -17,7 +18,6 @@ class Main {
 
         this.facade = Facade.getInstance(GameFacade.KEY);
         this.facade.startup(this);
-
     }
 }
 

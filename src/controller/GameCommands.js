@@ -11,5 +11,6 @@ export class GameCommands {
 
     static get PC_MOVED_TO_NODE() { return "PC_MOVED_TO_NODE" };
     static get START_COMBAT() { return "START_COMBAT" };
+    static get SHOW_TOAST_MESSAGE() { return "SHOW_TOAST_MESSAGE" };
 
 }

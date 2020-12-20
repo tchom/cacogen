@@ -83,7 +83,7 @@ export class Astar {
         }
 
         if (pathIsBroken) {
-            return null;
+            return undefined;
         } else {
             //path.push(start);
             // path.reverse();

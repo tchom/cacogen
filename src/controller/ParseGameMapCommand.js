@@ -38,18 +38,6 @@ export function parseGameMapCommand(multitonKey, notificationName) {
         }
     }
 
-    /*
-    const waypointTemplate = app.root.findByName("Waypoint");
-    const firstNode = completedGrid[0];
-    const lastNode = completedGrid[completedGrid.length - 1];
-    const path = Astar.calculatePath(firstNode, lastNode);
-
-    for (const pathPoint of path) {
-        const point = waypointTemplate.clone();
-        point.enabled = true;
-        point.setLocalPosition(pathPoint.x, pathPoint.y, pathPoint.z);
-    }*/
-
     // Register mediators
     Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(completedGrid));
     Facade.getInstance(multitonKey).registerMediator(new GameMapMediator());
