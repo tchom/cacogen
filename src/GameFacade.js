@@ -4,6 +4,8 @@ import { parseGameMapCommand } from './controller/ParseGameMapCommand';
 import { startupCommand } from './controller/StartupCommand';
 import { changeSceneCommand } from './controller/ChangeSceneCommand';
 import { startCombatCommand } from './controller/StartCombatCommand';
+import { nextCombatTurnCommand } from './controller/NextCombatTurnCommand';
+import { nextCombatRoundCommand } from './controller/NextCombatRoundCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -31,6 +33,8 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.CHANGE_SCENE, changeSceneCommand);
         this.registerCommand(GameCommands.PARSE_GAMEMAP, parseGameMapCommand);
         this.registerCommand(GameCommands.START_COMBAT, startCombatCommand);
+        this.registerCommand(GameCommands.NEXT_COMBAT_TURN, nextCombatTurnCommand);
+        this.registerCommand(GameCommands.NEXT_COMBAT_ROUND, nextCombatRoundCommand);
     }
 
 }

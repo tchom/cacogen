@@ -9,7 +9,7 @@ import { AgroGameCharacterComponent } from './view/gameCharacter/aggro/AgroGameC
 import { ToastMessageComponent } from './view/toastMessage/ToastMessageComponent';
 import { NavigateToNodeComponent } from './view/gameCharacter/navigateToNode/NavigateToNodeComponent';
 import { SetCameraTargetComponent } from './view/gameCharacter/setCameraTarget/SetCameraTargetComponent';
-
+import { PlayerCombatInputComponent } from './view/gameCharacter/combatInput/PlayerCombatInputComponent';
 
 class Main {
     constructor() {

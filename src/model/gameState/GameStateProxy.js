@@ -13,4 +13,8 @@ export class GameStateProxy extends Proxy {
         super(GameStateProxy.NAME, new GameStateVO());
     }
 
+    updateGameStateType(newStateType) {
+        this.vo.gameplayMode = newStateType;
+    }
+
 }

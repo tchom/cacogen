@@ -1,8 +1,6 @@
 export class CombatVO {
-    constructor(id) {
-        this.id = id;
-
-
-
+    constructor(participants) {
+        this.participants = participants;
+        this.roundInitiative = [];
     }
 }

@@ -10,7 +10,14 @@ export class GameCommands {
     static get INPUT_DRAG_MOUSE() { return "INPUT_DRAG_MOUSE" };
 
     static get PC_MOVED_TO_NODE() { return "PC_MOVED_TO_NODE" };
+    static get PC_FINISHED_MOVE() { return "PC_FINISHED_MOVE" };
     static get START_COMBAT() { return "START_COMBAT" };
     static get SHOW_TOAST_MESSAGE() { return "SHOW_TOAST_MESSAGE" };
+
+    static get NEXT_COMBAT_TURN() { return "NEXT_COMBAT_TURN" };
+    static get NEXT_COMBAT_ROUND() { return "NEXT_COMBAT_ROUND" };
+
+    static get AWAIT_PLAYER_COMBAT_INPUT() { return "AWAIT_PLAYER_COMBAT_INPUT" };
+
 
 }

@@ -43,7 +43,6 @@ GameCharacterComponent.prototype.postInitialize = function () {
 
 GameCharacterComponent.prototype.setPath = function (path) {
     this.movementPath = path;
-    this.movementPath.pop();
 };
 
 GameCharacterComponent.prototype.stopMovement = function (currentNode) {
@@ -74,7 +73,11 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
         const distanceToNextPath = newPosition.distance(nodePoint);
         if (distanceToNextPath < 0.15) {
             const currentNode = this.movementPath.pop();
+
             this.entity.fire('updateCurrentNode', currentNode);
+            if (this.movementPath.length === 0) {
+                this.entity.fire('finishedMove', currentNode);
+            }
         }
     }
 }

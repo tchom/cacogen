@@ -5,6 +5,8 @@ import { GameFacade } from '../../../GameFacade';
 import { GameCharacterProxy } from '../../../model/gameCharacter/GameCharacterProxy';
 import { GameMapProxy } from '../../../model/gameMap/GameMapProxy';
 import { Astar } from '../../../model/gameMap/navigation/Astar';
+import { GameStateProxy } from '../../../model/gameState/GameStateProxy';
+import { gameplayModeTypes } from '../../../model/gameState/GameStateVO';
 
 AgroGameCharacterComponent.attributes.add("sightRange", {
     type: "number",
@@ -38,6 +40,12 @@ AgroGameCharacterComponent.prototype.handleMapGridCreated = function (id, ...arg
 AgroGameCharacterComponent.prototype.handleMovedToNode = function (id, targetId, node) {
     const facade = Facade.getInstance(GameFacade.KEY);
     const vo = facade.retrieveProxy(GameCharacterProxy.NAME + id).vo;
+    const gameState = facade.retrieveProxy(GameStateProxy.NAME).vo;
+
+    // Ignore if the player isn't exploring
+    if (gameState.gameplayMode !== gameplayModeTypes.EXPLORATION) {
+        return;
+    }
 
     for (const agroNode of vo.agroArea) {
         if (agroNode.equals(node)) {

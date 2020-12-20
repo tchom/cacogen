@@ -26,6 +26,7 @@ export class GameCharacterMediator extends Mediator {
 
         this.viewComponent = viewComponent;
         this.viewComponent.on('updateCurrentNode', this.updateCurrentNode, this);
+        this.viewComponent.on('finishedMove', this.handleFinishedMode, this);
     }
 
     onRegister(notificationSubscriptionChange) {
@@ -38,10 +39,6 @@ export class GameCharacterMediator extends Mediator {
         }
 
         switch (notificationName) {
-            case GameCommands.NAVIGATE_TO_NODE:
-                /*const node = args[0];
-                this.handleNavigateToNode(node);*/
-                break;
             case GameCommands.START_COMBAT:
                 this.handleStartCombat();
 
@@ -52,22 +49,6 @@ export class GameCharacterMediator extends Mediator {
         }
     }
 
-    handleNavigateToNode(targetNode) {
-        const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
-        const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME).vo;
-
-        if (!gameCharacterVO.currentNode) {
-            gameCharacterVO.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
-        }
-
-        const path = Astar.calculatePath(gameCharacterVO.currentNode, targetNode);
-        if (path.length > 0) {
-            gameCharacterVO.currentNode = targetNode;
-
-            this.viewComponent.script['GameCharacterComponent'].setPath(path)
-        }
-    }
-
     updateCurrentNode(newNode) {
         const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
         gameCharacterVO.currentNode.occupied = false;
@@ -75,11 +56,15 @@ export class GameCharacterMediator extends Mediator {
         gameCharacterVO.currentNode.occupied = true;
     }
 
+    handleFinishedMode(newNode) {
+        this.facade.sendNotification(GameCommands.PC_FINISHED_MOVE, newNode);
+    }
+
     lookForCharacter(id, node) {
         for (const searchNode of this.searchArea) {
             if (searchNode.equals(node)) {
                 this.viewComponent.script['GameCharacterComponent'].lookAtPoint(node);
-                this.facade.sendNotification(GameCommands.START_COMBAT, this.viewComponent);
+                this.facade.sendNotification(GameCommands.START_COMBAT, this.viewComponent, [id]);
             }
         }
     }

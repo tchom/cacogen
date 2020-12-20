@@ -32,11 +32,12 @@ ToastMessageComponent.prototype.addMessage = function (message) {
 
 ToastMessageComponent.prototype.showNextMessage = function () {
     if (this.messageQueue.length > 0) {
-        const nextMessage = this.messageQueue.splice(0, 1)[0];
+        const nextMessage = this.messageQueue[0];
 
         this.labelEntity.element.text = nextMessage;
 
         setTimeout(() => {
+            this.messageQueue.shift();
             this.showNextMessage();
         }, this.messageTime * 1000);
     } else {
