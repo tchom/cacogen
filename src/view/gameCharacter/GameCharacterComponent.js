@@ -46,8 +46,6 @@ GameCharacterComponent.prototype.setPath = function (path) {
 };
 
 GameCharacterComponent.prototype.stopMovement = function (currentNode) {
-    console.log("StopMovement");
-    console.log(currentNode);
     this.movementPath = [];
     this.entity.setLocalPosition(currentNode.x, currentNode.y, currentNode.z);
 };
@@ -72,7 +70,6 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
 
         this.entity.setLocalPosition(newPosition);
         this.lookAtPoint(nextPathPoint);
-        console.log('updateCurrentNode');
 
         const distanceToNextPath = newPosition.distance(nodePoint);
         if (distanceToNextPath < 0.15) {

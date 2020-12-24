@@ -29,28 +29,39 @@ export class CombatProxy extends Proxy {
 
         if (roundInitiative && roundInitiative.length > 0) {
             const nextTurnId = roundInitiative.shift();
+            this.vo.activeParticipant = nextTurnId;
+            console.log(`Current turn:: ${nextTurnId}`);
+
             if (nextTurnId !== 'end_round') {
                 // Next Turn
                 this.facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `Turn ${nextTurnId}`);
                 const proxy = this.participantProxies.get(nextTurnId);
+                proxy.resetCombatTurnState();
+
                 if (nextTurnId === 'player') {
                     this.facade.sendNotification(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, proxy);
-
                 } else {
+                    // this.facade.sendNotification(GameCommands.END_COMBAT_TURN);
+                    // this.facade.sendNotification(GameCommands.NEXT_COMBAT_TURN, this.vo.nextTurnCharacterId);
                     setTimeout(() => {
-                        this.facade.sendNotification(GameCommands.NEXT_COMBAT_TURN);
-                    }, 4000);
+                        this.facade.sendNotification(GameCommands.END_COMBAT_TURN);
+                        // this.facade.sendNotification(GameCommands.NEXT_COMBAT_TURN, this.vo.nextTurnCharacterId);
+                    }, 3000);
                 }
             } else {
                 // End round
                 this.facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `End round`);
-                this.facade.sendNotification(GameCommands.NEXT_COMBAT_ROUND);
-
+                setTimeout(() => {
+                    this.facade.sendNotification(GameCommands.NEXT_COMBAT_ROUND);
+                }, 3000);
             }
         }
     }
 
     nextRound() {
+        console.log('/////////////////');
+        console.log('//  New round  //');
+        console.log('/////////////////');
         const initiatives = [];
         for (const [characterId, proxy] of this.participantProxies.entries()) {
             const vo = proxy.vo;
@@ -68,6 +79,18 @@ export class CombatProxy extends Proxy {
         }
 
         this.vo.roundInitiative = shuffledInitiative;
+    }
+
+    get nextTurnCharacterId() {
+        return this.vo.nextTurnCharacterId;
+    }
+
+    get activeParticipant() {
+        return this.vo.activeParticipant;
+    }
+
+    set activeParticipant(value) {
+        this.vo.activeParticipant = value;
     }
 
 }

@@ -17,6 +17,9 @@ export class GameCommands {
     static get NEXT_COMBAT_TURN() { return "NEXT_COMBAT_TURN" };
     static get NEXT_COMBAT_ROUND() { return "NEXT_COMBAT_ROUND" };
 
+    static get END_COMBAT_TURN() { return "END_COMBAT_TURN" };
+
+
     static get AWAIT_PLAYER_COMBAT_INPUT() { return "AWAIT_PLAYER_COMBAT_INPUT" };
 
 

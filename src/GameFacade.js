@@ -6,6 +6,7 @@ import { changeSceneCommand } from './controller/ChangeSceneCommand';
 import { startCombatCommand } from './controller/StartCombatCommand';
 import { nextCombatTurnCommand } from './controller/NextCombatTurnCommand';
 import { nextCombatRoundCommand } from './controller/NextCombatRoundCommand';
+import { endCombatTurnCommand } from './controller/EndCombatTurnCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -35,6 +36,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.START_COMBAT, startCombatCommand);
         this.registerCommand(GameCommands.NEXT_COMBAT_TURN, nextCombatTurnCommand);
         this.registerCommand(GameCommands.NEXT_COMBAT_ROUND, nextCombatRoundCommand);
+        this.registerCommand(GameCommands.END_COMBAT_TURN, endCombatTurnCommand);
     }
 
 }

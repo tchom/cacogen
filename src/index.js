@@ -10,6 +10,7 @@ import { ToastMessageComponent } from './view/toastMessage/ToastMessageComponent
 import { NavigateToNodeComponent } from './view/gameCharacter/navigateToNode/NavigateToNodeComponent';
 import { SetCameraTargetComponent } from './view/gameCharacter/setCameraTarget/SetCameraTargetComponent';
 import { PlayerCombatInputComponent } from './view/gameCharacter/combatInput/PlayerCombatInputComponent';
+import { PlayerCombatPanelComponent } from './view/playerCombatPanel/PlayerCombatPanelComponent';
 
 class Main {
     constructor() {

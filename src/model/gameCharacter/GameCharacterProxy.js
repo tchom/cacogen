@@ -13,4 +13,8 @@ export class GameCharacterProxy extends Proxy {
         super(GameCharacterProxy.NAME + id, new GameCharacterVO(id));
     }
 
+    resetCombatTurnState() {
+        this.vo.availableMovement = this.vo.maxMovement;
+    }
+
 }

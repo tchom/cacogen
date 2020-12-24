@@ -38,6 +38,19 @@ export class GameCharacterMediator extends Mediator {
             this.viewComponent.fire(notificationName, this.id, ...args);
         }
 
+        for (const scriptKey in this.viewComponent.script) {
+            if (Object.hasOwnProperty.call(this.viewComponent.script, scriptKey)) {
+                const scriptComponent = this.viewComponent.script[scriptKey];
+
+                if (typeof scriptComponent.handleNotification === 'function') {
+
+                    scriptComponent.handleNotification(notificationName, this.id, ...args);
+                }
+
+
+            }
+        }
+
         switch (notificationName) {
             case GameCommands.START_COMBAT:
                 this.handleStartCombat();

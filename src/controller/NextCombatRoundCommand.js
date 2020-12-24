@@ -12,7 +12,7 @@ export function nextCombatRoundCommand(multitonKey, notificationName, ...args) {
 
     if (gameState.vo.gameplayMode === gameplayModeTypes.COMBAT) {
         combatProxy.nextRound();
-        facade.sendNotification(GameCommands.NEXT_COMBAT_TURN);
+        facade.sendNotification(GameCommands.NEXT_COMBAT_TURN, combatProxy.vo.nextTurnCharacterId);
 
     }
 

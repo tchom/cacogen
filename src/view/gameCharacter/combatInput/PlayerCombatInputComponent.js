@@ -16,18 +16,43 @@ PlayerCombatInputComponent.prototype.initialize = function () {
     this.entity.script['GameCharacterComponent'].preregisterNotification(GameCommands.AWAIT_PLAYER_COMBAT_INPUT);
     this.entity.script['GameCharacterComponent'].preregisterNotification(GameCommands.NAVIGATE_TO_NODE);
     this.entity.script['GameCharacterComponent'].preregisterNotification(GameCommands.PC_FINISHED_MOVE);
+    this.entity.script['GameCharacterComponent'].preregisterNotification(GameCommands.END_COMBAT_TURN);
 
-
-    this.entity.on(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, this.awaitPlayerInput, this);
+    this.moveableNodes = [];
+    this.displayTiles = [];
 };
 
+PlayerCombatInputComponent.prototype.handleNotification = function (notificationName, id, ...args) {
+    console.log(`EVENT ${notificationName}`);
+
+    switch (notificationName) {
+        case GameCommands.AWAIT_PLAYER_COMBAT_INPUT:
+
+            this.awaitPlayerInput(id, ...args);
+            break;
+
+        case GameCommands.END_COMBAT_TURN:
+            this.handleEndCombatTurn(id, ...args);
+            break;
+        case GameCommands.NAVIGATE_TO_NODE:
+            this.handleNavigateToNode(id, ...args);
+            break;
+
+        case GameCommands.PC_FINISHED_MOVE:
+            this.handleFinishedMove(id, ...args);
+            break;
+        default:
+            break;
+    }
+}
+
+
 PlayerCombatInputComponent.prototype.awaitPlayerInput = function (id, ...args) {
+    this.destroyDisplayTiles();
     this.showMoveableTiles(id);
 }
 
 PlayerCombatInputComponent.prototype.handleNavigateToNode = function (id, ...args) {
-
-
     const targetNode = args[0];
 
     const facade = Facade.getInstance(GameFacade.KEY);
@@ -50,7 +75,14 @@ PlayerCombatInputComponent.prototype.destroyDisplayTiles = function () {
 }
 
 PlayerCombatInputComponent.prototype.handleFinishedMove = function (id, currentNode) {
-    this.showMoveableTiles(id);
+    const facade = Facade.getInstance(GameFacade.KEY);
+    const gameState = facade.retrieveProxy(GameStateProxy.NAME).vo;
+    const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
+    if (combatProxy && combatProxy.activeParticipant === 'player') {
+        this.destroyDisplayTiles();
+        this.showMoveableTiles(id);
+    }
+
 }
 
 PlayerCombatInputComponent.prototype.handleValidMove = function (characterProxy, targetNode) {
@@ -73,9 +105,6 @@ PlayerCombatInputComponent.prototype.showMoveableTiles = function (id) {
     const facade = Facade.getInstance(GameFacade.KEY);
     const proxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
     const vo = proxy.vo;
-    console.log("TILE AT AREA");
-    console.log(vo.currentNode);
-    console.log(this.entity.getLocalPosition());
     this.moveableNodes = Astar.breadthFirstSearch(vo.currentNode, vo.availableMovement);
     this.displayTiles = [];
 
@@ -85,8 +114,10 @@ PlayerCombatInputComponent.prototype.showMoveableTiles = function (id) {
         this.tileContainer.addChild(tile);
         this.displayTiles.push(tile);
     }
-
-
-    this.entity.on(GameCommands.NAVIGATE_TO_NODE, this.handleNavigateToNode, this);
-    this.entity.off(GameCommands.PC_FINISHED_MOVE, this.handleFinishedMove, this);
 }
+
+
+PlayerCombatInputComponent.prototype.handleEndCombatTurn = function (id, ...args) {
+    this.destroyDisplayTiles();
+}
+
