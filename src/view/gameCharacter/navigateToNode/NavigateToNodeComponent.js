@@ -33,9 +33,8 @@ NavigateToNodeComponent.prototype.handleNavigateToNode = function (id, ...args) 
 
         const path = Astar.calculatePath(gameCharacterVO.currentNode, targetNode);
         if (path && path.length > 0) {
-            gameCharacterVO.currentNode = targetNode;
-
             this.entity.script['GameCharacterComponent'].setPath(path);
+            gameCharacterVO.currentNode = targetNode;
         }
     }
 }

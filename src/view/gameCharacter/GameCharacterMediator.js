@@ -50,10 +50,12 @@ export class GameCharacterMediator extends Mediator {
     }
 
     updateCurrentNode(newNode) {
-        const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
+        /*const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
         gameCharacterVO.currentNode.occupied = false;
         gameCharacterVO.currentNode = newNode;
         gameCharacterVO.currentNode.occupied = true;
+        console.log('Moved to node');
+        console.log(newNode);*/
     }
 
     handleFinishedMode(newNode) {
