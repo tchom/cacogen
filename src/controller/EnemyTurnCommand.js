@@ -13,35 +13,46 @@ export function enemyTurnCommand(multitonKey, notificationName, ...args) {
     const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
 
     const enemyProxy = facade.retrieveProxy(GameCharacterProxy.NAME + enemyId);
+    const enemyCurrentNode = enemyProxy.currentNode;
     // find desired move position
     const playerProxy = facade.retrieveProxy(GameCharacterProxy.NAME + "player");
     const playerNode = playerProxy.currentNode;
     const connectedNodes = playerNode.connectedNodes;
 
-    /*for (const neighbourNodes of playerNode.connectedNodes) {
-        
-    }*/
+    // Check if character is already adjacent to target
+    const isAdjacent = connectedNodes.some(n => n.equals(enemyCurrentNode));
+
+    // we're already there
+    if (isAdjacent) {
+        facade.sendNotification(GameCommands.END_COMBAT_TURN);
+        return;
+    }
 
     const result = connectedNodes.filter(node => !node.occupied);
 
+    if (result.length > 0) {
+        // Find nearest node
+        let node = result.reduce((a, b) => distanceSqrt(enemyCurrentNode, a) < distanceSqrt(enemyCurrentNode, b) ? a : b);
 
-    const node = result[Math.floor(result.length * Math.random())];
 
-    const path = Astar.calculatePath(enemyProxy.currentNode, node);
-    if (path && path.length > 0) {
-        enemyProxy.currentNode = node;
-        facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + enemyId, path);
-    } else {
-        facade.sendNotification(GameCommands.END_COMBAT_TURN);
+        const path = Astar.calculatePath(enemyCurrentNode, node);
+        if (path && path.length > 0) {
+            // trim movement
+            const vo = enemyProxy.vo;
+            while (path.length > vo.availableMovement) {
+                path.shift();
+            }
+
+            enemyProxy.currentNode = node;
+            facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + enemyId, path);
+        } else {
+            facade.sendNotification(GameCommands.END_COMBAT_TURN);
+        }
+
     }
 
-    // const node = gameMapProxy.findNearestNode({ x: 0, y: 0, z: 0 });
-    /*if (node) {
-        facade.sendNotification(GameCommands.NAVIGATE_TO_NODE + enemyId, node);
-    }*/
+}
 
-    /*setTimeout(() => {
-        facade.sendNotification(GameCommands.END_COMBAT_TURN);
-    }, 3000);*/
-
+function distanceSqrt(p1, p2) {
+    return Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2);
 }

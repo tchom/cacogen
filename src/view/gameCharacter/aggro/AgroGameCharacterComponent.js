@@ -51,7 +51,6 @@ AgroGameCharacterComponent.prototype.handleMovedToNode = function (id, node) {
             this.entity.script['GameCharacterComponent'].lookAtPoint(node);
 
             facade.sendNotification(GameCommands.SET_CHARACTER_TO_NODE + "player", node);
-            // facade.sendNotification(GameCommands.NAVIGATE_TO_NODE + "player", node);
             facade.sendNotification(GameCommands.START_COMBAT, id);
         }
     }

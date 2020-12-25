@@ -30,5 +30,7 @@ export function startCombatCommand(multitonKey, notificationName, ...args) {
     // console.log(participants);
     facade.registerProxy(combatProxy);
 
-    facade.sendNotification(GameCommands.NEXT_COMBAT_ROUND);
+    setTimeout(() => {
+        facade.sendNotification(GameCommands.NEXT_COMBAT_ROUND);
+    }, 2000);
 }
