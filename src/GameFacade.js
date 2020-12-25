@@ -15,6 +15,7 @@ import { hideWalkableAreaCommand } from './controller/HideWalkableAreaCommand';
 import { awaitPlayerCombatInputCommand } from './controller/AwaitPlayerCombatInputCommand';
 import { endMovementCommand } from './controller/EndMovementCommand';
 import { selectedGameCharacterCommand } from './controller/SelectedGameCharacterCommand';
+import { changePlayerActionCommand } from './controller/ChangePlayerActionCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -54,6 +55,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, awaitPlayerCombatInputCommand);
         this.registerCommand(GameCommands.FINISHED_MOVE, endMovementCommand);
         this.registerCommand(GameCommands.SELECT_GAME_CHARACTER, selectedGameCharacterCommand);
+        this.registerCommand(GameCommands.SET_PLAYER_ACTION, changePlayerActionCommand);
     }
 
 }

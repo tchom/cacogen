@@ -11,6 +11,8 @@ import { SetCameraTargetComponent } from './view/gameCharacter/setCameraTarget/S
 import { PlayerCombatPanelComponent } from './view/playerCombatPanel/PlayerCombatPanelComponent';
 import { CombatGroupComponent } from './view/gameCharacter/combatGroup/CombatGroupComponent';
 import { HitboxComponent } from './components/collision/HitboxComponent';
+import { ActionPanelComponent } from './view/actionPanel/ActionPanelComponent';
+import { UIStopPropagation } from './components/UIStopPropagation';
 
 class Main {
     constructor() {

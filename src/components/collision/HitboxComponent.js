@@ -7,7 +7,7 @@ HitboxComponent.prototype.initialize = function () {
     this.aabb = new pc.BoundingBox(this.entity.getPosition(), halfExtents);
     this.app.on('picker:raycast', this.handleRayCast, this);
 
-    // this.entity.model.enabled = false;
+    this.entity.model.enabled = false;
 
 }
 

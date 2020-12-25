@@ -34,6 +34,9 @@ export class GameCommands {
 
     static get SELECT_GAME_CHARACTER() { return "SELECT_GAME_CHARACTER" };
 
+    static get SET_PLAYER_ACTION() { return "SET_PLAYER_ACTION" };
+    static get DISPLAY_PLAYER_ACTION() { return "DISPLAY_PLAYER_ACTION" };
+
 
 
 }

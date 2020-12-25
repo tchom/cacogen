@@ -21,4 +21,11 @@ export class GameStateProxy extends Proxy {
         return this.vo.gameplayMode;
     }
 
+    get currentAction() {
+        return this.vo.selectedAction;
+    }
+
+    set currentAction(value) {
+        this.vo.selectedAction = value;
+    }
 }
