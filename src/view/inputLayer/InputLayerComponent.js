@@ -25,10 +25,7 @@ InputLayerComponent.prototype.initialize = function () {
 
     this.facade.registerMediator(new InputLayerMediator(this.entity));
     this.ray = new pc.Ray();
-
-    /*this.entity.element.on('click', (evt) => {
-        this.handleRaycastCollisions(evt.x, evt.y);
-    });*/
+    this.inputQueue = [];
 
     // Drag properties
     this.app.mouse.disableContextMenu();
@@ -85,9 +82,61 @@ InputLayerComponent.prototype.handleRaycastCollisions = function (x, y) {
 }
 
 InputLayerComponent.prototype.handlePickerResult = function (pickedEntity, hitPosition, screenPos) {
-    if (pickedEntity.tags.has('navigation')) {
-        const navComp = pickedEntity.script['NavigationComponent'];
-        const nearestNode = navComp.getNearestNode(hitPosition);
-        this.entity.fire('picker:navigation', nearestNode);
+    this.inputQueue.push({
+        entity: pickedEntity,
+        hitPosition: hitPosition,
+        screenPosition: screenPos
+    });
+}
+
+InputLayerComponent.prototype.update = function (dt) {
+    this.processInputQueue();
+}
+
+
+InputLayerComponent.prototype.processInputQueue = function () {
+
+    if (this.inputQueue.length > 0) {
+        let highestPriorityPick = this.inputQueue[0];
+        let highestPriority = -1;
+        // Find highest priority
+        for (const pick of this.inputQueue) {
+            const pickPriority = getPriority(pick.entity)
+            if (pickPriority > highestPriority) {
+                highestPriorityPick = pick;
+            }
+        }
+
+        if (highestPriorityPick.entity.tags.has('gameCharacter')) {
+            this.pickedGameCharacter(highestPriorityPick.entity, highestPriorityPick.hitPosition)
+        }
+
+        if (highestPriorityPick.entity.tags.has('navigation')) {
+            this.pickedNavigation(highestPriorityPick.entity, highestPriorityPick.hitPosition)
+        }
+
+        this.inputQueue = [];
     }
+}
+
+InputLayerComponent.prototype.pickedGameCharacter = function (pickedEntity, hitPosition) {
+    this.entity.fire('picker:gameCharacter', pickedEntity);
+}
+
+InputLayerComponent.prototype.pickedNavigation = function (pickedEntity, hitPosition) {
+    const navComp = pickedEntity.script['NavigationComponent'];
+    const nearestNode = navComp.getNearestNode(hitPosition);
+    this.entity.fire('picker:navigation', nearestNode);
+}
+
+function getPriority(entity) {
+    if (entity.tags.has('gameCharacter')) {
+        return 2;
+    }
+
+    if (entity.tags.has('navigation')) {
+        return 1;
+    }
+
+    return -1;
 }

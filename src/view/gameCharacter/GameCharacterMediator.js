@@ -20,7 +20,9 @@ export class GameCharacterMediator extends Mediator {
             GameCommands.NAVIGATE_TO_NODE + this.id,
             GameCommands.NAVIGATE_ALONG_PATH + this.id,
             GameCommands.SET_CHARACTER_TO_NODE + this.id,
-            GameCommands.START_COMBAT
+            GameCommands.START_COMBAT,
+            GameCommands.MAP_GRID_CREATED
+
         ];
 
         notifications = notifications.concat(preregisteredNotifications);
@@ -57,7 +59,14 @@ export class GameCharacterMediator extends Mediator {
         switch (notificationName) {
             case GameCommands.START_COMBAT:
                 this.handleStartCombat();
+                break;
+            case GameCommands.MAP_GRID_CREATED:
+                const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
+                const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
 
+                if (!gameCharacterProxy.currentNode) {
+                    gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
+                }
                 break;
             case GameCommands.NAVIGATE_TO_NODE + this.id:
                 this.handleNavigateToNode(args[0]);

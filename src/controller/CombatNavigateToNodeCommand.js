@@ -15,15 +15,15 @@ export function combatNavigateToNodeCommand(multitonKey, notificationName, ...ar
     const vo = gameCharacterProxy.vo;
     const moveableNodes = Astar.breadthFirstSearch(vo.currentNode, vo.availableMovement);
 
+    console.log(`Looking for mathcing node`);
+    console.log(targetNode);
     for (const node of moveableNodes) {
         if (node.equals(targetNode)) {
+            console.log(`Gotcha`);
+
             handleValidMove(facade, gameCharacterProxy, targetNode);
         }
     }
-    const gameState = facade.retrieveProxy(GameStateProxy.NAME);
-    const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
-
-
 }
 
 function handleValidMove(facade, characterProxy, targetNode) {
@@ -32,6 +32,7 @@ function handleValidMove(facade, characterProxy, targetNode) {
     if (path && path.length > 0) {
         vo.availableMovement -= (path.length - 1); // Detract by one... the first path node doesn't count
         characterProxy.currentNode = targetNode;
+        facade.sendNotification(GameCommands.HIDE_WALKABLE_AREA);
         facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + vo.id, path);
     }
 }

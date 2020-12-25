@@ -13,6 +13,7 @@ export class InputLayerMediator extends Mediator {
             GameCommands.CHANGE_SCENE_COMPLETE
         ]);
         this.viewComponent = viewComponent;
+        this.viewComponent.on('picker:gameCharacter', this.handlePickerGameCharacter, this);
         this.viewComponent.on('picker:navigation', this.handlePickerNavigation, this);
         this.viewComponent.on('scrolling', this.handleScrolling, this);
 
@@ -27,6 +28,11 @@ export class InputLayerMediator extends Mediator {
             case GameCommands.CHANGE_SCENE_COMPLETE:
                 break;
         }
+    }
+
+    handlePickerGameCharacter(characterEntity) {
+        console.log('Clicked a game character');
+        this.facade.sendNotification(GameCommands.SELECT_GAME_CHARACTER, characterEntity);
     }
 
     handlePickerNavigation(node) {

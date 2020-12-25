@@ -32,5 +32,8 @@ export class GameCommands {
     static get AWAIT_PLAYER_COMBAT_INPUT() { return "AWAIT_PLAYER_COMBAT_INPUT" };
     static get SET_CHARACTER_TO_NODE() { return "SET_CHARACTER_TO_NODE" };
 
+    static get SELECT_GAME_CHARACTER() { return "SELECT_GAME_CHARACTER" };
+
+
 
 }

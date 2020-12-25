@@ -14,7 +14,6 @@ export function selectedNodeCommand(multitonKey, notificationName, ...args) {
     } else if (gameStateProxy.currentMode === gameplayModeTypes.COMBAT) {
         const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
         if (combatProxy.activeParticipant === "player") {
-            facade.sendNotification(GameCommands.HIDE_WALKABLE_AREA);
             facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", node);
         }
     }
