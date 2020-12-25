@@ -37,6 +37,8 @@ export class GameCommands {
     static get SET_PLAYER_ACTION() { return "SET_PLAYER_ACTION" };
     static get DISPLAY_PLAYER_ACTION() { return "DISPLAY_PLAYER_ACTION" };
 
+    static get RESOLVE_ATTACK() { return "RESOLVE_ATTACK" };
+
 
 
 }

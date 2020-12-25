@@ -15,25 +15,31 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
 
     if (gameStateProxy.currentMode === gameplayModeTypes.EXPLORATION) {
 
-        const pathToTarget = navigateToCharacterInExploration(playerCharacterProxy, targetCharacterProxy);
+        const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
         if (pathToTarget) {
             facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + "player", pathToTarget);
 
         }
 
     } else if (gameStateProxy.currentMode === gameplayModeTypes.COMBAT) {
-        console.log("GOT YOU MOTHER FUCKER");
-        const pathToTarget = navigateToCharacterInExploration(playerCharacterProxy, targetCharacterProxy);
-        if (pathToTarget && pathToTarget.length <= playerCharacterProxy.vo.availableMovement) {
-            facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", pathToTarget.shift());
+        if (gameStateProxy.currentAction === 'attack') {
+            if (isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
+                facade.sendNotification(GameCommands.RESOLVE_ATTACK, playerCharacterProxy.id, targetCharacterProxy.id);
+            }
         } else {
-            facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "Cannot reach target");
+            if (!isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
+                const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
+                if (pathToTarget && pathToTarget.length <= playerCharacterProxy.vo.availableMovement) {
+                    facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", pathToTarget.shift());
+                } else {
+                    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "Cannot reach target");
+                }
+            }
         }
     }
-
 }
 
-function navigateToCharacterInExploration(playerCharacterProxy, targetCharacterProxy) {
+function navigateToCharacter(playerCharacterProxy, targetCharacterProxy) {
     const connectedNodes = targetCharacterProxy.currentNode.connectedNodes;
 
     const unoccupiedNodes = connectedNodes.filter(node => !node.occupied);
@@ -54,22 +60,8 @@ function navigateToCharacterInExploration(playerCharacterProxy, targetCharacterP
     return undefined;
 }
 
-function navigateToCharacterInCombat(playerCharacterProxy, targetCharacterProxy) {
-    const connectedNodes = targetCharacterProxy.currentNode.connectedNodes;
-
-    const unoccupiedNodes = connectedNodes.filter(node => !node.occupied);
-    if (unoccupiedNodes.length > 0) {
-        const playerNode = playerCharacterProxy.currentNode;
-
-        let shortestPath = Astar.calculatePath(playerNode, unoccupiedNodes[0]);
-
-        for (let i = 1; i < unoccupiedNodes.length; i++) {
-            const otherPath = Astar.calculatePath(playerNode, unoccupiedNodes[i]);
-            if (otherPath.length < shortestPath.length) {
-                shortestPath = otherPath;
-            }
-        }
-
-        return shortestPath;
-    }
+function isTargetAdjacent(playerCharacterProxy, targetCharacterProxy) {
+    const targetCurrrentNode = targetCharacterProxy.currentNode;
+    const connectedNodes = playerCharacterProxy.currentNode.connectedNodes;
+    return connectedNodes.some(n => n.equals(targetCurrrentNode));
 }

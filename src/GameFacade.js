@@ -16,6 +16,7 @@ import { awaitPlayerCombatInputCommand } from './controller/AwaitPlayerCombatInp
 import { endMovementCommand } from './controller/EndMovementCommand';
 import { selectedGameCharacterCommand } from './controller/SelectedGameCharacterCommand';
 import { changePlayerActionCommand } from './controller/ChangePlayerActionCommand';
+import { resolveAttackCommand } from './controller/ResolveAttackCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -56,6 +57,8 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.FINISHED_MOVE, endMovementCommand);
         this.registerCommand(GameCommands.SELECT_GAME_CHARACTER, selectedGameCharacterCommand);
         this.registerCommand(GameCommands.SET_PLAYER_ACTION, changePlayerActionCommand);
+
+        this.registerCommand(GameCommands.RESOLVE_ATTACK, resolveAttackCommand);
     }
 
 }
