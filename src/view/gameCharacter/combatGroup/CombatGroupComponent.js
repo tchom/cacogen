@@ -1,7 +1,7 @@
 export const CombatGroupComponent = pc.createScript('CombatGroupComponent');
 
 CombatGroupComponent.attributes.add("combatGroup", {
-    type: "entity",
+    type: "string",
     title: "Combat Group",
     array: true
 });

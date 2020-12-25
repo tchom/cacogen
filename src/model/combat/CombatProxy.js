@@ -30,7 +30,6 @@ export class CombatProxy extends Proxy {
         if (roundInitiative && roundInitiative.length > 0) {
             const nextTurnId = roundInitiative.shift();
             this.vo.activeParticipant = nextTurnId;
-            console.log(`Current turn:: ${nextTurnId}`);
 
             if (nextTurnId !== 'end_round') {
                 // Next Turn
@@ -38,15 +37,11 @@ export class CombatProxy extends Proxy {
                 const proxy = this.participantProxies.get(nextTurnId);
                 proxy.resetCombatTurnState();
 
-                if (nextTurnId === 'player') {
-                    this.facade.sendNotification(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, proxy);
+                if (proxy.isNPC) {
+                    this.facade.sendNotification(GameCommands.ENEMY_TURN, nextTurnId);
                 } else {
-                    // this.facade.sendNotification(GameCommands.END_COMBAT_TURN);
-                    // this.facade.sendNotification(GameCommands.NEXT_COMBAT_TURN, this.vo.nextTurnCharacterId);
-                    setTimeout(() => {
-                        this.facade.sendNotification(GameCommands.END_COMBAT_TURN);
-                        // this.facade.sendNotification(GameCommands.NEXT_COMBAT_TURN, this.vo.nextTurnCharacterId);
-                    }, 3000);
+                    console.log('COMBAT PROXY AWAIT');
+                    this.facade.sendNotification(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, nextTurnId);
                 }
             } else {
                 // End round

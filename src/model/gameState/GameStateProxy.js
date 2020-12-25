@@ -17,4 +17,8 @@ export class GameStateProxy extends Proxy {
         this.vo.gameplayMode = newStateType;
     }
 
+    get currentMode() {
+        return this.vo.gameplayMode;
+    }
+
 }

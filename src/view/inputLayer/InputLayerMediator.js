@@ -30,7 +30,7 @@ export class InputLayerMediator extends Mediator {
     }
 
     handlePickerNavigation(node) {
-        this.facade.sendNotification(GameCommands.NAVIGATE_TO_NODE, node);
+        this.facade.sendNotification(GameCommands.SELECTED_NODE, node);
     }
 
     handleScrolling(direction) {

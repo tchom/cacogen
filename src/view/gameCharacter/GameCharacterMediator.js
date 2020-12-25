@@ -5,6 +5,7 @@ import { GameStateProxy } from '../../model/gameState/GameStateProxy';
 import { GameCharacterComponent } from './GameCharacterComponent';
 import { Astar } from '../../model/gameMap/navigation/Astar';
 import { GameCharacterProxy } from '../../model/gameCharacter/GameCharacterProxy';
+import { gameplayModeTypes } from '../../model/gameState/GameStateVO';
 const { Mediator } = require('@koreez/pure-mvc');
 
 export class GameCharacterMediator extends Mediator {
@@ -16,7 +17,9 @@ export class GameCharacterMediator extends Mediator {
 
         let notifications = [
             GameCommands.CHANGE_SCENE_COMPLETE,
-            GameCommands.NAVIGATE_TO_NODE,
+            GameCommands.NAVIGATE_TO_NODE + this.id,
+            GameCommands.NAVIGATE_ALONG_PATH + this.id,
+            GameCommands.SET_CHARACTER_TO_NODE + this.id,
             GameCommands.START_COMBAT
         ];
 
@@ -56,10 +59,39 @@ export class GameCharacterMediator extends Mediator {
                 this.handleStartCombat();
 
                 break;
+            case GameCommands.NAVIGATE_TO_NODE + this.id:
+                this.handleNavigateToNode(args[0]);
+                break;
+            case GameCommands.NAVIGATE_ALONG_PATH + this.id:
+                this.handleNavigateAlongPath(args[0]);
+                break;
+            case GameCommands.SET_CHARACTER_TO_NODE + this.id:
+                this.handleSetCharacterToNode(args[0]);
+                break;
             default:
 
                 break;
         }
+    }
+
+    handleNavigateToNode(targetNode) {
+        const gameState = this.facade.retrieveProxy(GameStateProxy.NAME).vo;
+        const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
+        const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
+
+        if (!gameCharacterVO.currentNode) {
+            gameCharacterVO.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
+        }
+
+        const path = Astar.calculatePath(gameCharacterVO.currentNode, targetNode);
+        if (path && path.length > 0) {
+            this.viewComponent.script['GameCharacterComponent'].setPath(path);
+            gameCharacterVO.currentNode = targetNode;
+        }
+    }
+
+    handleNavigateAlongPath(path) {
+        this.viewComponent.script['GameCharacterComponent'].setPath(path);
     }
 
     updateCurrentNode(newNode) {
@@ -69,10 +101,12 @@ export class GameCharacterMediator extends Mediator {
         gameCharacterVO.currentNode.occupied = true;
         console.log('Moved to node');
         console.log(newNode);*/
+        this.facade.sendNotification(GameCommands.MOVED_TO_NODE + this.id, newNode);
+
     }
 
     handleFinishedMode(newNode) {
-        this.facade.sendNotification(GameCommands.PC_FINISHED_MOVE, newNode);
+        this.facade.sendNotification(GameCommands.FINISHED_MOVE, this.id, newNode);
     }
 
     lookForCharacter(id, node) {
@@ -85,6 +119,16 @@ export class GameCharacterMediator extends Mediator {
     }
 
     handleStartCombat() {
+        const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
 
+        // this.viewComponent.script['GameCharacterComponent'].stopMovement(gameCharacterVO.currentNode);
+    }
+
+    handleSetCharacterToNode(node) {
+        console.log('////////////');
+        console.log('/// STOP ///');
+        const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
+        gameCharacterVO.currentNode = node;
+        this.viewComponent.script['GameCharacterComponent'].stopMovement(node);
     }
 }

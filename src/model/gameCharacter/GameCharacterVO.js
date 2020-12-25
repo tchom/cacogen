@@ -1,6 +1,8 @@
 export class GameCharacterVO {
-    constructor(id) {
-        this.id = id;
+    constructor(params) {
+        this.id = params.id;
+        this.isNPC = params.isNPC;
+        this.combatGroup = params.combatGroup || [];
         this.currentNode = undefined;
         this.agroArea = undefined;
         this.roundInitiative = [];

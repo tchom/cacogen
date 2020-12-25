@@ -7,10 +7,9 @@ import { NavigationComponent } from './components/navigation/NavigationComponent
 import { GameCharacterComponent } from './view/gameCharacter/GameCharacterComponent';
 import { AgroGameCharacterComponent } from './view/gameCharacter/aggro/AgroGameCharacterComponent';
 import { ToastMessageComponent } from './view/toastMessage/ToastMessageComponent';
-import { NavigateToNodeComponent } from './view/gameCharacter/navigateToNode/NavigateToNodeComponent';
 import { SetCameraTargetComponent } from './view/gameCharacter/setCameraTarget/SetCameraTargetComponent';
-import { PlayerCombatInputComponent } from './view/gameCharacter/combatInput/PlayerCombatInputComponent';
 import { PlayerCombatPanelComponent } from './view/playerCombatPanel/PlayerCombatPanelComponent';
+import { CombatGroupComponent } from './view/gameCharacter/combatGroup/CombatGroupComponent';
 
 class Main {
     constructor() {

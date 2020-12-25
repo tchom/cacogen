@@ -16,6 +16,12 @@ GameCharacterComponent.attributes.add("characterSpeed", {
     default: 4
 });
 
+GameCharacterComponent.attributes.add("isNPC", {
+    type: "boolean",
+    title: "is NPC",
+    default: true
+});
+
 GameCharacterComponent.prototype.preregisterNotification = function (notification) {
     if (!this.preregisteredNotifications) {
         this.preregisteredNotifications = [];
@@ -36,7 +42,17 @@ GameCharacterComponent.prototype.postInitialize = function () {
         this.preregisteredNotifications = [];
     }
 
-    this.facade.registerProxy(new GameCharacterProxy(this.characterId));
+    const proxyParams = {
+        id: this.characterId,
+        isNPC: this.isNPC
+    };
+
+    const combatGroupComponent = this.entity.script['CombatGroupComponent'];
+    if (combatGroupComponent) {
+        proxyParams.combatGroup = combatGroupComponent.combatGroup;
+    }
+
+    this.facade.registerProxy(new GameCharacterProxy(proxyParams));
     this.facade.registerMediator(new GameCharacterMediator(this.characterId, this.entity, this.preregisteredNotifications));
 };
 
@@ -75,10 +91,10 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
         if (distanceToNextPath < 0.15) {
             const currentNode = this.movementPath.pop();
 
-            this.entity.fire('updateCurrentNode', currentNode);
             if (this.movementPath.length === 0) {
                 this.entity.fire('finishedMove', currentNode);
             }
+            this.entity.fire('updateCurrentNode', currentNode);
         }
     }
 }

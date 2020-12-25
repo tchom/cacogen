@@ -9,12 +9,20 @@ export class GameCharacterProxy extends Proxy {
     }
     static get NAME() { return "GameCharacterProxy_" };
 
-    constructor(id) {
-        super(GameCharacterProxy.NAME + id, new GameCharacterVO(id));
+    constructor(params) {
+        super(GameCharacterProxy.NAME + params.id, new GameCharacterVO(params));
     }
 
     resetCombatTurnState() {
         this.vo.availableMovement = this.vo.maxMovement;
+    }
+
+    get combatGroup() {
+        return this.vo.combatGroup;
+    }
+
+    get isNPC() {
+        return this.vo.isNPC;
     }
 
 }

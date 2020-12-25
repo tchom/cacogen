@@ -6,11 +6,12 @@ export class GameCommands {
     static get MAP_GRID_CREATED() { return "MAP_GRID_CREATED" };
 
     static get NAVIGATE_TO_NODE() { return "NAVIGATE_TO_NODE" };
+    static get COMBAT_NAVIGATE_TO_NODE() { return "COMBAT_NAVIGATE_TO_NODE" };
     static get SET_CAMERA_TARGET() { return "SET_CAMERA_TARGET" };
     static get INPUT_DRAG_MOUSE() { return "INPUT_DRAG_MOUSE" };
 
-    static get PC_MOVED_TO_NODE() { return "PC_MOVED_TO_NODE" };
-    static get PC_FINISHED_MOVE() { return "PC_FINISHED_MOVE" };
+    static get MOVED_TO_NODE() { return "MOVED_TO_NODE" };
+    static get FINISHED_MOVE() { return "FINISHED_MOVE" };
     static get START_COMBAT() { return "START_COMBAT" };
     static get SHOW_TOAST_MESSAGE() { return "SHOW_TOAST_MESSAGE" };
 
@@ -18,9 +19,18 @@ export class GameCommands {
     static get NEXT_COMBAT_ROUND() { return "NEXT_COMBAT_ROUND" };
 
     static get END_COMBAT_TURN() { return "END_COMBAT_TURN" };
+    static get ENEMY_TURN() { return "ENEMY_TURN" };
+    static get SELECTED_NODE() { return "SELECTED_NODE" };
+
+    static get NAVIGATE_ALONG_PATH() { return "NAVIGATE_ALONG_PATH" };
+
+    static get SHOW_WALKABLE_AREA() { return "SHOW_WALKABLE_AREA" };
+    static get HIDE_WALKABLE_AREA() { return "HIDE_WALKABLE_AREA" };
 
 
+    static get END_MOVEMENT() { return "END_MOVEMENT" };
     static get AWAIT_PLAYER_COMBAT_INPUT() { return "AWAIT_PLAYER_COMBAT_INPUT" };
+    static get SET_CHARACTER_TO_NODE() { return "SET_CHARACTER_TO_NODE" };
 
 
 }
