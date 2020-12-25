@@ -17,6 +17,19 @@ export class GameCharacterProxy extends Proxy {
         this.vo.availableMovement = this.vo.maxMovement;
     }
 
+    get currentNode() {
+        return this.vo.currentNode;
+    }
+
+    set currentNode(value) {
+        if (this.vo.currentNode) {
+            this.vo.currentNode.occupied = false;
+        }
+
+        this.vo.currentNode = value;
+        this.vo.currentNode.occupied = true;
+    }
+
     get combatGroup() {
         return this.vo.combatGroup;
     }

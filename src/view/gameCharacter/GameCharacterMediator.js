@@ -77,16 +77,16 @@ export class GameCharacterMediator extends Mediator {
     handleNavigateToNode(targetNode) {
         const gameState = this.facade.retrieveProxy(GameStateProxy.NAME).vo;
         const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
-        const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
+        const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
 
-        if (!gameCharacterVO.currentNode) {
-            gameCharacterVO.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
+        if (!gameCharacterProxy.currentNode) {
+            gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
         }
 
-        const path = Astar.calculatePath(gameCharacterVO.currentNode, targetNode);
+        const path = Astar.calculatePath(gameCharacterProxy.currentNode, targetNode);
         if (path && path.length > 0) {
             this.viewComponent.script['GameCharacterComponent'].setPath(path);
-            gameCharacterVO.currentNode = targetNode;
+            gameCharacterProxy.currentNode = targetNode;
         }
     }
 
@@ -95,12 +95,6 @@ export class GameCharacterMediator extends Mediator {
     }
 
     updateCurrentNode(newNode) {
-        /*const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
-        gameCharacterVO.currentNode.occupied = false;
-        gameCharacterVO.currentNode = newNode;
-        gameCharacterVO.currentNode.occupied = true;
-        console.log('Moved to node');
-        console.log(newNode);*/
         this.facade.sendNotification(GameCommands.MOVED_TO_NODE + this.id, newNode);
 
     }
@@ -125,10 +119,8 @@ export class GameCharacterMediator extends Mediator {
     }
 
     handleSetCharacterToNode(node) {
-        console.log('////////////');
-        console.log('/// STOP ///');
-        const gameCharacterVO = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id).vo;
-        gameCharacterVO.currentNode = node;
+        const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
+        gameCharacterProxy.currentNode = node;
         this.viewComponent.script['GameCharacterComponent'].stopMovement(node);
     }
 }

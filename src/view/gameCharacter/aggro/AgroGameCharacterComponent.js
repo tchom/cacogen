@@ -25,12 +25,12 @@ AgroGameCharacterComponent.prototype.initialize = function () {
 
 AgroGameCharacterComponent.prototype.handleMapGridCreated = function (id, ...args) {
     const facade = Facade.getInstance(GameFacade.KEY);
-    const vo = facade.retrieveProxy(GameCharacterProxy.NAME + id).vo;
+    const characterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
+    const vo = characterProxy.vo;
 
     if (!vo.currentNode) {
         const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
-        vo.currentNode = gameMapProxy.findNearestNode(this.entity.getLocalPosition());
-        vo.currentNode.occupied = true;
+        characterProxy.currentNode = gameMapProxy.findNearestNode(this.entity.getLocalPosition());
         vo.agroArea = Astar.breadthFirstSearch(vo.currentNode, this.sightRange);
 
     }

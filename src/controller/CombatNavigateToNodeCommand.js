@@ -31,7 +31,7 @@ function handleValidMove(facade, characterProxy, targetNode) {
     const path = Astar.calculatePath(vo.currentNode, targetNode);
     if (path && path.length > 0) {
         vo.availableMovement -= (path.length - 1); // Detract by one... the first path node doesn't count
-        vo.currentNode = targetNode;
+        characterProxy.currentNode = targetNode;
         facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + vo.id, path);
     }
 }
