@@ -103,6 +103,20 @@ export class GameCharacterMediator extends Mediator {
         this.viewComponent.script['GameCharacterComponent'].setPath(path);
     }
 
+    handleNavigateAlongPathWithPromise(path) {
+        this.viewComponent.script['GameCharacterComponent'].setPath(path);
+
+        return new Promise((resolve, reject) => {
+            this.viewComponent.on('finishedMove', () => {
+                resolve();
+            });
+
+            this.viewComponent.on('cancelMove', () => {
+                reject();
+            });
+        });
+    }
+
     updateCurrentNode(newNode) {
         this.facade.sendNotification(GameCommands.MOVED_TO_NODE + this.id, newNode);
 

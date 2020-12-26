@@ -18,6 +18,10 @@ export class GameCharacterProxy extends Proxy {
         this.vo.availableAction = this.vo.maxActionsPerTurn;
     }
 
+    useMovement(cost) {
+        this.vo.availableMovement -= cost;
+    }
+
     get id() {
         return this.vo.id;
     }

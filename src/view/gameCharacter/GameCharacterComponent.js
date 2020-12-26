@@ -5,6 +5,44 @@ import { GameCharacterMediator } from './GameCharacterMediator';
 
 export const GameCharacterComponent = pc.createScript('GameCharacterComponent');
 
+const statsSchema = [
+    {
+        name: 'skill',
+        title: 'Skill',
+        type: 'number',
+        default: 1
+    },
+    {
+        name: 'maxStamina',
+        title: 'Stamina',
+        type: 'number',
+        default: 1
+    }, {
+        name: 'maxLuck',
+        title: 'Luck',
+        type: 'number',
+        default: 1
+    }, {
+        name: 'maxMovement',
+        title: 'Movement',
+        type: 'number',
+        default: 6
+    }
+];
+
+const advancedSkillsSchema = [
+    {
+        name: 'skillName',
+        title: 'Skill Name',
+        type: 'string'
+    },
+    {
+        name: 'skillValue',
+        title: 'Skill Value',
+        type: 'string'
+    }
+];
+
 GameCharacterComponent.attributes.add("characterId", {
     type: "string",
     title: "Character Id"
@@ -20,6 +58,19 @@ GameCharacterComponent.attributes.add("isNPC", {
     type: "boolean",
     title: "is NPC",
     default: true
+});
+
+GameCharacterComponent.attributes.add("statsOverrides", {
+    type: "json",
+    title: "Stats Overrides",
+    schema: statsSchema
+});
+
+GameCharacterComponent.attributes.add("advancedSkills", {
+    type: "json",
+    title: "Advanced Skills",
+    schema: advancedSkillsSchema,
+    array: true
 });
 
 GameCharacterComponent.prototype.preregisterNotification = function (notification) {
@@ -58,6 +109,9 @@ GameCharacterComponent.prototype.postInitialize = function () {
 
 
 GameCharacterComponent.prototype.setPath = function (path) {
+    if (this.movementPath && this.movementPath.length > 0) {
+        this.entity.fire('cancelMove');
+    }
     this.movementPath = path;
 };
 

@@ -5,7 +5,6 @@ export class GameCharacterVO {
         this.combatGroup = params.combatGroup || [];
         this.currentNode = undefined;
         this.agroArea = undefined;
-        this.roundInitiative = [];
 
         // Troika stats
         this.initiative = 2;
@@ -13,6 +12,17 @@ export class GameCharacterVO {
         this.maxActionsPerTurn = 1;
         this.availableAction = this.maxActionsPerTurn;
         this.availableMovement = this.maxMovement;
+
+        this.skill = 1;
+
+        this.maxStamina = 1;
+        this.currentStamina = this.maxStamina;
+
+        this.maxLuck = 1;
+        this.currentLuck = this.maxLuck;
+
+        this.advancedSkills = params.advancedSkills || {}
+
 
 
     }

@@ -17,6 +17,7 @@ import { endMovementCommand } from './controller/EndMovementCommand';
 import { selectedGameCharacterCommand } from './controller/SelectedGameCharacterCommand';
 import { changePlayerActionCommand } from './controller/ChangePlayerActionCommand';
 import { resolveAttackCommand } from './controller/ResolveAttackCommand';
+import { moveAlongPathAndAttackCommand } from './controller/MoveAlongPathAndAttackCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -59,6 +60,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.SET_PLAYER_ACTION, changePlayerActionCommand);
 
         this.registerCommand(GameCommands.RESOLVE_ATTACK, resolveAttackCommand);
+        this.registerCommand(GameCommands.MOVE_ALONG_PATH_AND_ATTACK, moveAlongPathAndAttackCommand);
     }
 
 }

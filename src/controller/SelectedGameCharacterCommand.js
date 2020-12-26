@@ -29,18 +29,21 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
             return;
         }
 
-        if (gameStateProxy.currentAction === 'attack') {
-            if (isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
-                facade.sendNotification(GameCommands.RESOLVE_ATTACK, playerCharacterProxy.id, targetCharacterProxy.id);
-            }
-        } else {
-            if (!isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
-                const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
-                if (pathToTarget && pathToTarget.length <= playerCharacterProxy.vo.availableMovement) {
-                    facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", pathToTarget.shift());
+        if (!isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
+            const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
+            // path length includes current node, so deduct on to work out actual moveable distance
+            if (pathToTarget && pathToTarget.length - 1 <= playerCharacterProxy.vo.availableMovement) {
+                if (gameStateProxy.currentAction === 'attack') {
+                    facade.sendNotification(GameCommands.MOVE_ALONG_PATH_AND_ATTACK, "player", targetCharacterProxy.id, pathToTarget);
                 } else {
-                    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "Cannot reach target");
+                    facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", pathToTarget.shift());
                 }
+            } else {
+                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "Cannot reach target");
+            }
+        } else if (gameStateProxy.currentAction === 'attack') {
+            if (gameStateProxy.currentAction === 'attack') {
+                facade.sendNotification(GameCommands.RESOLVE_ATTACK, playerCharacterProxy.id, targetCharacterProxy.id);
             }
         }
     }
