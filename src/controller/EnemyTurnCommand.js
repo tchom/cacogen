@@ -24,7 +24,10 @@ export function enemyTurnCommand(multitonKey, notificationName, ...args) {
 
     // we're already there
     if (isAdjacent) {
-        facade.sendNotification(GameCommands.END_COMBAT_TURN);
+        facade.sendNotification(GameCommands.RESOLVE_ATTACK, enemyProxy.id, playerProxy.id);
+        setTimeout(() => {
+            facade.sendNotification(GameCommands.END_COMBAT_TURN);
+        }, 2000);
         return;
     }
 
