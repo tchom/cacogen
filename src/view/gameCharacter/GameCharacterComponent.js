@@ -109,7 +109,7 @@ GameCharacterComponent.prototype.postInitialize = function () {
     this.facade.registerProxy(new GameCharacterProxy(proxyParams));
     this.facade.registerMediator(new GameCharacterMediator(this.characterId, this.entity, this.preregisteredNotifications));
 
-    this.entity.animation.play('idle.glb');
+    this.entity.animation.play('idle.glb', 0.1);
 
 };
 
@@ -122,7 +122,7 @@ GameCharacterComponent.prototype.setPath = function (path) {
     this.movementPath = path;
 
     this.entity.animation.loop = true;
-    this.entity.animation.play('walk.glb');
+    this.entity.animation.play('walk.glb', 0.1);
 };
 
 GameCharacterComponent.prototype.stopMovement = function (currentNode) {
@@ -130,7 +130,7 @@ GameCharacterComponent.prototype.stopMovement = function (currentNode) {
     this.entity.setLocalPosition(currentNode.x, currentNode.y, currentNode.z);
 
     this.entity.animation.loop = true;
-    this.entity.animation.play('idle.glb');
+    this.entity.animation.play('idle.glb', 0.1);
 };
 
 GameCharacterComponent.prototype.update = function (dt) {
@@ -161,7 +161,7 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
             if (this.movementPath.length === 0) {
                 this.entity.fire('finishedMove', currentNode);
                 this.entity.animation.loop = true;
-                this.entity.animation.play('idle.glb');
+                this.entity.animation.play('idle.glb', 0.1);
             }
             this.entity.fire('updateCurrentNode', currentNode);
         }
@@ -179,15 +179,15 @@ GameCharacterComponent.prototype.lookAtPoint = function (point) {
 
 GameCharacterComponent.prototype.animateDeath = function () {
     this.entity.animation.loop = false;
-    this.entity.animation.play('die.glb');
+    this.entity.animation.play('die.glb', 0.1);
 }
 
 GameCharacterComponent.prototype.animateHit = function () {
     this.entity.animation.loop = false;
-    this.entity.animation.play('hit.glb');
+    this.entity.animation.play('hit.glb', 0.1);
 }
 
 GameCharacterComponent.prototype.animateAttack = function () {
     this.entity.animation.loop = false;
-    this.entity.animation.play('attack.glb');
+    this.entity.animation.play('attack.glb', 0.1);
 }
