@@ -10,5 +10,16 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
     const defenderId = args[1];
     const defenderProxy = facade.retrieveProxy(GameCharacterProxy.NAME + defenderId);
 
-    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} attacks ${defenderId}`);
+    const attackerRoll = rollAttackSkill(attackerProxy.skill);
+    const defenderRoll = rollAttackSkill(attackerProxy.skill);
+
+    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId}(${attackerRoll}) attacks ${defenderId}(${defenderRoll})`);
+}
+
+function rollAttackSkill(skill) {
+    return skill + rollDice() + rollDice();
+}
+
+function rollDice() {
+    return Math.round(Math.random() * 6);
 }

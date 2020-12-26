@@ -93,9 +93,12 @@ GameCharacterComponent.prototype.postInitialize = function () {
         this.preregisteredNotifications = [];
     }
 
+    const statsOverrides = this.statsOverrides;
     const proxyParams = {
         id: this.characterId,
-        isNPC: this.isNPC
+        isNPC: this.isNPC,
+        advancedSkills: this.advancedSkills,
+        ...statsOverrides
     };
 
     const combatGroupComponent = this.entity.script['CombatGroupComponent'];

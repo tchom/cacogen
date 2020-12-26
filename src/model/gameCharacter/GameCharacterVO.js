@@ -13,15 +13,15 @@ export class GameCharacterVO {
         this.availableAction = this.maxActionsPerTurn;
         this.availableMovement = this.maxMovement;
 
-        this.skill = 1;
+        this.skill = params.skill || 1;
 
-        this.maxStamina = 1;
+        this.maxStamina = params.maxStamina || 1;
         this.currentStamina = this.maxStamina;
 
-        this.maxLuck = 1;
+        this.maxLuck = params.maxLuck || 1;
         this.currentLuck = this.maxLuck;
 
-        this.advancedSkills = params.advancedSkills || {}
+        this.advancedSkills = params.advancedSkills || {};
 
 
 

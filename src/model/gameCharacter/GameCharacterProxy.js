@@ -51,4 +51,16 @@ export class GameCharacterProxy extends Proxy {
         return this.vo.availableAction;
     }
 
+    get skill() {
+        return this.vo.skill;
+    }
+
+    get currentStamina() {
+        return this.vo.currentStamina;
+    }
+
+    get currentLuck() {
+        return this.vo.currentStamina;
+    }
+
 }
