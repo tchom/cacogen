@@ -73,6 +73,12 @@ GameCharacterComponent.attributes.add("advancedSkills", {
     array: true
 });
 
+GameCharacterComponent.attributes.add("combatGroupName", {
+    type: "string",
+    title: "Combat Group Name"
+});
+
+
 GameCharacterComponent.prototype.preregisterNotification = function (notification) {
     if (!this.preregisteredNotifications) {
         this.preregisteredNotifications = [];
@@ -101,9 +107,16 @@ GameCharacterComponent.prototype.postInitialize = function () {
         ...statsOverrides
     };
 
-    const combatGroupComponent = this.entity.script['CombatGroupComponent'];
-    if (combatGroupComponent) {
-        proxyParams.combatGroup = combatGroupComponent.combatGroup;
+    if (this.combatGroupName && this.combatGroupName !== "") {
+        const comradeEntities = this.app.root.findByTag(`combatGroup:${this.combatGroupName}`);
+
+        const combatGroup = [];
+        for (const comradeEntity of comradeEntities) {
+            const comradeId = comradeEntity.script['GameCharacterComponent'].characterId;
+            combatGroup.push(comradeId);
+
+        }
+        proxyParams.combatGroup = combatGroup;
     }
 
     this.facade.registerProxy(new GameCharacterProxy(proxyParams));
@@ -115,7 +128,6 @@ GameCharacterComponent.prototype.postInitialize = function () {
 
 
 GameCharacterComponent.prototype.setPath = function (path) {
-    console.log('Set the path!!');
     if (this.movementPath && this.movementPath.length > 0) {
         this.entity.fire('cancelMove');
     }

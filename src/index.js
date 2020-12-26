@@ -9,7 +9,6 @@ import { AgroGameCharacterComponent } from './view/gameCharacter/aggro/AgroGameC
 import { ToastMessageComponent } from './view/toastMessage/ToastMessageComponent';
 import { SetCameraTargetComponent } from './view/gameCharacter/setCameraTarget/SetCameraTargetComponent';
 import { PlayerCombatPanelComponent } from './view/playerCombatPanel/PlayerCombatPanelComponent';
-import { CombatGroupComponent } from './view/gameCharacter/combatGroup/CombatGroupComponent';
 import { HitboxComponent } from './components/collision/HitboxComponent';
 import { ActionPanelComponent } from './view/actionPanel/ActionPanelComponent';
 import { UIStopPropagation } from './components/UIStopPropagation';

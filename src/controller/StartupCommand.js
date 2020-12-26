@@ -10,8 +10,8 @@ export function startupCommand(multitonKey, notificationName) {
 
     // Load weapons data and create proxy
     const app = pc.Application.getApplication();
-    const weaponsData = app.assets.get(40415631).resource;
-    Facade.getInstance(multitonKey).registerProxy(new WeaponsProxy(weaponsData));
-
-
+    if (app) {
+        const weaponsData = app.assets.get(40415631).resource;
+        Facade.getInstance(multitonKey).registerProxy(new WeaponsProxy(weaponsData));
+    }
 }
