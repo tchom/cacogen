@@ -63,8 +63,11 @@ export function enemyTurnCommand(multitonKey, notificationName, ...args) {
             facade.sendNotification(GameCommands.END_COMBAT_TURN);
         }
 
+    } else {
+        setTimeout(() => {
+            facade.sendNotification(GameCommands.END_COMBAT_TURN);
+        }, 1500);
     }
-
 }
 
 function distanceSqrt(p1, p2) {
