@@ -46,6 +46,7 @@ export class GameCommands {
     static get DISPLAY_DEATH() { return "DISPLAY_DEATH" };
     static get DISPLAY_ATTACK() { return "DISPLAY_ATTACK" };
     static get DISPLAY_HIT() { return "DISPLAY_HIT" };
+    static get KILL_GAME_CHARACTER() { return "KILL_GAME_CHARACTER" };
 
     static get CHARACTER_LOOK_AT() { return "CHARACTER_LOOK_AT" };
 
