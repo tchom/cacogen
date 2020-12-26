@@ -15,6 +15,7 @@ export class GameCharacterProxy extends Proxy {
 
     resetCombatTurnState() {
         this.vo.availableMovement = this.vo.maxMovement;
+        this.vo.availableAction = this.vo.maxActionsPerTurn;
     }
 
     get id() {
@@ -40,6 +41,10 @@ export class GameCharacterProxy extends Proxy {
 
     get isNPC() {
         return this.vo.isNPC;
+    }
+
+    get availableActions() {
+        return this.vo.availableAction;
     }
 
 }

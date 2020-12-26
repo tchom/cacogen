@@ -15,12 +15,8 @@ export function combatNavigateToNodeCommand(multitonKey, notificationName, ...ar
     const vo = gameCharacterProxy.vo;
     const moveableNodes = Astar.breadthFirstSearch(vo.currentNode, vo.availableMovement);
 
-    console.log(`Looking for mathcing node`);
-    console.log(targetNode);
     for (const node of moveableNodes) {
         if (node.equals(targetNode)) {
-            console.log(`Gotcha`);
-
             handleValidMove(facade, gameCharacterProxy, targetNode);
         }
     }

@@ -10,6 +10,8 @@ export class GameCharacterVO {
         // Troika stats
         this.initiative = 2;
         this.maxMovement = 6;
+        this.maxActionsPerTurn = 1;
+        this.availableAction = this.maxActionsPerTurn;
         this.availableMovement = this.maxMovement;
 
 

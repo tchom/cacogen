@@ -31,7 +31,6 @@ export class InputLayerMediator extends Mediator {
     }
 
     handlePickerGameCharacter(characterEntity) {
-        console.log('Clicked a game character');
         this.facade.sendNotification(GameCommands.SELECT_GAME_CHARACTER, characterEntity);
     }
 

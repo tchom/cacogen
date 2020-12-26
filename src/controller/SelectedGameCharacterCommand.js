@@ -4,6 +4,7 @@ import { gameplayModeTypes } from '../model/gameState/GameStateVO';
 import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { Astar } from '../model/gameMap/navigation/Astar';
 import { GameCommands } from './GameCommands';
+import { CombatProxy } from '../model/combat/CombatProxy';
 
 export function selectedGameCharacterCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
@@ -22,6 +23,12 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
         }
 
     } else if (gameStateProxy.currentMode === gameplayModeTypes.COMBAT) {
+        const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
+        if (!combatProxy || combatProxy.activeParticipant !== "player") {
+            // not your turn
+            return;
+        }
+
         if (gameStateProxy.currentAction === 'attack') {
             if (isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
                 facade.sendNotification(GameCommands.RESOLVE_ATTACK, playerCharacterProxy.id, targetCharacterProxy.id);

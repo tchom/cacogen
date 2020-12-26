@@ -40,7 +40,6 @@ export class CombatProxy extends Proxy {
                 if (proxy.isNPC) {
                     this.facade.sendNotification(GameCommands.ENEMY_TURN, nextTurnId);
                 } else {
-                    console.log('COMBAT PROXY AWAIT');
                     this.facade.sendNotification(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, nextTurnId);
                 }
             } else {

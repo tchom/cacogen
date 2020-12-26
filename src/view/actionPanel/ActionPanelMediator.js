@@ -8,7 +8,8 @@ export class ActionPanelMediator extends Mediator {
     constructor(viewComponent) {
         super(ActionPanelMediator.NAME);
         this.subscribeNotification([
-            GameCommands.SET_PLAYER_ACTION, GameCommands.DISPLAY_PLAYER_ACTION
+            GameCommands.SET_PLAYER_ACTION, GameCommands.DISPLAY_PLAYER_ACTION,
+            GameCommands.USE_PLAYER_ACTION
         ]);
         this.viewComponent = viewComponent;
 
@@ -25,6 +26,9 @@ export class ActionPanelMediator extends Mediator {
             case GameCommands.DISPLAY_PLAYER_ACTION:
                 const actionName = args[0];
                 this.viewComponent.script['ActionPanelComponent'].selectAction(actionName);
+                break;
+            case GameCommands.USE_PLAYER_ACTION:
+
                 break;
         }
     }
