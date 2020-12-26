@@ -20,6 +20,10 @@ export class GameCharacterMediator extends Mediator {
             GameCommands.NAVIGATE_TO_NODE + this.id,
             GameCommands.NAVIGATE_ALONG_PATH + this.id,
             GameCommands.SET_CHARACTER_TO_NODE + this.id,
+            GameCommands.DISPLAY_DEATH + this.id,
+            GameCommands.DISPLAY_ATTACK + this.id,
+            GameCommands.DISPLAY_HIT + this.id,
+            GameCommands.CHARACTER_LOOK_AT + this.id,
             GameCommands.START_COMBAT,
             GameCommands.MAP_GRID_CREATED
 
@@ -51,8 +55,6 @@ export class GameCharacterMediator extends Mediator {
 
                     scriptComponent.handleNotification(notificationName, this.id, ...args);
                 }
-
-
             }
         }
 
@@ -77,6 +79,19 @@ export class GameCharacterMediator extends Mediator {
             case GameCommands.SET_CHARACTER_TO_NODE + this.id:
                 this.handleSetCharacterToNode(args[0]);
                 break;
+            case GameCommands.CHARACTER_LOOK_AT + this.id:
+                const lookPoint = args[0];
+                this.viewComponent.script['GameCharacterComponent'].lookAtPoint(lookPoint);
+                break;
+            case GameCommands.DISPLAY_DEATH + this.id:
+                this.viewComponent.script['GameCharacterComponent'].animateDeath();
+                break;
+            case GameCommands.DISPLAY_ATTACK + this.id:
+                this.viewComponent.script['GameCharacterComponent'].animateAttack();
+                break;
+            case GameCommands.DISPLAY_HIT + this.id:
+                this.viewComponent.script['GameCharacterComponent'].animateHit();
+                break;
             default:
 
                 break;
@@ -84,7 +99,7 @@ export class GameCharacterMediator extends Mediator {
     }
 
     handleNavigateToNode(targetNode) {
-        const gameState = this.facade.retrieveProxy(GameStateProxy.NAME).vo;
+        console.log("NAVIGATING TO NODE");
         const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
         const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
 

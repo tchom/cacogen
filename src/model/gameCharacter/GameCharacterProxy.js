@@ -22,6 +22,19 @@ export class GameCharacterProxy extends Proxy {
         this.vo.availableMovement -= cost;
     }
 
+    applyDamage(damange) {
+        this.vo.currentStamina -= damange;
+
+        if (this.vo.currentStamina > 0) {
+            // Alive
+            this.facade.sendNotification(GameCommands.UPDATE_STAMINA + this.id,
+                this.vo.currentStamina, this.vo.maximumStamina);
+        } else {
+            // Dead
+            console.log(`${this.id} died`);
+        }
+    }
+
     get id() {
         return this.vo.id;
     }
@@ -61,6 +74,10 @@ export class GameCharacterProxy extends Proxy {
 
     get currentLuck() {
         return this.vo.currentStamina;
+    }
+
+    get isDead() {
+        return this.vo.currentStamina <= 0;
     }
 
 }

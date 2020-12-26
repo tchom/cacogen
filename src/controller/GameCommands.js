@@ -42,6 +42,13 @@ export class GameCommands {
     static get RESOLVE_ATTACK() { return "RESOLVE_ATTACK" };
     static get MOVE_ALONG_PATH_AND_ATTACK() { return "MOVE_ALONG_PATH_AND_ATTACK" };
 
+    static get UPDATE_STAMINA() { return "UPDATE_STAMINA" };
+    static get DISPLAY_DEATH() { return "DISPLAY_DEATH" };
+    static get DISPLAY_ATTACK() { return "DISPLAY_ATTACK" };
+    static get DISPLAY_HIT() { return "DISPLAY_HIT" };
+
+    static get CHARACTER_LOOK_AT() { return "CHARACTER_LOOK_AT" };
+
 
 
 }

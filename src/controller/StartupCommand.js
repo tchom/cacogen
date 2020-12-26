@@ -1,4 +1,5 @@
 import { GameStateProxy } from '../model/gameState/GameStateProxy';
+import { WeaponsProxy } from '../model/weapons/WeaponsProxy';
 const { Facade } = require('@koreez/pure-mvc');
 
 export function startupCommand(multitonKey, notificationName) {
@@ -6,6 +7,11 @@ export function startupCommand(multitonKey, notificationName) {
 
     // Create game state proxy
     Facade.getInstance(multitonKey).registerProxy(new GameStateProxy());
+
+    // Load weapons data and create proxy
+    const app = pc.Application.getApplication();
+    const weaponsData = app.assets.get(40415631).resource;
+    Facade.getInstance(multitonKey).registerProxy(new WeaponsProxy(weaponsData));
 
 
 }

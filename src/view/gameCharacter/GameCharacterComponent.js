@@ -108,19 +108,29 @@ GameCharacterComponent.prototype.postInitialize = function () {
 
     this.facade.registerProxy(new GameCharacterProxy(proxyParams));
     this.facade.registerMediator(new GameCharacterMediator(this.characterId, this.entity, this.preregisteredNotifications));
+
+    this.entity.animation.play('idle.glb');
+
 };
 
 
 GameCharacterComponent.prototype.setPath = function (path) {
+    console.log('Set the path!!');
     if (this.movementPath && this.movementPath.length > 0) {
         this.entity.fire('cancelMove');
     }
     this.movementPath = path;
+
+    this.entity.animation.loop = true;
+    this.entity.animation.play('walk.glb');
 };
 
 GameCharacterComponent.prototype.stopMovement = function (currentNode) {
     this.movementPath = [];
     this.entity.setLocalPosition(currentNode.x, currentNode.y, currentNode.z);
+
+    this.entity.animation.loop = true;
+    this.entity.animation.play('idle.glb');
 };
 
 GameCharacterComponent.prototype.update = function (dt) {
@@ -150,6 +160,8 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
 
             if (this.movementPath.length === 0) {
                 this.entity.fire('finishedMove', currentNode);
+                this.entity.animation.loop = true;
+                this.entity.animation.play('idle.glb');
             }
             this.entity.fire('updateCurrentNode', currentNode);
         }
@@ -163,4 +175,19 @@ GameCharacterComponent.prototype.lookAtPoint = function (point) {
     const dz = point.z - localPos.z;
     const angleToDest = Math.atan2(dx, dz) * 180 / Math.PI;
     this.entity.setEulerAngles(0, angleToDest, 0);
+}
+
+GameCharacterComponent.prototype.animateDeath = function () {
+    this.entity.animation.loop = false;
+    this.entity.animation.play('die.glb');
+}
+
+GameCharacterComponent.prototype.animateHit = function () {
+    this.entity.animation.loop = false;
+    this.entity.animation.play('hit.glb');
+}
+
+GameCharacterComponent.prototype.animateAttack = function () {
+    this.entity.animation.loop = false;
+    this.entity.animation.play('attack.glb');
 }
