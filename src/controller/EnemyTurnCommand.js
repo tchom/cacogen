@@ -43,8 +43,19 @@ export function enemyTurnCommand(multitonKey, notificationName, ...args) {
                 path.shift();
             }
 
+            // Check if the end point in adjacent to target
+            const endPoint = path[0];
+            const endpointIsAdjacent = connectedNodes.some(n => n.equals(endPoint));
+
+            if (endpointIsAdjacent) {
+                facade.sendNotification(GameCommands.MOVE_ALONG_PATH_AND_ATTACK, enemyId, "player", path);
+            } else {
+                facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + enemyId, path);
+            }
+
+
             enemyProxy.currentNode = node;
-            facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + enemyId, path);
+
         } else {
             facade.sendNotification(GameCommands.END_COMBAT_TURN);
         }
