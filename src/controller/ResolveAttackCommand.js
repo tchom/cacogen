@@ -51,6 +51,8 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
 
             if (attackerProxy.isDead) {
                 facade.sendNotification(GameCommands.DISPLAY_DEATH + attackerId);
+                facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, attackerId);
+
             } else {
                 facade.sendNotification(GameCommands.DISPLAY_HIT + attackerId);
             }

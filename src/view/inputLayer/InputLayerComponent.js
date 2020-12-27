@@ -16,6 +16,7 @@ InputLayerComponent.attributes.add("dragTime", {
     default: 0.4
 });
 
+InputLayerComponent.prototype.window = window;
 
 InputLayerComponent.prototype.initialize = function () {
     this.facade = Facade.getInstance(GameFacade.KEY);
@@ -34,15 +35,49 @@ InputLayerComponent.prototype.initialize = function () {
 
     this.app.on('picker:result', this.handlePickerResult, this);
 
-    this.app.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
-    this.entity.element.on(pc.EVENT_MOUSEDOWN, this.onMouseDown, this);
-    this.app.mouse.on(pc.EVENT_MOUSEUP, this.onMouseUp, this);
+    if (this.app.mouse) {
+        this.app.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
+        this.entity.element.on(pc.EVENT_MOUSEDOWN, this.onMouseDown, this);
+        this.app.mouse.on(pc.EVENT_MOUSEUP, this.onMouseUp, this);
 
-    this.entity.once('destroy', () => {
-        this.app.mouse.off(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
-        this.app.mouse.off(pc.EVENT_MOUSEUP, this.onMouseUp, this);
+        this.entity.once('destroy', () => {
+            this.app.mouse.off(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
+            this.app.mouse.off(pc.EVENT_MOUSEUP, this.onMouseUp, this);
 
-    });
+        });
+    }
+
+    if (this.app.touch) {
+        this.app.touch.on(pc.EVENT_TOUCHMOVE, (touchEvt) => {
+            this.onMouseMove(touchEvt.touches[0]);
+        });
+
+        this.entity.element.on(pc.EVENT_TOUCHSTART, (touchEvt) => {
+            console.log(touchEvt);
+            this.onMouseDown(touchEvt.touches[0]);
+        });
+
+        this.entity.element.on(pc.EVENT_TOUCHEND, (touchEvt) => {
+            this.onMouseUp();
+        });
+    }
+
+    this.onResize();
+
+    this.window.addEventListener('resize', this.onResize.bind(this), false);
+
+}
+
+InputLayerComponent.prototype.onResize = function () {
+    const graphicsDevice = this.app.graphicsDevice;
+    console.log("size", graphicsDevice.width, graphicsDevice.height);
+
+    // Flip blend
+    if (graphicsDevice.width < graphicsDevice.height) {
+        this.entity.element.screen.screen.scaleBlend = 1;
+    } else {
+        this.entity.element.screen.screen.scaleBlend = 0;
+    }
 }
 
 InputLayerComponent.prototype.onMouseDown = function (evt) {

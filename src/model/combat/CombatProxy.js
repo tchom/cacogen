@@ -63,6 +63,13 @@ export class CombatProxy extends Proxy {
                 initiatives.push(characterId);
             }
         }
+
+        if (initiatives.length === 0) {
+            // Everyone is out of the combat somehow, probably dead
+            this.facade.sendNotification(GameCommands.END_COMBAT);
+            return;
+        }
+
         // Add end of round token
         initiatives.push('end_round');
 

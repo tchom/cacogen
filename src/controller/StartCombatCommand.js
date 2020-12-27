@@ -14,6 +14,7 @@ export function startCombatCommand(multitonKey, notificationName, ...args) {
     gameStateProxy.updateGameStateType(gameplayModeTypes.COMBAT);
 
     const instigatingCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + instigatingCharacterId);
+
     // Setup the combat
     const dirtyParticipants = ['player'].concat(instigatingCharacterId).concat(instigatingCharacterProxy.combatGroup);
     // remove duplicates
@@ -21,8 +22,15 @@ export function startCombatCommand(multitonKey, notificationName, ...args) {
         return self.indexOf(item) == pos;
     });
 
+    const playerProxy = facade.retrieveProxy(GameCharacterProxy.NAME + "player");
+
     for (const participant of cleanParticipants) {
         facade.sendNotification(GameCommands.END_MOVEMENT + participant);
+        if (participant !== "player") {
+            facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + participant, playerProxy.currentNode);
+        } else {
+            facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + participant, instigatingCharacterProxy.currentNode);
+        }
 
     }
 

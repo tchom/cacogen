@@ -18,6 +18,7 @@ export class GameCommands {
     static get NEXT_COMBAT_TURN() { return "NEXT_COMBAT_TURN" };
     static get NEXT_COMBAT_ROUND() { return "NEXT_COMBAT_ROUND" };
 
+    static get END_COMBAT() { return "END_COMBAT" };
     static get END_COMBAT_TURN() { return "END_COMBAT_TURN" };
     static get ENEMY_TURN() { return "ENEMY_TURN" };
     static get SELECTED_NODE() { return "SELECTED_NODE" };
