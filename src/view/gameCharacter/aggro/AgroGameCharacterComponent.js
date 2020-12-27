@@ -40,9 +40,10 @@ AgroGameCharacterComponent.prototype.handleMovedToNode = function (id, node) {
     const facade = Facade.getInstance(GameFacade.KEY);
     const vo = facade.retrieveProxy(GameCharacterProxy.NAME + id).vo;
     const gameState = facade.retrieveProxy(GameStateProxy.NAME).vo;
+    const characterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
 
     // Ignore if the player isn't exploring
-    if (gameState.gameplayMode !== gameplayModeTypes.EXPLORATION) {
+    if (gameState.gameplayMode !== gameplayModeTypes.EXPLORATION || characterProxy.isDead) {
         return;
     }
 

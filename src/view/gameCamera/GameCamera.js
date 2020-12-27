@@ -7,6 +7,7 @@ GameCamera.attributes.add('distance', { type: 'number', default: 100, title: 'Di
 GameCamera.attributes.add('dragMultiplierX', { type: 'number', default: 0.5, title: 'Drag Multiplier' });
 GameCamera.attributes.add('dragMultiplierY', { type: 'number', default: 0.5, title: 'Drag Multiplier' });
 
+GameCamera.attributes.add('verticalScroll', { type: 'boolean', default: false, title: 'Vertical Scroll' });
 GameCamera.attributes.add('minCameraHeight', { type: 'number', default: 5, title: 'Min Camera Height' });
 GameCamera.attributes.add('maxCameraHeight', { type: 'number', default: 100, title: 'Max Camera Height' });
 
@@ -30,9 +31,11 @@ GameCamera.prototype.setCameraTarget = function (cameraTarget) {
 GameCamera.prototype.handleDrag = function (direction) {
     this.rotation += direction.x * this.dragMultiplierX;
 
-    let newCameraHeight = this.cameraHeight - (direction.y * this.dragMultiplierY);
-    newCameraHeight = pc.math.clamp(newCameraHeight, this.minCameraHeight, this.maxCameraHeight);
-    this.cameraHeight = newCameraHeight;
+    if (this.verticalScroll) {
+        let newCameraHeight = this.cameraHeight - (direction.y * this.dragMultiplierY);
+        newCameraHeight = pc.math.clamp(newCameraHeight, this.minCameraHeight, this.maxCameraHeight);
+        this.cameraHeight = newCameraHeight;
+    }
 }
 
 GameCamera.prototype.getTargetCameraPosition = function (focusPoint) {
