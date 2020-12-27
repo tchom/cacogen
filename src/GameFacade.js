@@ -20,6 +20,7 @@ import { resolveAttackCommand } from './controller/ResolveAttackCommand';
 import { moveAlongPathAndAttackCommand } from './controller/MoveAlongPathAndAttackCommand';
 import { killGameCharacterCommand } from './controller/KillGameCharacterCommand';
 import { endCombatCommand } from './controller/EndCombatCommand';
+import { determineEnemyActionCommand } from './controller/DetermineEnemyActionCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -53,6 +54,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.ENEMY_TURN, enemyTurnCommand);
         this.registerCommand(GameCommands.SELECTED_NODE, selectedNodeCommand);
         this.registerCommand(GameCommands.COMBAT_NAVIGATE_TO_NODE, combatNavigateToNodeCommand);
+        this.registerCommand(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, determineEnemyActionCommand);
 
         this.registerCommand(GameCommands.SHOW_WALKABLE_AREA, showWalkableAreaCommand);
         this.registerCommand(GameCommands.HIDE_WALKABLE_AREA, hideWalkableAreaCommand);

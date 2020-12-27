@@ -38,7 +38,7 @@ export class CombatProxy extends Proxy {
                 proxy.resetCombatTurnState();
 
                 if (proxy.isNPC) {
-                    this.facade.sendNotification(GameCommands.ENEMY_TURN, nextTurnId);
+                    this.facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, nextTurnId);
                 } else {
                     this.facade.sendNotification(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, nextTurnId);
                 }

@@ -22,6 +22,7 @@ export class GameCommands {
     static get END_COMBAT_TURN() { return "END_COMBAT_TURN" };
     static get ENEMY_TURN() { return "ENEMY_TURN" };
     static get SELECTED_NODE() { return "SELECTED_NODE" };
+    static get DETERMINE_NEXT_ENEMY_ACTION() { return "DETERMINE_NEXT_ENEMY_ACTION" };
 
     static get NAVIGATE_ALONG_PATH() { return "NAVIGATE_ALONG_PATH" };
 

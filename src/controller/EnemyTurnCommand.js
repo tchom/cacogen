@@ -6,6 +6,7 @@ import { GameCommands } from './GameCommands';
 import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { Astar } from '../model/gameMap/navigation/Astar';
+import { BasicMeleeTree } from '../behaviourTree/trees/BasicMeleeTree';
 
 export function enemyTurnCommand(multitonKey, notificationName, ...args) {
     const enemyId = args[0];
@@ -22,7 +23,10 @@ export function enemyTurnCommand(multitonKey, notificationName, ...args) {
     // Check if character is already adjacent to target
     const isAdjacent = connectedNodes.some(n => n.equals(enemyCurrentNode));
 
-    // we're already there
+    const basicMeleeTree = new BasicMeleeTree();
+    basicMeleeTree.runCommands(facade, enemyId);
+
+    /*// we're already there
     if (isAdjacent) {
         facade.sendNotification(GameCommands.RESOLVE_ATTACK, enemyProxy.id, playerProxy.id);
         setTimeout(() => {
@@ -67,7 +71,7 @@ export function enemyTurnCommand(multitonKey, notificationName, ...args) {
         setTimeout(() => {
             facade.sendNotification(GameCommands.END_COMBAT_TURN);
         }, 1500);
-    }
+    }*/
 }
 
 function distanceSqrt(p1, p2) {

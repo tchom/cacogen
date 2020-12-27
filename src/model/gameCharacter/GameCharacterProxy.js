@@ -60,8 +60,20 @@ export class GameCharacterProxy extends Proxy {
         return this.vo.isNPC;
     }
 
+    get availableMovement() {
+        return this.vo.availableMovement;
+    }
+
+    set availableMovement(value) {
+        this.vo.availableMovement = value;
+    }
+
     get availableActions() {
         return this.vo.availableAction;
+    }
+
+    set availableAction(value) {
+        this.vo.availableAction = value;
     }
 
     get skill() {

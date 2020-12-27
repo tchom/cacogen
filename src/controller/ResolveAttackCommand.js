@@ -2,6 +2,7 @@ import { Facade } from "@koreez/pure-mvc";
 import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { GameCommands } from './GameCommands';
 import { WeaponsProxy } from '../model/weapons/WeaponsProxy';
+import { CombatProxy } from '../model/combat/CombatProxy';
 
 export function resolveAttackCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
@@ -58,6 +59,14 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
             }
 
         }
+    }
+
+    const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
+    if (combatProxy && combatProxy.activeParticipant !== "player") {
+        setTimeout(() => {
+            facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, attackerId);
+
+        }, 3000);
     }
 }
 
