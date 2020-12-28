@@ -24,6 +24,7 @@ export class GameCharacterProxy extends Proxy {
 
     applyDamage(damange) {
         this.vo.currentStamina -= damange;
+        this.vo.currentStamina = Math.max(0, this.vo.currentStamina);
 
         if (this.vo.currentStamina > 0) {
             // Alive
@@ -33,6 +34,8 @@ export class GameCharacterProxy extends Proxy {
             // Dead
             console.log(`${this.id} died`);
         }
+
+        this.facade.sendNotification(GameCommands.CHANGE_STAMINA + this.id, this.vo.currentStamina, this.vo.maxStamina);
     }
 
     get id() {

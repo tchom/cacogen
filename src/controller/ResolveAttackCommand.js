@@ -46,7 +46,7 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
             facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damage}`);
 
         } else {
-            const weaponCategory = weaponsProxy.getWeaponCategory(playerCharacterProxy.equippedWeapon);
+            const weaponCategory = weaponsProxy.getWeaponCategory(defenderProxy.equippedWeapon);
             const hasMeleeWeapon = weaponCategory === "melee";
 
             // Defender wins

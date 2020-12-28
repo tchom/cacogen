@@ -14,6 +14,7 @@ import { ActionPanelComponent } from './view/actionPanel/ActionPanelComponent';
 import { UIStopPropagation } from './components/UIStopPropagation';
 import { ProjectileCreatorComponent } from './view/projectiles/ProjectileCreatorComponent';
 import { ProjectileComponent } from './view/projectiles/ProjectileComponent';
+import { StaminaBarComponent } from './view/staminaBar/StaminaBarComponent';
 
 class Main {
     constructor() {

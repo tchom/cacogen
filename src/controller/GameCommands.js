@@ -52,6 +52,7 @@ export class GameCommands {
     static get KILL_GAME_CHARACTER() { return "KILL_GAME_CHARACTER" };
 
     static get CHARACTER_LOOK_AT() { return "CHARACTER_LOOK_AT" };
+    static get CHANGE_STAMINA() { return "CHANGE_STAMINA" };
 
 
 
