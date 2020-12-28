@@ -99,7 +99,6 @@ export class GameCharacterMediator extends Mediator {
     }
 
     handleNavigateToNode(targetNode) {
-        console.log("NAVIGATING TO NODE");
         const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
         const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
 

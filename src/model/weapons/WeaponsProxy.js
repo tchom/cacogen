@@ -12,7 +12,6 @@ export class WeaponsProxy extends Proxy {
     }
 
     getDamage(weaponName, damageTier) {
-        console.log(this.vo);
         for (const categoryKey in this.vo) {
             if (Object.hasOwnProperty.call(this.vo, categoryKey)) {
                 const category = this.vo[categoryKey];
@@ -24,5 +23,19 @@ export class WeaponsProxy extends Proxy {
         }
 
         throw new Error(`Cannot find weapon:: ${weaponName}`);
+    }
+
+    getWeaponCategory(weaponName) {
+        for (const categoryKey in this.vo) {
+            if (Object.hasOwnProperty.call(this.vo, categoryKey)) {
+                const category = this.vo[categoryKey];
+                if (Object.hasOwnProperty.call(category, weaponName)) {
+                    return categoryKey;
+                }
+            }
+        }
+
+        throw new Error(`Cannot category for weapon:: ${weaponName}`);
+
     }
 }

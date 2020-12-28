@@ -5,6 +5,7 @@ import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { Astar } from '../model/gameMap/navigation/Astar';
 import { GameCommands } from './GameCommands';
 import { CombatProxy } from '../model/combat/CombatProxy';
+import { WeaponsProxy } from '../model/weapons/WeaponsProxy';
 
 export function selectedGameCharacterCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
@@ -29,21 +30,32 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
             return;
         }
 
-        if (!isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
-            const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
-            // path length includes current node, so deduct on to work out actual moveable distance
-            if (pathToTarget && pathToTarget.length - 1 <= playerCharacterProxy.vo.availableMovement) {
-                if (gameStateProxy.currentAction === 'attack') {
-                    facade.sendNotification(GameCommands.MOVE_ALONG_PATH_AND_ATTACK, "player", targetCharacterProxy.id, pathToTarget);
+        const weaponProxy = facade.retrieveProxy(WeaponsProxy.NAME);
+        const weaponCategory = weaponProxy.getWeaponCategory(playerCharacterProxy.equippedWeapon);
+        if (weaponCategory === "ranged") {
+            facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
+
+        } else {
+            if (!isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
+                const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
+                // path length includes current node, so deduct on to work out actual moveable distance
+                if (pathToTarget && pathToTarget.length - 1 <= playerCharacterProxy.vo.availableMovement) {
+                    if (gameStateProxy.currentAction === 'attack') {
+
+                        // Get weapon type
+                        facade.sendNotification(GameCommands.MOVE_ALONG_PATH_AND_ATTACK, "player", targetCharacterProxy.id, pathToTarget);
+
+
+                    } else {
+                        facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", pathToTarget.shift());
+                    }
                 } else {
-                    facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", pathToTarget.shift());
+                    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "Cannot reach target");
                 }
-            } else {
-                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "Cannot reach target");
-            }
-        } else if (gameStateProxy.currentAction === 'attack') {
-            if (gameStateProxy.currentAction === 'attack') {
-                facade.sendNotification(GameCommands.RESOLVE_ATTACK, playerCharacterProxy.id, targetCharacterProxy.id);
+            } else if (gameStateProxy.currentAction === 'attack') {
+                if (gameStateProxy.currentAction === 'attack') {
+                    facade.sendNotification(GameCommands.RESOLVE_ATTACK, playerCharacterProxy.id, targetCharacterProxy.id);
+                }
             }
         }
     }

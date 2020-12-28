@@ -96,4 +96,8 @@ export class GameCharacterProxy extends Proxy {
         return this.vo.botBehaviour;
     }
 
+    get equippedWeapon() {
+        return this.vo.equippedWeapon;
+    }
+
 }

@@ -3,6 +3,7 @@ import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { GameCommands } from './GameCommands';
 import { WeaponsProxy } from '../model/weapons/WeaponsProxy';
 import { CombatProxy } from '../model/combat/CombatProxy';
+import { WeaponTypes } from '../data/WeaponTypes';
 
 export function resolveAttackCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
@@ -30,7 +31,7 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
         if (attackerRoll > defenderRoll) {
             // Attacker wins
             const damageTier = determineDamageTier(attackerRoll, defenderRoll);
-            const damage = weaponsProxy.getDamage("sword", damageTier);
+            const damage = weaponsProxy.getDamage(attackerProxy.equippedWeapon, damageTier);
             defenderProxy.applyDamage(damage);
 
             facade.sendNotification(GameCommands.DISPLAY_ATTACK + attackerId);
@@ -45,9 +46,13 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
             facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damage}`);
 
         } else {
+            const weaponCategory = weaponsProxy.getWeaponCategory(playerCharacterProxy.equippedWeapon);
+            const hasMeleeWeapon = weaponCategory === "melee";
+
             // Defender wins
             const damageTier = determineDamageTier(defenderRoll, attackerRoll);
-            const damage = weaponsProxy.getDamage("sword", damageTier);
+            const weapon = (hasMeleeWeapon) ? defenderProxy.equippedWeapon : WeaponTypes.UNARMED;
+            const damage = weaponsProxy.getDamage(weapon, damageTier);
             attackerProxy.applyDamage(damage);
             facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${defenderId} damages ${attackerId} for ${damage}`);
 

@@ -3,6 +3,7 @@ import { GameFacade } from '../../GameFacade';
 import { GameCharacterProxy } from "../../model/gameCharacter/GameCharacterProxy";
 import { GameCharacterMediator } from './GameCharacterMediator';
 import { botBehaviourEnums } from '../../behaviourTree/BotBehaviourTypes';
+import { weaponEnums } from "../../data/WeaponTypes";
 
 export const GameCharacterComponent = pc.createScript('GameCharacterComponent');
 
@@ -87,6 +88,15 @@ GameCharacterComponent.attributes.add("botBehaviour", {
 });
 
 
+GameCharacterComponent.attributes.add("equippedWeapon", {
+    type: "string",
+    title: "Equipped Weapon",
+    enum: weaponEnums,
+    default: "unarmed"
+});
+
+
+
 GameCharacterComponent.prototype.preregisterNotification = function (notification) {
     if (!this.preregisteredNotifications) {
         this.preregisteredNotifications = [];
@@ -112,6 +122,7 @@ GameCharacterComponent.prototype.postInitialize = function () {
         id: this.characterId,
         isNPC: this.isNPC,
         advancedSkills: this.advancedSkills,
+        equippedWeapon: this.equippedWeapon,
         ...statsOverrides,
         botBehaviour: this.botBehaviour
     };

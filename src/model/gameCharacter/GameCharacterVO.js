@@ -25,5 +25,7 @@ export class GameCharacterVO {
 
         this.botBehaviour = params.botBehaviour || 0;
 
+        this.equippedWeapon = params.equippedWeapon || "unarmed";
+
     }
 }

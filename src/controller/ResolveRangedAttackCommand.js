@@ -55,15 +55,12 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
 
                     defenderId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
                     defenderProxy = facade.retrieveProxy(GameCharacterProxy.NAME + defenderId);
-
-                    console.log(`Target is ${defenderId} out of ${possibleTargets}`);
-
                 }
 
 
                 // Attacker wins
                 const damageTier = determineDamageTier(attackerRoll, defenderRoll);
-                const damage = weaponsProxy.getDamage("crossbow", damageTier);
+                const damage = weaponsProxy.getDamage(attackerProxy.equippedWeapon, damageTier);
                 defenderProxy.applyDamage(damage);
 
 
