@@ -15,14 +15,20 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
     const targetCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
     const playerCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + "player");
 
+    const weaponProxy = facade.retrieveProxy(WeaponsProxy.NAME);
+    const weaponCategory = weaponProxy.getWeaponCategory(playerCharacterProxy.equippedWeapon);
+
     if (gameStateProxy.currentMode === gameplayModeTypes.EXPLORATION) {
+        if (gameStateProxy.currentAction === 'attack' && weaponCategory === "ranged") {
+            facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
+            facade.sendNotification(GameCommands.START_COMBAT, id);
+        } else {
+            const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
+            if (pathToTarget) {
+                facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + "player", pathToTarget);
 
-        const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
-        if (pathToTarget) {
-            facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + "player", pathToTarget);
-
+            }
         }
-
     } else if (gameStateProxy.currentMode === gameplayModeTypes.COMBAT) {
         const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
         if (!combatProxy || combatProxy.activeParticipant !== "player") {
@@ -30,8 +36,6 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
             return;
         }
 
-        const weaponProxy = facade.retrieveProxy(WeaponsProxy.NAME);
-        const weaponCategory = weaponProxy.getWeaponCategory(playerCharacterProxy.equippedWeapon);
         if (weaponCategory === "ranged") {
             facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
 

@@ -84,6 +84,10 @@ export class GameCharacterMediator extends Mediator {
                 this.viewComponent.script['GameCharacterComponent'].lookAtPoint(lookPoint);
                 break;
             case GameCommands.DISPLAY_DEATH + this.id:
+                const hitbox = this.viewComponent.findByName("Hitbox");
+                if (hitbox) {
+                    hitbox.fire('stopListening');
+                }
                 this.viewComponent.script['GameCharacterComponent'].animateDeath();
                 break;
             case GameCommands.DISPLAY_ATTACK + this.id:
