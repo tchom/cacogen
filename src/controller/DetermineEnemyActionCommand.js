@@ -3,6 +3,7 @@ import { BasicMeleeTree } from '../behaviourTree/trees/BasicMeleeTree';
 import { Facade } from '@koreez/pure-mvc';
 import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { BotBehaviourTypes } from '../behaviourTree/BotBehaviourTypes';
+import { BasicRangedTree } from '../behaviourTree/trees/BasicRangedTree';
 
 export function determineEnemyActionCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
@@ -16,7 +17,8 @@ export function determineEnemyActionCommand(multitonKey, notificationName, ...ar
             basicMeleeTree.runCommands(facade, enemyId);
             break;
         case BotBehaviourTypes.BASIC_RANGED:
-
+            const basicRangedTree = new BasicRangedTree();
+            basicRangedTree.runCommands(facade, enemyId);
             break;
         default:
             break;
