@@ -12,6 +12,8 @@ import { PlayerCombatPanelComponent } from './view/playerCombatPanel/PlayerComba
 import { HitboxComponent } from './components/collision/HitboxComponent';
 import { ActionPanelComponent } from './view/actionPanel/ActionPanelComponent';
 import { UIStopPropagation } from './components/UIStopPropagation';
+import { ProjectileCreatorComponent } from './view/projectiles/ProjectileCreatorComponent';
+import { ProjectileComponent } from './view/projectiles/ProjectileComponent';
 
 class Main {
     constructor() {

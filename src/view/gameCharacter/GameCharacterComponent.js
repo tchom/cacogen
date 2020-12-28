@@ -176,7 +176,7 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
         this.lookAtPoint(nextPathPoint);
 
         const distanceToNextPath = newPosition.distance(nodePoint);
-        if (distanceToNextPath < 0.15) {
+        if (distanceToNextPath <= (dt * this.characterSpeed)) {
             const currentNode = this.movementPath.pop();
 
             if (this.movementPath.length === 0) {

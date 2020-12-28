@@ -42,6 +42,7 @@ export class GameCommands {
     static get USE_PLAYER_ACTION() { return "USE_PLAYER_ACTION" };
 
     static get RESOLVE_ATTACK() { return "RESOLVE_ATTACK" };
+    static get RESOLVE_RANGED_ATTACK() { return "RESOLVE_RANGED_ATTACK" };
     static get MOVE_ALONG_PATH_AND_ATTACK() { return "MOVE_ALONG_PATH_AND_ATTACK" };
 
     static get UPDATE_STAMINA() { return "UPDATE_STAMINA" };
