@@ -10,7 +10,7 @@ export class GameCharacterVO {
         this.initiative = 2;
         this.maxMovement = 6;
         this.maxActionsPerTurn = 1;
-        this.availableAction = this.maxActionsPerTurn;
+        this.availableActions = this.maxActionsPerTurn;
         this.availableMovement = this.maxMovement;
 
         this.skill = params.skill || 1;
@@ -23,7 +23,7 @@ export class GameCharacterVO {
 
         this.advancedSkills = params.advancedSkills || {};
 
-
+        this.botBehaviour = params.botBehaviour || 0;
 
     }
 }

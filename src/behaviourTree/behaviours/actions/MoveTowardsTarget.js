@@ -18,8 +18,6 @@ export class MoveTowardsTarget extends BaseNode {
 
         const result = connectedNodes.filter(node => !node.occupied);
 
-
-
         // Check there is a node to move to 
         if (result.length > 0) {
             // Find nearest node

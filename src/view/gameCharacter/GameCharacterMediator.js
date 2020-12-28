@@ -138,7 +138,9 @@ export class GameCharacterMediator extends Mediator {
     }
 
     handleFinishedMode(newNode) {
-        this.facade.sendNotification(GameCommands.FINISHED_MOVE, this.id, newNode);
+        setTimeout(() => {
+            this.facade.sendNotification(GameCommands.FINISHED_MOVE, this.id, newNode);
+        }, 500);
     }
 
     lookForCharacter(id, node) {

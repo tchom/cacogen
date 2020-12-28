@@ -2,6 +2,7 @@ import { Facade } from "@koreez/pure-mvc";
 import { GameFacade } from '../../GameFacade';
 import { GameCharacterProxy } from "../../model/gameCharacter/GameCharacterProxy";
 import { GameCharacterMediator } from './GameCharacterMediator';
+import { botBehaviourEnums } from '../../behaviourTree/BotBehaviourTypes';
 
 export const GameCharacterComponent = pc.createScript('GameCharacterComponent');
 
@@ -78,6 +79,13 @@ GameCharacterComponent.attributes.add("combatGroupName", {
     title: "Combat Group Name"
 });
 
+GameCharacterComponent.attributes.add("botBehaviour", {
+    type: "number",
+    title: "Bot Behaviour",
+    enum: botBehaviourEnums,
+    default: 0
+});
+
 
 GameCharacterComponent.prototype.preregisterNotification = function (notification) {
     if (!this.preregisteredNotifications) {
@@ -104,7 +112,8 @@ GameCharacterComponent.prototype.postInitialize = function () {
         id: this.characterId,
         isNPC: this.isNPC,
         advancedSkills: this.advancedSkills,
-        ...statsOverrides
+        ...statsOverrides,
+        botBehaviour: this.botBehaviour
     };
 
     if (this.combatGroupName && this.combatGroupName !== "") {

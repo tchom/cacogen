@@ -11,6 +11,7 @@ import { Inverter } from '../core/decorators/Inverter';
 import { IsTargetDead } from '../behaviours/conditions/IsTargetDead';
 import { MoveTowardsTarget } from '../behaviours/actions/MoveTowardsTarget';
 import { IsDead } from '../behaviours/conditions/IsDead';
+import { HasActionsRemaining } from '../behaviours/conditions/HasActionsRemaining';
 
 export class BasicMeleeTree extends CharacterCommandTree {
 
@@ -29,6 +30,7 @@ export class BasicMeleeTree extends CharacterCommandTree {
                         new Priority([
                             new MemSequence([
                                 new IsNextToPlayer(),
+                                new HasActionsRemaining(),
                                 new SetPlayerAsTarget(),
                                 new MeleeAttackTarget()
                             ]),

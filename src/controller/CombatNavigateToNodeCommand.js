@@ -1,7 +1,4 @@
 const { Facade } = require('@koreez/pure-mvc');
-import { CombatProxy } from '../model/combat/CombatProxy';
-import { GameStateProxy } from '../model/gameState/GameStateProxy';
-import { gameplayModeTypes } from '../model/gameState/GameStateVO';
 import { GameCommands } from './GameCommands';
 import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { Astar } from '../model/gameMap/navigation/Astar';

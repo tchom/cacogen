@@ -20,6 +20,9 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
 
     const weaponsProxy = facade.retrieveProxy(WeaponsProxy.NAME);
 
+    // Reduce actions
+    attackerProxy.availableActions -= 1;
+
     // Determine winner
     if (attackerRoll === defenderRoll) {
         facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `Attack tied(${attackerRoll}/${defenderRoll})`);
@@ -66,7 +69,7 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
         setTimeout(() => {
             facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, attackerId);
 
-        }, 3000);
+        }, 1500);
     }
 }
 

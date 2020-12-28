@@ -15,7 +15,7 @@ export class GameCharacterProxy extends Proxy {
 
     resetCombatTurnState() {
         this.vo.availableMovement = this.vo.maxMovement;
-        this.vo.availableAction = this.vo.maxActionsPerTurn;
+        this.vo.availableActions = this.vo.maxActionsPerTurn;
     }
 
     useMovement(cost) {
@@ -69,11 +69,11 @@ export class GameCharacterProxy extends Proxy {
     }
 
     get availableActions() {
-        return this.vo.availableAction;
+        return this.vo.availableActions;
     }
 
-    set availableAction(value) {
-        this.vo.availableAction = value;
+    set availableActions(value) {
+        this.vo.availableActions = value;
     }
 
     get skill() {
@@ -90,6 +90,10 @@ export class GameCharacterProxy extends Proxy {
 
     get isDead() {
         return this.vo.currentStamina <= 0;
+    }
+
+    get botBehaviour() {
+        return this.vo.botBehaviour;
     }
 
 }
