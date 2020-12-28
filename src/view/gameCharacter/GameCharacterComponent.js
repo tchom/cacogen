@@ -25,6 +25,11 @@ const statsSchema = [
         type: 'number',
         default: 1
     }, {
+        name: 'initiative',
+        title: 'Initiative',
+        type: 'number',
+        default: 2
+    }, {
         name: 'maxMovement',
         title: 'Movement',
         type: 'number',

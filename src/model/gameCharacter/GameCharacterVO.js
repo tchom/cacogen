@@ -7,7 +7,7 @@ export class GameCharacterVO {
         this.agroArea = undefined;
 
         // Troika stats
-        this.initiative = 2;
+        this.initiative = params.initiative || 2;
         this.maxMovement = 6;
         this.maxActionsPerTurn = 1;
         this.availableActions = this.maxActionsPerTurn;
