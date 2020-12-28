@@ -55,6 +55,7 @@ export class GameCommands {
     static get CHANGE_STAMINA() { return "CHANGE_STAMINA" };
 
     static get EQUIP_WEAPON() { return "EQUIP_WEAPON" };
+    static get USE_ACTION() { return "USE_ACTION" };
 
 
 

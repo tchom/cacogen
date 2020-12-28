@@ -36,6 +36,12 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
             return;
         }
 
+        if (playerCharacterProxy.availableActions <= 0) {
+            // out of actions
+            facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "Out of actions");
+            return;
+        }
+
         if (weaponCategory === "ranged") {
             facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
 

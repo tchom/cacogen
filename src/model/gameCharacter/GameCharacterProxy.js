@@ -77,6 +77,12 @@ export class GameCharacterProxy extends Proxy {
 
     set availableActions(value) {
         this.vo.availableActions = value;
+        this.facade.sendNotification(GameCommands.USE_ACTION + this.id,
+            this.availableActions, this.maxActionsPerTurn);
+    }
+
+    get maxActionsPerTurn() {
+        return this.vo.maxActionsPerTurn;
     }
 
     get skill() {

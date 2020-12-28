@@ -25,7 +25,6 @@ export class ActionPanelMediator extends Mediator {
         switch (notificationName) {
             case GameCommands.TOGGLE_BUTTON:
                 const actionName = args[0];
-                console.log(`Show button ${actionName}`);
                 this.viewComponent.script['ActionPanelComponent'].selectAction(actionName);
                 break;
             case GameCommands.USE_PLAYER_ACTION:
@@ -35,7 +34,6 @@ export class ActionPanelMediator extends Mediator {
     }
 
     handleFireCommand(commandName, ...args) {
-        console.log(commandName, args);
         this.facade.sendNotification(commandName, ...args);
     }
 }
