@@ -94,6 +94,10 @@ export class CombatProxy extends Proxy {
         this.vo.activeParticipant = value;
     }
 
+    get participants() {
+        return this.vo.participants;
+    }
+
     removeCharacterFromCombat(characterId) {
         // remove from particcipants
         this.participantProxies.delete(characterId);

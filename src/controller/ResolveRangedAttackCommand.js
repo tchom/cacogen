@@ -10,8 +10,9 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
 
     const attackerId = args[0];
     const attackerProxy = facade.retrieveProxy(GameCharacterProxy.NAME + attackerId);
-    const defenderId = args[1];
-    const defenderProxy = facade.retrieveProxy(GameCharacterProxy.NAME + defenderId);
+    let defenderId = args[1];
+    let defenderProxy = facade.retrieveProxy(GameCharacterProxy.NAME + defenderId);
+
 
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + attackerId, defenderProxy.currentNode);
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + defenderId, attackerProxy.currentNode);
@@ -37,6 +38,29 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
         .then(() => {
             // Determine outcome
             if (attackerRoll > defenderRoll) {
+
+                // Check if target is in melee and roll for new target
+                const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
+                if (combatProxy) {
+
+                    const neighbouringNodes = defenderProxy.currentNode.connectedNodes;
+                    const possibleTargets = [defenderId];
+
+                    for (const participant of combatProxy.participants) {
+                        const participantProxy = facade.retrieveProxy(GameCharacterProxy.NAME + participant);
+                        if (!participantProxy.isDead && neighbouringNodes.some(n => n.equals(participantProxy.currentNode))) {
+                            possibleTargets.push(participant);
+                        }
+                    }
+
+                    defenderId = possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
+                    defenderProxy = facade.retrieveProxy(GameCharacterProxy.NAME + defenderId);
+
+                    console.log(`Target is ${defenderId} out of ${possibleTargets}`);
+
+                }
+
+
                 // Attacker wins
                 const damageTier = determineDamageTier(attackerRoll, defenderRoll);
                 const damage = weaponsProxy.getDamage("crossbow", damageTier);
