@@ -22,6 +22,7 @@ import { killGameCharacterCommand } from './controller/KillGameCharacterCommand'
 import { endCombatCommand } from './controller/EndCombatCommand';
 import { determineEnemyActionCommand } from './controller/DetermineEnemyActionCommand';
 import { resolveRangedAttackCommand } from './controller/ResolveRangedAttackCommand';
+import { equipWeaponCommand } from './controller/EquipWeaponCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -70,6 +71,7 @@ export class GameFacade extends Facade {
 
         this.registerCommand(GameCommands.KILL_GAME_CHARACTER, killGameCharacterCommand);
         this.registerCommand(GameCommands.END_COMBAT, endCombatCommand);
+        this.registerCommand(GameCommands.EQUIP_WEAPON, equipWeaponCommand);
     }
 
 }

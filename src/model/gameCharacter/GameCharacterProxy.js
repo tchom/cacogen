@@ -103,4 +103,8 @@ export class GameCharacterProxy extends Proxy {
         return this.vo.equippedWeapon;
     }
 
+    set equippedWeapon(value) {
+        this.vo.equippedWeapon = value;
+    }
+
 }

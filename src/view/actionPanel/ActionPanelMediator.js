@@ -8,12 +8,12 @@ export class ActionPanelMediator extends Mediator {
     constructor(viewComponent) {
         super(ActionPanelMediator.NAME);
         this.subscribeNotification([
-            GameCommands.SET_PLAYER_ACTION, GameCommands.DISPLAY_PLAYER_ACTION,
+            GameCommands.SET_PLAYER_ACTION, GameCommands.TOGGLE_BUTTON,
             GameCommands.USE_PLAYER_ACTION
         ]);
         this.viewComponent = viewComponent;
 
-        this.viewComponent.on('click:actionButton', this.handleClickActionButton, this);
+        this.viewComponent.on('click:fireCommand', this.handleFireCommand, this);
 
     }
 
@@ -23,8 +23,9 @@ export class ActionPanelMediator extends Mediator {
 
     handleNotification(notificationName, ...args) {
         switch (notificationName) {
-            case GameCommands.DISPLAY_PLAYER_ACTION:
+            case GameCommands.TOGGLE_BUTTON:
                 const actionName = args[0];
+                console.log(`Show button ${actionName}`);
                 this.viewComponent.script['ActionPanelComponent'].selectAction(actionName);
                 break;
             case GameCommands.USE_PLAYER_ACTION:
@@ -33,9 +34,8 @@ export class ActionPanelMediator extends Mediator {
         }
     }
 
-
-    handleClickActionButton(actionName) {
-        // this.viewComponent.script['ActionPanelComponent'].selectAction(actionName);
-        this.facade.sendNotification(GameCommands.SET_PLAYER_ACTION, actionName)
+    handleFireCommand(commandName, ...args) {
+        console.log(commandName, args);
+        this.facade.sendNotification(commandName, ...args);
     }
 }

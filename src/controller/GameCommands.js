@@ -37,7 +37,7 @@ export class GameCommands {
     static get SELECT_GAME_CHARACTER() { return "SELECT_GAME_CHARACTER" };
 
     static get SET_PLAYER_ACTION() { return "SET_PLAYER_ACTION" };
-    static get DISPLAY_PLAYER_ACTION() { return "DISPLAY_PLAYER_ACTION" };
+    static get TOGGLE_BUTTON() { return "TOGGLE_BUTTON" };
 
     static get USE_PLAYER_ACTION() { return "USE_PLAYER_ACTION" };
 
@@ -53,6 +53,8 @@ export class GameCommands {
 
     static get CHARACTER_LOOK_AT() { return "CHARACTER_LOOK_AT" };
     static get CHANGE_STAMINA() { return "CHANGE_STAMINA" };
+
+    static get EQUIP_WEAPON() { return "EQUIP_WEAPON" };
 
 
 
