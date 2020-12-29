@@ -1,6 +1,5 @@
 const { GameMediator } = require('../view/GameMediator');
 import { NavigationNode } from '../model/gameMap/navigation/NavigationNode';
-import { Astar } from '../model/gameMap/navigation/Astar';
 import { GameMapMediator } from '../view/gameMap/GameMapMediator';
 import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 import { GameCommands } from './GameCommands';
@@ -8,10 +7,21 @@ const { Facade } = require('@koreez/pure-mvc');
 
 export function parseGameMapCommand(multitonKey, notificationName) {
     // Once a gameMap scene is loaded, parse gameMap VO, generate nav mesh, etc
-    console.log('Parse map');
 
     // Get navigation floors
     const app = pc.Application.getApplication();
+    const floorGrid = createMapFloor(app);
+    const walls = createMapWalls(app);
+
+    // Register mediators
+    Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(floorGrid, walls));
+    Facade.getInstance(multitonKey).registerMediator(new GameMapMediator());
+
+    Facade.getInstance(multitonKey).sendNotification(GameCommands.MAP_GRID_CREATED);
+
+}
+
+function createMapFloor(app) {
     const navigationFloors = app.root.findByTag('navigation_floor');
 
     let completedGrid = [];
@@ -38,12 +48,27 @@ export function parseGameMapCommand(multitonKey, notificationName) {
         }
     }
 
-    // Register mediators
-    Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(completedGrid));
-    Facade.getInstance(multitonKey).registerMediator(new GameMapMediator());
+    return completedGrid;
+}
 
-    Facade.getInstance(multitonKey).sendNotification(GameCommands.MAP_GRID_CREATED);
+function createMapWalls(app) {
+    const wallsBoundingBoxes = [];
+    const mapFloorEntities = app.root.findByTag('wall');
+    for (const mapFloorEntity of mapFloorEntities) {
+        const aabb = createBoundingBoxFromEntity(mapFloorEntity);
+        wallsBoundingBoxes.push(aabb);
+        mapFloorEntity.destroy();
+    }
 
+    return wallsBoundingBoxes;
+
+}
+
+function createBoundingBoxFromEntity(boxEntity) {
+    const scale = boxEntity.getLocalScale();
+    const halfExtents = new pc.Vec3(scale.x / 2, scale.y / 2, scale.z / 2);
+    const aabb = new pc.BoundingBox(boxEntity.getPosition(), halfExtents);
+    return aabb;
 }
 
 function createPartialGridFromFloor(floorEntity) {

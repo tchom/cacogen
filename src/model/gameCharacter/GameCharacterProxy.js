@@ -113,4 +113,8 @@ export class GameCharacterProxy extends Proxy {
         this.vo.equippedWeapon = value;
     }
 
+    get height() {
+        return this.vo.height;
+    }
+
 }

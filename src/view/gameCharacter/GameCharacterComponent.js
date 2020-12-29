@@ -61,6 +61,13 @@ GameCharacterComponent.attributes.add("characterSpeed", {
     default: 4
 });
 
+
+GameCharacterComponent.attributes.add("characterHeight", {
+    type: "number",
+    title: "Character Height",
+    default: 1.8
+});
+
 GameCharacterComponent.attributes.add("isNPC", {
     type: "boolean",
     title: "is NPC",
@@ -126,6 +133,7 @@ GameCharacterComponent.prototype.postInitialize = function () {
     const proxyParams = {
         id: this.characterId,
         isNPC: this.isNPC,
+        height: this.characterHeight,
         advancedSkills: this.advancedSkills,
         equippedWeapon: this.equippedWeapon,
         ...statsOverrides,

@@ -6,12 +6,15 @@ import { Astar } from '../model/gameMap/navigation/Astar';
 import { GameCommands } from './GameCommands';
 import { CombatProxy } from '../model/combat/CombatProxy';
 import { WeaponsProxy } from '../model/weapons/WeaponsProxy';
+import { centerPointCharacterProxy } from '../utils/CharacterCenterPoint';
+import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 
 export function selectedGameCharacterCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
     const gameCharacterEntity = args[0];
     const id = gameCharacterEntity.script['GameCharacterComponent'].characterId;
     const gameStateProxy = facade.retrieveProxy(GameStateProxy.NAME);
+    const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
     const targetCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
     const playerCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + "player");
 
@@ -20,8 +23,12 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
 
     if (gameStateProxy.currentMode === gameplayModeTypes.EXPLORATION) {
         if (gameStateProxy.currentAction === 'attack' && weaponCategory === "ranged") {
-            facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
-            facade.sendNotification(GameCommands.START_COMBAT, id);
+            if (canSeeTarget(gameMapProxy, playerCharacterProxy, targetCharacterProxy)) {
+                facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
+                facade.sendNotification(GameCommands.START_COMBAT, id);
+            } else {
+                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "No line of sight");
+            }
         } else {
             const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
             if (pathToTarget) {
@@ -43,8 +50,11 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
         }
 
         if (weaponCategory === "ranged") {
-            facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
-
+            if (canSeeTarget(gameMapProxy, playerCharacterProxy, targetCharacterProxy)) {
+                facade.sendNotification(GameCommands.RESOLVE_RANGED_ATTACK, "player", id);
+            } else {
+                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "No line of sight");
+            }
         } else {
             if (!isTargetAdjacent(playerCharacterProxy, targetCharacterProxy)) {
                 const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
@@ -96,4 +106,11 @@ function isTargetAdjacent(playerCharacterProxy, targetCharacterProxy) {
     const targetCurrrentNode = targetCharacterProxy.currentNode;
     const connectedNodes = playerCharacterProxy.currentNode.connectedNodes;
     return connectedNodes.some(n => n.equals(targetCurrrentNode));
+}
+
+function canSeeTarget(gameMapProxy, playerCharacterProxy, targetCharacterProxy) {
+    const playerPoint = centerPointCharacterProxy(playerCharacterProxy);
+    const targetPoint = centerPointCharacterProxy(targetCharacterProxy);
+
+    !gameMapProxy.rayIntersectsWall(playerPoint, targetPoint);
 }

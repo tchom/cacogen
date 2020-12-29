@@ -8,11 +8,12 @@ export class GameMapProxy extends Proxy {
     }
     static get NAME() { return "GameMapProxy" };
 
-    constructor(mapGrid) {
+    constructor(mapGrid, wallBoundingBoxes) {
         super(GameMapProxy.NAME);
 
         this.setData({
-            mapGrid: mapGrid
+            mapGrid: mapGrid,
+            wallBoundingBoxes: wallBoundingBoxes
         });
     }
 
@@ -35,5 +36,29 @@ export class GameMapProxy extends Proxy {
         }
 
         return nearestNode;
+    }
+
+    rayIntersectsWall(from, to) {
+        const distance = from.distance(to);
+        const direction = to.clone().sub(from.clone()).normalize();
+        const ray = new pc.Ray(from, direction);
+
+        console.log('Ray cast');
+        console.log(direction);
+
+        const mapWalls = this.vo.wallBoundingBoxes;
+        for (const wall of mapWalls) {
+            const hitPosition = new pc.Vec3();
+            const result = wall.intersectsRay(ray, hitPosition);
+            if (result) {
+                const distanceToHit = hitPosition.distance(from);
+
+                if (distanceToHit < distance) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
