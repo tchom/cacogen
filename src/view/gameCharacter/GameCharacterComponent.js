@@ -137,9 +137,11 @@ GameCharacterComponent.prototype.postInitialize = function () {
 
         const combatGroup = [];
         for (const comradeEntity of comradeEntities) {
-            const comradeId = comradeEntity.script['GameCharacterComponent'].characterId;
-            combatGroup.push(comradeId);
-
+            // Ignore disabled entities
+            if (comradeEntity.enabled) {
+                const comradeId = comradeEntity.script['GameCharacterComponent'].characterId;
+                combatGroup.push(comradeId);
+            }
         }
         proxyParams.combatGroup = combatGroup;
     }
@@ -173,7 +175,6 @@ GameCharacterComponent.prototype.stopMovement = function (currentNode) {
 GameCharacterComponent.prototype.update = function (dt) {
     this.moveAlongPath(dt);
 }
-
 
 GameCharacterComponent.prototype.moveAlongPath = function (dt) {
 

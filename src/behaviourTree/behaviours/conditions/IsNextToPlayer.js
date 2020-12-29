@@ -18,10 +18,8 @@ export class IsNextToPlayer extends BaseNode {
         const isAdjacent = connectedNodes.some(n => n.equals(characterCurrentNode));
 
         if (isAdjacent) {
-            console.log("Is adjacent");
             return BehaviourStatus.SUCCESS;
         } else {
-            console.log("Is not adjacent");
             return BehaviourStatus.FAILURE;
         }
 

@@ -11,6 +11,8 @@ import { FleeFromTarget } from '../behaviours/actions/FleeFromTarget';
 import { HasMovementRemaining } from '../behaviours/conditions/HasMovementRemaining';
 import { HasActionsRemaining } from '../behaviours/conditions/HasActionsRemaining';
 import { RangeAttackTarget } from '../behaviours/actions/RangeAttackTarget';
+import { MaintainDistanceFromTarget } from '../behaviours/actions/MaintainDistanceFromTarget';
+import { PickNextAction } from '../behaviours/actions/PickNextAction';
 
 export class BasicRangedTree extends CharacterCommandTree {
 
@@ -27,15 +29,21 @@ export class BasicRangedTree extends CharacterCommandTree {
                         new Inverter([new IsDead()]),
                         new Inverter([new IsTargetDead()]),
                         new Priority([
-                            new MemSequence([
-                                new HasMovementRemaining(),
-                                new SetPlayerAsTarget(),
-                                new FleeFromTarget(),
+                            new Priority([
+                                new MemSequence([
+                                    new HasMovementRemaining(),
+                                    new SetPlayerAsTarget(),
+                                    new Priority([
+                                        new MaintainDistanceFromTarget(9, 12),
+                                        new PickNextAction()
+                                    ])
+                                ]),
                             ]),
+
                             new MemSequence([
                                 new HasActionsRemaining(),
                                 new RangeAttackTarget()
-                            ]),
+                            ])
                         ]),
                     ]),
 
