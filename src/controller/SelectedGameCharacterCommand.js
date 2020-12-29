@@ -112,5 +112,5 @@ function canSeeTarget(gameMapProxy, playerCharacterProxy, targetCharacterProxy) 
     const playerPoint = centerPointCharacterProxy(playerCharacterProxy);
     const targetPoint = centerPointCharacterProxy(targetCharacterProxy);
 
-    !gameMapProxy.rayIntersectsWall(playerPoint, targetPoint);
+    return !gameMapProxy.rayIntersectsWall(playerPoint, targetPoint);
 }
