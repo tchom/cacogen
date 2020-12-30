@@ -11,7 +11,7 @@ export function parseGameMapCommand(multitonKey, notificationName) {
     // Get navigation floors
     const app = pc.Application.getApplication();
     const floorGrid = createMapFloor(app);
-    const walls = createMapWalls(app);
+    const walls = createMapWalls(app, floorGrid);
 
     // Register mediators
     Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(floorGrid, walls));
@@ -51,12 +51,13 @@ function createMapFloor(app) {
     return completedGrid;
 }
 
-function createMapWalls(app) {
+function createMapWalls(app, floorGrid) {
     const wallsBoundingBoxes = [];
     const mapFloorEntities = app.root.findByTag('wall');
     for (const mapFloorEntity of mapFloorEntities) {
         const aabb = createBoundingBoxFromEntity(mapFloorEntity);
         wallsBoundingBoxes.push(aabb);
+        createFloorUnderWalls(mapFloorEntity, floorGrid);
         mapFloorEntity.destroy();
     }
 
@@ -69,6 +70,38 @@ function createBoundingBoxFromEntity(boxEntity) {
     const halfExtents = new pc.Vec3(scale.x / 2, scale.y / 2, scale.z / 2);
     const aabb = new pc.BoundingBox(boxEntity.getPosition(), halfExtents);
     return aabb;
+}
+
+function createFloorUnderWalls(wall, floorGrid) {
+    const wallPos = wall.getPosition();
+    const wallScale = wall.getLocalScale();
+    const y = Math.round(wallPos.y - (wallScale.y * 0.5));
+
+    const cornerX = Math.round(wallPos.x - (wallScale.x * 0.5));
+    const cornerZ = Math.round(wallPos.z - (wallScale.z * 0.5));
+
+    console.log("**************");
+    console.log(cornerX, cornerX + wallScale.x);
+    console.log(cornerZ, cornerZ + wallScale.z);
+    console.log(Number.isInteger(cornerZ));
+
+    for (let x = cornerX; x < cornerX + wallScale.x; x++) {
+        for (let z = cornerZ; z < cornerZ + wallScale.z; z++) {
+            const matchingNodeIndex = floorGrid.findIndex((node) => node.equalsPoint(x, y, z));
+            if (matchingNodeIndex > -1) {
+                const deletedNodes = floorGrid.splice(matchingNodeIndex, 1);
+
+                for (const deletedNode of deletedNodes) {
+                    for (const node of deletedNode.connectedNodes) {
+                        node.disconnectedNode(deletedNode);
+                    }
+                }
+            }
+
+        }
+
+    }
+
 }
 
 function createPartialGridFromFloor(floorEntity) {
