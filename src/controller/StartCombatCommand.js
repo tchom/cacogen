@@ -16,15 +16,21 @@ export function startCombatCommand(multitonKey, notificationName, ...args) {
     const instigatingCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + instigatingCharacterId);
 
     // Setup the combat
-    const dirtyParticipants = ['player'].concat(instigatingCharacterId).concat(instigatingCharacterProxy.combatGroup);
-    // remove duplicates
-    const cleanParticipants = dirtyParticipants.filter(function (item, pos, self) {
+    const teams = new Map();
+    const playerTeam = ['player'];
+    teams.set('player_team', playerTeam);
+
+    const opposingTeam = [instigatingCharacterId].concat(instigatingCharacterProxy.combatGroup).filter(function (item, pos, self) {
         return self.indexOf(item) == pos;
     });
+    teams.set('opposing_team', opposingTeam);
+
+    const participants = playerTeam.concat(opposingTeam);
+
 
     const playerProxy = facade.retrieveProxy(GameCharacterProxy.NAME + "player");
 
-    for (const participant of cleanParticipants) {
+    for (const participant of participants) {
         facade.sendNotification(GameCommands.END_MOVEMENT + participant);
         if (participant !== "player") {
             facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + participant, playerProxy.currentNode);
@@ -34,7 +40,7 @@ export function startCombatCommand(multitonKey, notificationName, ...args) {
 
     }
 
-    const combatProxy = new CombatProxy(cleanParticipants);
+    const combatProxy = new CombatProxy(participants, teams);
     // console.log(participants);
     facade.registerProxy(combatProxy);
 

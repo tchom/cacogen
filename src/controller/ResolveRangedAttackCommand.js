@@ -82,8 +82,6 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
                 if (defenderProxy.isDead) {
                     facade.sendNotification(GameCommands.DISPLAY_DEATH + defenderId);
                     facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, defenderId);
-                    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} killed ${defenderId}`);
-
                 } else {
                     facade.sendNotification(GameCommands.DISPLAY_HIT + defenderId);
                     facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damage}`);

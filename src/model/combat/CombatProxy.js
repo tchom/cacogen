@@ -11,8 +11,8 @@ export class CombatProxy extends Proxy {
     }
     static get NAME() { return "CombatProxy" };
 
-    constructor(participants) {
-        super(CombatProxy.NAME, new CombatVO(participants));
+    constructor(participants, teams) {
+        super(CombatProxy.NAME, new CombatVO(participants, teams));
     }
 
     onRegister() {
@@ -98,11 +98,27 @@ export class CombatProxy extends Proxy {
         return this.vo.participants;
     }
 
+    get teams() {
+        return this.vo.teams;
+    }
+
     removeCharacterFromCombat(characterId) {
         // remove from particcipants
         this.participantProxies.delete(characterId);
         // remove from initiative
         this.vo.roundInitiative = this.vo.roundInitiative.filter(e => e !== characterId);
+
+        for (const [key, team] of this.teams.entries()) {
+
+            const characterIndex = team.indexOf(characterId);
+            if (characterIndex > -1) {
+                team.splice(characterIndex, 1);
+            }
+
+            if (team.length === 0) {
+                this.facade.sendNotification(GameCommands.END_COMBAT, key);
+            }
+        }
     }
 
 }
