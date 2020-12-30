@@ -25,33 +25,29 @@ AgroGameCharacterComponent.prototype.initialize = function () {
 
 AgroGameCharacterComponent.prototype.handleMapGridCreated = function (id, ...args) {
     const facade = Facade.getInstance(GameFacade.KEY);
-    const characterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
-    const vo = characterProxy.vo;
-
-    if (!vo.currentNode) {
-        const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
-        characterProxy.currentNode = gameMapProxy.findNearestNode(this.entity.getLocalPosition());
-        vo.agroArea = Astar.breadthFirstSearch(vo.currentNode, this.sightRange);
-
-    }
+    this.characterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
 }
 
-AgroGameCharacterComponent.prototype.handleMovedToNode = function (id, node) {
+AgroGameCharacterComponent.prototype.handleMovedToNode = function (id, targetNode) {
     const facade = Facade.getInstance(GameFacade.KEY);
-    const vo = facade.retrieveProxy(GameCharacterProxy.NAME + id).vo;
     const gameState = facade.retrieveProxy(GameStateProxy.NAME).vo;
-    const characterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
 
     // Ignore if the player isn't exploring
-    if (gameState.gameplayMode !== gameplayModeTypes.EXPLORATION || characterProxy.isDead) {
+    if (gameState.gameplayMode !== gameplayModeTypes.EXPLORATION || this.characterProxy.isDead) {
         return;
     }
 
-    for (const agroNode of vo.agroArea) {
-        if (agroNode.equals(node)) {
-            this.entity.script['GameCharacterComponent'].lookAtPoint(node);
+    const currentNode = this.characterProxy.currentNode;
+    const characterPoint = new pc.Vec3(currentNode.x, currentNode.y, currentNode.z);
+    const targetPoint = new pc.Vec3(targetNode.x, targetNode.y, targetNode.z);
 
-            facade.sendNotification(GameCommands.SET_CHARACTER_TO_NODE + "player", node);
+    if (characterPoint.distance(targetPoint) <= this.sightRange) {
+        // Might be seen - check for walls
+        const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
+        characterPoint.y += this.characterProxy.height;
+
+        if (!gameMapProxy.rayIntersectsWall(characterPoint, targetPoint)) {
+            facade.sendNotification(GameCommands.SET_CHARACTER_TO_NODE + "player", targetNode);
             facade.sendNotification(GameCommands.START_COMBAT, id);
         }
     }

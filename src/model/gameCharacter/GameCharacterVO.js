@@ -4,7 +4,6 @@ export class GameCharacterVO {
         this.isNPC = params.isNPC;
         this.combatGroup = params.combatGroup || [];
         this.currentNode = undefined;
-        this.agroArea = undefined;
 
         // Troika stats
         this.initiative = params.initiative || 2;
