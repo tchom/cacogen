@@ -1,5 +1,6 @@
 const { Proxy } = require('@koreez/pure-mvc');
 import { Astar } from './navigation/Astar';
+import { getAdjacentPoints } from '../../utils/AdjacentPoints';
 const { GameMapVO } = require('./GameMapVO');
 
 export class GameMapProxy extends Proxy {
@@ -8,12 +9,13 @@ export class GameMapProxy extends Proxy {
     }
     static get NAME() { return "GameMapProxy" };
 
-    constructor(mapGrid, wallBoundingBoxes) {
+    constructor(mapGrid, wallBoundingBoxes, cover) {
         super(GameMapProxy.NAME);
 
         this.setData({
             mapGrid: mapGrid,
-            wallBoundingBoxes: wallBoundingBoxes
+            wallBoundingBoxes: wallBoundingBoxes,
+            cover: cover
         });
     }
 
@@ -43,9 +45,6 @@ export class GameMapProxy extends Proxy {
         const direction = to.clone().sub(from.clone()).normalize();
         const ray = new pc.Ray(from, direction);
 
-        console.log('Ray cast');
-        console.log(direction);
-
         const mapWalls = this.vo.wallBoundingBoxes;
         for (const wall of mapWalls) {
             const hitPosition = new pc.Vec3();
@@ -60,5 +59,35 @@ export class GameMapProxy extends Proxy {
         }
 
         return false;
+    }
+
+    get cover() {
+        return this.vo.cover;
+    }
+
+
+    isInCover(targetPoint, attackingFrom) {
+        const adjacentCoverPoints = [];
+        const adjacentPoints = getAdjacentPoints(targetPoint);
+
+        for (const adjacentPoint of adjacentPoints) {
+            const matchingNode = this.cover.find((coverPoint) => adjacentPoint.equals(coverPoint));
+            if (matchingNode) {
+                adjacentCoverPoints.push(adjacentPoint);
+            }
+        }
+
+        if (adjacentCoverPoints.length > 0) {
+            const distanceToTarget = targetPoint.distance(attackingFrom);
+            for (const adjacentCoverPoint of adjacentCoverPoints) {
+                const distanceToCover = adjacentCoverPoint.distance(attackingFrom);
+                if (distanceToCover < distanceToTarget) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 }

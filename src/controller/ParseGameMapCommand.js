@@ -12,9 +12,13 @@ export function parseGameMapCommand(multitonKey, notificationName) {
     const app = pc.Application.getApplication();
     const floorGrid = createMapFloor(app);
     const walls = createMapWalls(app, floorGrid);
+    const cover = createMapCover(app, floorGrid);
+
+    console.log('COVER');
+    console.log(cover);
 
     // Register mediators
-    Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(floorGrid, walls));
+    Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(floorGrid, walls, cover));
     Facade.getInstance(multitonKey).registerMediator(new GameMapMediator());
 
     Facade.getInstance(multitonKey).sendNotification(GameCommands.MAP_GRID_CREATED);
@@ -53,12 +57,12 @@ function createMapFloor(app) {
 
 function createMapWalls(app, floorGrid) {
     const wallsBoundingBoxes = [];
-    const mapFloorEntities = app.root.findByTag('wall');
-    for (const mapFloorEntity of mapFloorEntities) {
-        const aabb = createBoundingBoxFromEntity(mapFloorEntity);
+    const mapWallEntities = app.root.findByTag('wall');
+    for (const mapWallEntity of mapWallEntities) {
+        const aabb = createBoundingBoxFromEntity(mapWallEntity);
         wallsBoundingBoxes.push(aabb);
-        createFloorUnderWalls(mapFloorEntity, floorGrid);
-        mapFloorEntity.destroy();
+        createFloorUnderWalls(mapWallEntity, floorGrid);
+        mapWallEntity.destroy();
     }
 
     return wallsBoundingBoxes;
@@ -79,11 +83,6 @@ function createFloorUnderWalls(wall, floorGrid) {
 
     const cornerX = Math.round(wallPos.x - (wallScale.x * 0.5));
     const cornerZ = Math.round(wallPos.z - (wallScale.z * 0.5));
-
-    console.log("**************");
-    console.log(cornerX, cornerX + wallScale.x);
-    console.log(cornerZ, cornerZ + wallScale.z);
-    console.log(Number.isInteger(cornerZ));
 
     for (let x = cornerX; x < cornerX + wallScale.x; x++) {
         for (let z = cornerZ; z < cornerZ + wallScale.z; z++) {
@@ -117,8 +116,6 @@ function createPartialGridFromFloor(floorEntity) {
     const snappedX = Math.round(floorPosition.x - (snappedWidth / 2));
     const snappedY = floorPosition.y;
     const snappedZ = Math.round(floorPosition.z - (snappedBreadth / 2));
-
-
 
     for (let z = snappedZ; z < snappedZ + snappedBreadth; z++) {
         for (let x = snappedX; x < snappedX + snappedWidth; x++) {
@@ -154,4 +151,48 @@ function joinToAdjacentGrid(grid, gridToJoin) {
             }
         }
     }
+}
+
+function createMapCover(app, floorGrid) {
+    let coverPoints = [];
+    const coverEntities = app.root.findByTag('cover');
+    for (const coverEntity of coverEntities) {
+        coverPoints = coverPoints.concat(createCoverPointFromBox(coverEntity, floorGrid));
+        coverEntity.destroy();
+    }
+
+    return coverPoints;
+
+}
+
+function createCoverPointFromBox(box, floorGrid) {
+    const coverPoints = [];
+    const boxPos = box.getPosition();
+    const boxScale = box.getLocalScale();
+    const y = Math.round(boxPos.y - (boxScale.y * 0.5));
+
+    const cornerX = Math.round(boxPos.x - (boxScale.x * 0.5));
+    const cornerZ = Math.round(boxPos.z - (boxScale.z * 0.5));
+
+    for (let x = cornerX; x < cornerX + boxScale.x; x++) {
+        for (let z = cornerZ; z < cornerZ + boxScale.z; z++) {
+            const coverPoint = new pc.Vec3(x, y, z);
+            coverPoints.push(coverPoint);
+            const matchingNodeIndex = floorGrid.findIndex((node) => node.equalsPoint(x, y, z));
+            if (matchingNodeIndex > -1) {
+                const deletedNodes = floorGrid.splice(matchingNodeIndex, 1);
+
+                for (const deletedNode of deletedNodes) {
+                    for (const node of deletedNode.connectedNodes) {
+                        node.disconnectedNode(deletedNode);
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    return coverPoints;
+
 }

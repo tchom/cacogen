@@ -4,23 +4,38 @@ import { GameCommands } from './GameCommands';
 import { WeaponsProxy } from '../model/weapons/WeaponsProxy';
 import { CombatProxy } from '../model/combat/CombatProxy';
 import { ProjectileCreatorMediator } from '../view/projectiles/ProjectileCreatorMediator';
+import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 
 export function resolveRangedAttackCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
 
+    // Scores for comparisson
+    let attackerScore = 0;
+    let defenderScore = 0;
+
     const attackerId = args[0];
     const attackerProxy = facade.retrieveProxy(GameCharacterProxy.NAME + attackerId);
+    const attackerNode = attackerProxy.currentNode;
     let defenderId = args[1];
     let defenderProxy = facade.retrieveProxy(GameCharacterProxy.NAME + defenderId);
-
+    const defenderNode = defenderProxy.currentNode;
 
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + attackerId, defenderProxy.currentNode);
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + defenderId, attackerProxy.currentNode);
 
-    const attackerRoll = rollAttackSkill(attackerProxy.skill);
-    const defenderRoll = rollAttackSkill(defenderProxy.skill);
+    attackerScore += rollAttackSkill(attackerProxy.skill);
+    defenderScore += rollAttackSkill(defenderProxy.skill);
 
     const weaponsProxy = facade.retrieveProxy(WeaponsProxy.NAME);
+    const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
+    const isInCover = gameMapProxy.isInCover(
+        new pc.Vec3(defenderNode.x, defenderNode.y, defenderNode.z),
+        new pc.Vec3(attackerNode.x, attackerNode.y, attackerNode.z));
+
+    if (isInCover) {
+        defenderScore += 2;
+    }
+
 
     const projectileCreatorMediator = facade.retrieveMediator(ProjectileCreatorMediator.NAME);
     // TODO: make this more sophisticated
@@ -37,7 +52,7 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
     projectileCreatorMediator.createProjectile('crossbow_bolt', projectileOrigin, projectileTarget)
         .then(() => {
             // Determine outcome
-            if (attackerRoll > defenderRoll) {
+            if (attackerScore > defenderScore) {
 
                 // Check if target is in melee and roll for new target
                 const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
@@ -59,7 +74,7 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
 
 
                 // Attacker wins
-                const damageTier = determineDamageTier(attackerRoll, defenderRoll);
+                const damageTier = determineDamageTier(attackerScore, defenderScore);
                 const damage = weaponsProxy.getDamage(attackerProxy.equippedWeapon, damageTier);
                 defenderProxy.applyDamage(damage);
 
