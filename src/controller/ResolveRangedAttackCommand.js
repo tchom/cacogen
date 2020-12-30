@@ -92,7 +92,7 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
 
             } else {
                 // Defender wins
-                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} missed ${defenderId}`);
+                facade.sendNotification(GameCommands.DISPLAY_FLOATING_STATUS, "dodge", defenderProxy);
             }
 
             const combatProxy = facade.retrieveProxy(CombatProxy.NAME);

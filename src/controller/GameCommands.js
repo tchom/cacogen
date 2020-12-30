@@ -57,6 +57,8 @@ export class GameCommands {
     static get EQUIP_WEAPON() { return "EQUIP_WEAPON" };
     static get USE_ACTION() { return "USE_ACTION" };
 
+    static get DISPLAY_FLOATING_STATUS() { return "DISPLAY_FLOATING_STATUS" };
+
 
 
 }

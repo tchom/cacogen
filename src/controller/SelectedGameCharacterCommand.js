@@ -114,9 +114,3 @@ function canSeeTarget(gameMapProxy, playerCharacterProxy, targetCharacterProxy) 
 
     return !gameMapProxy.rayIntersectsWall(playerPoint, targetPoint);
 }
-
-function isInCover(targetCharacterProxy, attackingFrom) {
-    const targetCurrrentNode = targetCharacterProxy.currentNode;
-    const connectedNodes = playerCharacterProxy.currentNode.connectedNodes;
-    return connectedNodes.some(n => n.equals(targetCurrrentNode));
-}
