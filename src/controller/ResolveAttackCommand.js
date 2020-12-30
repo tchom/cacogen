@@ -41,9 +41,9 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
                 facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, defenderId);
             } else {
                 facade.sendNotification(GameCommands.DISPLAY_HIT + defenderId);
+                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damage}`);
             }
 
-            facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damage}`);
 
         } else {
             const weaponCategory = weaponsProxy.getWeaponCategory(defenderProxy.equippedWeapon);

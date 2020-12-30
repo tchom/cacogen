@@ -12,6 +12,7 @@ import { IsTargetDead } from '../behaviours/conditions/IsTargetDead';
 import { MoveTowardsTarget } from '../behaviours/actions/MoveTowardsTarget';
 import { IsDead } from '../behaviours/conditions/IsDead';
 import { HasActionsRemaining } from '../behaviours/conditions/HasActionsRemaining';
+import { RelinquishMovementPoints } from '../behaviours/actions/RelinquishMovementPoints';
 
 export class BasicMeleeTree extends CharacterCommandTree {
 
@@ -32,7 +33,8 @@ export class BasicMeleeTree extends CharacterCommandTree {
                                 new IsNextToPlayer(),
                                 new HasActionsRemaining(),
                                 new SetPlayerAsTarget(),
-                                new MeleeAttackTarget()
+                                new MeleeAttackTarget(),
+                                new RelinquishMovementPoints(),
                             ]),
                             new MemSequence([
                                 new HasMovementRemaining(),

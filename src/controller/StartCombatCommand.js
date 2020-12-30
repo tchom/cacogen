@@ -14,6 +14,8 @@ export function startCombatCommand(multitonKey, notificationName, ...args) {
     gameStateProxy.updateGameStateType(gameplayModeTypes.COMBAT);
 
     const instigatingCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + instigatingCharacterId);
+    facade.sendNotification(GameCommands.DISPLAY_FLOATING_STATUS, "spotted", instigatingCharacterProxy);
+
 
     // Setup the combat
     const teams = new Map();
