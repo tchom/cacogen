@@ -24,6 +24,7 @@ import { determineEnemyActionCommand } from './controller/DetermineEnemyActionCo
 import { resolveRangedAttackCommand } from './controller/ResolveRangedAttackCommand';
 import { equipWeaponCommand } from './controller/EquipWeaponCommand';
 import { navigateThroughPortalCommand } from './controller/NavigateThroughPortalCommand';
+import { addPlayerCharacterToMapCommand } from './controller/AddPlayerCharacterToMapCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -74,6 +75,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.END_COMBAT, endCombatCommand);
         this.registerCommand(GameCommands.EQUIP_WEAPON, equipWeaponCommand);
         this.registerCommand(GameCommands.NAVIGATE_THROUGH_PORTAL, navigateThroughPortalCommand);
+        this.registerCommand(GameCommands.ADD_PLAYER_CHARACTER_TO_MAP, addPlayerCharacterToMapCommand);
     }
 
 }

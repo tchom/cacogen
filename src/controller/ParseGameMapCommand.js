@@ -1,6 +1,4 @@
-const { GameMediator } = require('../view/GameMediator');
 import { NavigationNode } from '../model/gameMap/navigation/NavigationNode';
-import { GameMapMediator } from '../view/gameMap/GameMapMediator';
 import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 import { GameCommands } from './GameCommands';
 const { Facade } = require('@koreez/pure-mvc');
@@ -13,6 +11,7 @@ export function parseGameMapCommand(multitonKey, notificationName, ...args) {
     const floorGrid = createMapFloor(app);
     const walls = createMapWalls(app, floorGrid);
     const cover = createMapCover(app, floorGrid);
+    const portals = createPortals(app);
 
 
     // Register mediators
@@ -22,7 +21,7 @@ export function parseGameMapCommand(multitonKey, notificationName, ...args) {
         facade.removeProxy(GameMapProxy.NAME)
     }
 
-    facade.registerProxy(new GameMapProxy(floorGrid, walls, cover));
+    facade.registerProxy(new GameMapProxy(floorGrid, walls, cover, portals));
     console.log('MAP_GRID_CREATED');
     facade.sendNotification(GameCommands.MAP_GRID_CREATED);
 }
@@ -196,5 +195,31 @@ function createCoverPointFromBox(box, floorGrid) {
     }
 
     return coverPoints;
+
+}
+
+function createPortals(app) {
+    const portals = new Map();
+    const portalEntities = app.root.findByTag('portal');
+    for (const portalEntity of portalEntities) {
+        const portalComponent = portalEntity.script['PortalComponent'];
+        const portalId = portalComponent.portalId;
+        const destinationScene = portalComponent.destinationScene;
+        const destinationPortal = portalComponent.destinationPortal;
+        const standingPoint = portalComponent.standingPoint.getPosition();
+        const hitboxPoint = portalComponent.hitbox.getPosition();
+
+        const portal = {
+            portalId: portalId,
+            destinationScene: destinationScene,
+            destinationPortal: destinationPortal,
+            standingPoint: standingPoint,
+            hitboxPoint: hitboxPoint
+        }
+
+        portals.set(portalId, portal);
+    }
+
+    return portals;
 
 }

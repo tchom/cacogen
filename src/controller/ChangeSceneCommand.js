@@ -4,6 +4,7 @@ import { GameCommands } from './GameCommands';
 export function changeSceneCommand(multitonKey, notificationName, ...args) {
     const app = pc.Application.getApplication();
     const sceneName = args[0];
+    const portalId = args[1];
     console.log(`Changing scene ${sceneName}`);
 
     // Get a reference to the scene's root object
@@ -23,6 +24,7 @@ export function changeSceneCommand(multitonKey, notificationName, ...args) {
         }
         Facade.getInstance(multitonKey).sendNotification(GameCommands.CHANGE_SCENE_COMPLETE, sceneName);
         Facade.getInstance(multitonKey).sendNotification(GameCommands.PARSE_GAMEMAP, sceneName);
+        Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_PLAYER_CHARACTER_TO_MAP, portalId);
 
     });
 }

@@ -9,13 +9,14 @@ export class GameMapProxy extends Proxy {
     }
     static get NAME() { return "GameMapProxy" };
 
-    constructor(mapGrid, wallBoundingBoxes, cover) {
+    constructor(mapGrid, wallBoundingBoxes, cover, portals) {
         super(GameMapProxy.NAME);
 
         this.setData({
             mapGrid: mapGrid,
             wallBoundingBoxes: wallBoundingBoxes,
-            cover: cover
+            cover: cover,
+            portals: portals
         });
     }
 
@@ -89,5 +90,9 @@ export class GameMapProxy extends Proxy {
         } else {
             return false;
         }
+    }
+
+    retrievePortal(portalId) {
+        return this.vo.portals.get(portalId);
     }
 }

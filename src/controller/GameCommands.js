@@ -59,6 +59,7 @@ export class GameCommands {
     static get USE_ACTION() { return "USE_ACTION" };
 
     static get DISPLAY_FLOATING_STATUS() { return "DISPLAY_FLOATING_STATUS" };
+    static get ADD_PLAYER_CHARACTER_TO_MAP() { return "ADD_PLAYER_CHARACTER_TO_MAP" };
 
 
 

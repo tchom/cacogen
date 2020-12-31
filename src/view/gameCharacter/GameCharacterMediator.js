@@ -81,6 +81,8 @@ export class GameCharacterMediator extends Mediator {
                 break;
             case GameCommands.CHARACTER_LOOK_AT + this.id:
                 const lookPoint = args[0];
+                console.log(this.id);
+                console.log(this.viewComponent);
                 this.viewComponent.script['GameCharacterComponent'].lookAtPoint(lookPoint);
                 break;
             case GameCommands.DISPLAY_DEATH + this.id:

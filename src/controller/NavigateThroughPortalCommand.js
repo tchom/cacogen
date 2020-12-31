@@ -1,6 +1,5 @@
 import { GameCommands } from './GameCommands';
 import { Facade } from '@koreez/pure-mvc';
-import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 import { GameCharacterMediator } from '../view/gameCharacter/GameCharacterMediator';
 
@@ -12,11 +11,10 @@ export function navigateThroughPortalCommand(multitonKey, notificationName, ...a
 
     const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
     const standingNode = gameMapProxy.findNearestNode(standingPosition);
-    const playerProxy = facade.retrieveProxy(GameCharacterProxy.NAME + "player");
     const playerMediator = facade.retrieveMediator(GameCharacterMediator.NAME + "player");
 
     playerMediator.moveToNodeWithPromise(standingNode)
         .then(() => {
-            facade.sendNotification(GameCommands.CHANGE_SCENE, destinationScene);
+            facade.sendNotification(GameCommands.CHANGE_SCENE, destinationScene, destinationPortal);
         });
 }
