@@ -8,9 +8,7 @@ export class PickNextAction extends BaseNode {
         const characterId = tick.blackboard.get('characterId', tick.tree.id, false);
 
         setTimeout(() => {
-            setTimeout(() => {
-                facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, characterId);
-            }, 500);
+            facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, characterId);
         }, 500);
     }
 }

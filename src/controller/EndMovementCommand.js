@@ -21,7 +21,9 @@ export function endMovementCommand(multitonKey, notificationName, ...args) {
             if (combatProxy.activeParticipant === "player") {
                 facade.sendNotification(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, id);
             } else {
-                facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, id);
+                setTimeout(() => {
+                    facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, id);
+                }, 500);
             }
         }
     }

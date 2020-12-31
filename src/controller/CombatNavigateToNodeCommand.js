@@ -11,9 +11,7 @@ export function combatNavigateToNodeCommand(multitonKey, notificationName, ...ar
     const gameCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + id);
     const vo = gameCharacterProxy.vo;
     const moveableNodes = Astar.breadthFirstSearch(vo.currentNode, vo.availableMovement);
-    console.log(vo);
-    console.log(moveableNodes);
-    console.log(targetNode);
+
     for (const node of moveableNodes) {
         if (node.equals(targetNode)) {
             handleValidMove(facade, gameCharacterProxy, targetNode);
