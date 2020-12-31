@@ -72,7 +72,6 @@ export class Astar {
         const path = [];
         path.push(current);
 
-
         while (!current.equals(start) && !pathIsBroken) {
             if (cameFrom.has(current) || !current.equals(goal)) {
                 current = cameFrom.get(current);

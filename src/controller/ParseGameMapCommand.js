@@ -5,24 +5,26 @@ import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 import { GameCommands } from './GameCommands';
 const { Facade } = require('@koreez/pure-mvc');
 
-export function parseGameMapCommand(multitonKey, notificationName) {
+export function parseGameMapCommand(multitonKey, notificationName, ...args) {
+    const facade = Facade.getInstance(multitonKey);
     // Once a gameMap scene is loaded, parse gameMap VO, generate nav mesh, etc
-
     // Get navigation floors
     const app = pc.Application.getApplication();
     const floorGrid = createMapFloor(app);
     const walls = createMapWalls(app, floorGrid);
     const cover = createMapCover(app, floorGrid);
 
-    console.log('COVER');
-    console.log(cover);
 
     // Register mediators
-    Facade.getInstance(multitonKey).registerProxy(new GameMapProxy(floorGrid, walls, cover));
-    Facade.getInstance(multitonKey).registerMediator(new GameMapMediator());
 
-    Facade.getInstance(multitonKey).sendNotification(GameCommands.MAP_GRID_CREATED);
+    if (facade.hasProxy(GameMapProxy.NAME)) {
+        // remove old map
+        facade.removeProxy(GameMapProxy.NAME)
+    }
 
+    facade.registerProxy(new GameMapProxy(floorGrid, walls, cover));
+    console.log('MAP_GRID_CREATED');
+    facade.sendNotification(GameCommands.MAP_GRID_CREATED);
 }
 
 function createMapFloor(app) {

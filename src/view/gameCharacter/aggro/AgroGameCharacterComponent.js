@@ -21,6 +21,7 @@ AgroGameCharacterComponent.prototype.initialize = function () {
 
     this.entity.on(GameCommands.MAP_GRID_CREATED, this.handleMapGridCreated, this);
     this.entity.on(GameCommands.MOVED_TO_NODE + "player", this.handleMovedToNode, this);
+    console.log('Wait for initial');
 };
 
 AgroGameCharacterComponent.prototype.handleMapGridCreated = function (id, ...args) {

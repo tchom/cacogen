@@ -16,7 +16,9 @@ NavigationComponent.prototype.initialize = function () {
     this.app.on('picker:raycast', this.handleRayCast, this);
 
     this.entity.findByName('Plane').enabled = false;
-
+    this.entity.once('destroy', () => {
+        this.app.off('picker:raycast', this.handleRayCast, this);
+    });
 }
 
 NavigationComponent.prototype.handleRayCast = function (ray, screenPos) {

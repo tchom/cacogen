@@ -121,9 +121,7 @@ GameCharacterComponent.prototype.preregisterNotification = function (notificatio
 GameCharacterComponent.prototype.postInitialize = function () {
     this.movementPath = [];
     this.facade = Facade.getInstance(GameFacade.KEY);
-    if (this.facade.hasMediator(GameCharacterMediator.NAME + this.characterId)) {
-        this.facade.removeMediator(GameCharacterMediator.NAME + this.characterId);
-    }
+
 
     if (!this.preregisteredNotifications) {
         this.preregisteredNotifications = [];
@@ -152,6 +150,14 @@ GameCharacterComponent.prototype.postInitialize = function () {
             }
         }
         proxyParams.combatGroup = combatGroup;
+    }
+
+    if (this.facade.hasProxy(GameCharacterProxy.NAME + this.characterId)) {
+        this.facade.removeProxy(GameCharacterProxy.NAME + this.characterId);
+    }
+
+    if (this.facade.hasMediator(GameCharacterMediator.NAME + this.characterId)) {
+        this.facade.removeMediator(GameCharacterMediator.NAME + this.characterId);
     }
 
     this.facade.registerProxy(new GameCharacterProxy(proxyParams));

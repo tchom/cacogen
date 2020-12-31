@@ -43,7 +43,6 @@ export function startCombatCommand(multitonKey, notificationName, ...args) {
     }
 
     const combatProxy = new CombatProxy(participants, teams);
-    // console.log(participants);
     facade.registerProxy(combatProxy);
 
     setTimeout(() => {

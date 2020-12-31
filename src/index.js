@@ -18,6 +18,7 @@ import { StaminaBarComponent } from './view/staminaBar/StaminaBarComponent';
 import { ActionsRemainingPanelComponent } from './view/actionsRemainingPanel/ActionsRemainingPanelComponent';
 import { ActionsRemainingPipComponent } from './view/actionsRemainingPanel/ActionsRemainingPipComponent';
 import { FloatingStatusCreatorComponent } from './view/floatingStatus/FloatingStatusCreatorComponent';
+import { PortalComponent } from './view/portal/PortalComponent';
 
 class Main {
     constructor() {

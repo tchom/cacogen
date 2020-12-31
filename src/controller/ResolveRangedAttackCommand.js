@@ -36,7 +36,6 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
         defenderScore += 2;
     }
 
-
     const projectileCreatorMediator = facade.retrieveMediator(ProjectileCreatorMediator.NAME);
     // TODO: make this more sophisticated
     const projectileOrigin = new pc.Vec3(attackerProxy.currentNode.x,

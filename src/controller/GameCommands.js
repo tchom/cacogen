@@ -6,6 +6,7 @@ export class GameCommands {
     static get MAP_GRID_CREATED() { return "MAP_GRID_CREATED" };
 
     static get NAVIGATE_TO_NODE() { return "NAVIGATE_TO_NODE" };
+    static get NAVIGATE_THROUGH_PORTAL() { return "NAVIGATE_THROUGH_PORTAL" };
     static get COMBAT_NAVIGATE_TO_NODE() { return "COMBAT_NAVIGATE_TO_NODE" };
     static get SET_CAMERA_TARGET() { return "SET_CAMERA_TARGET" };
     static get INPUT_DRAG_MOUSE() { return "INPUT_DRAG_MOUSE" };

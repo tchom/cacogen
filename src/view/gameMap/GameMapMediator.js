@@ -8,15 +8,20 @@ const { Mediator } = require('@koreez/pure-mvc');
 export class GameMapMediator extends Mediator {
     static get NAME() { return "GameMapMediator" };
 
-    constructor(mapGrid) {
+    constructor(viewComponent) {
         super(GameMapMediator.NAME);
         this.subscribeNotification([
             GameCommands.CHANGE_SCENE_COMPLETE
         ]);
+
+        this.viewComponent = viewComponent;
+
     }
 
     onRegister(notificationSubscriptionChange) {
         super.onRegister(notificationSubscriptionChange);
+        this.facade.sendNotification(GameCommands.PARSE_GAMEMAP);
+
     }
 
     handleNotification(notificationName, ...args) {

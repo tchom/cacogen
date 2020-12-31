@@ -17,12 +17,10 @@ export class FleeFromTarget extends BaseNode {
 
         const moveableNodes = Astar.breadthFirstSearch(characterCurrentNode, characterProxy.availableMovement);
 
-        console.log("Flee");
         // Check there is a node to move to 
         if (moveableNodes.length > 0) {
             // Find furtherest node
             let node = moveableNodes.reduce((a, b) => distanceSqrt(targetCurrentNode, a) > distanceSqrt(targetCurrentNode, b) ? a : b);
-            console.log(node);
 
             const path = Astar.calculatePath(characterCurrentNode, node);
             if (path && path.length > 0) {

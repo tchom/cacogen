@@ -24,10 +24,8 @@ export class CanSeeTarget extends BaseNode {
 
         const canSeeTarget = !gameMapProxy.rayIntersectsWall(fromPos, toPos);
         if (canSeeTarget) {
-            console.log('I can see you');
             return BehaviourStatus.SUCCESS;
         } else {
-            console.log(`Where'd you ever go?`);
             return BehaviourStatus.FAILURE;
 
         }

@@ -7,7 +7,6 @@ import { WeaponTypes } from '../data/WeaponTypes';
 
 export function resolveAttackCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
-
     const attackerId = args[0];
     const attackerProxy = facade.retrieveProxy(GameCharacterProxy.NAME + attackerId);
     const defenderId = args[1];

@@ -53,7 +53,6 @@ InputLayerComponent.prototype.initialize = function () {
         });
 
         this.entity.element.on(pc.EVENT_TOUCHSTART, (touchEvt) => {
-            console.log(touchEvt);
             this.onMouseDown(touchEvt.touches[0]);
         });
 
@@ -70,7 +69,6 @@ InputLayerComponent.prototype.initialize = function () {
 
 InputLayerComponent.prototype.onResize = function () {
     const graphicsDevice = this.app.graphicsDevice;
-    console.log("size", graphicsDevice.width, graphicsDevice.height);
 
     // Flip blend
     if (graphicsDevice.width < graphicsDevice.height) {
@@ -139,8 +137,11 @@ InputLayerComponent.prototype.processInputQueue = function () {
             const pickPriority = getPriority(pick.entity)
             if (pickPriority > highestPriority) {
                 highestPriorityPick = pick;
+                highestPriority = pickPriority;
             }
         }
+
+        this.inputQueue = [];
 
         if (highestPriorityPick.entity.tags.has('gameCharacter')) {
             this.pickedGameCharacter(highestPriorityPick.entity, highestPriorityPick.hitPosition)
@@ -150,7 +151,10 @@ InputLayerComponent.prototype.processInputQueue = function () {
             this.pickedNavigation(highestPriorityPick.entity, highestPriorityPick.hitPosition)
         }
 
-        this.inputQueue = [];
+        if (highestPriorityPick.entity.tags.has('portal')) {
+            this.pickedPortal(highestPriorityPick.entity, highestPriorityPick.hitPosition)
+        }
+
     }
 }
 
@@ -164,8 +168,16 @@ InputLayerComponent.prototype.pickedNavigation = function (pickedEntity, hitPosi
     this.entity.fire('picker:navigation', nearestNode);
 }
 
+InputLayerComponent.prototype.pickedPortal = function (pickedEntity, hitPosition) {
+    pickedEntity.fire('picker:portal');
+}
+
 function getPriority(entity) {
     if (entity.tags.has('gameCharacter')) {
+        return 3;
+    }
+
+    if (entity.tags.has('portal')) {
         return 2;
     }
 

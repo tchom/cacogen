@@ -1,11 +1,8 @@
 
 import { GameCommands } from '../../controller/GameCommands';
 import { GameMapProxy } from '../../model/gameMap/GameMapProxy';
-import { GameStateProxy } from '../../model/gameState/GameStateProxy';
-import { GameCharacterComponent } from './GameCharacterComponent';
 import { Astar } from '../../model/gameMap/navigation/Astar';
 import { GameCharacterProxy } from '../../model/gameCharacter/GameCharacterProxy';
-import { gameplayModeTypes } from '../../model/gameState/GameStateVO';
 const { Mediator } = require('@koreez/pure-mvc');
 
 export class GameCharacterMediator extends Mediator {
@@ -36,6 +33,11 @@ export class GameCharacterMediator extends Mediator {
         this.viewComponent = viewComponent;
         this.viewComponent.on('updateCurrentNode', this.updateCurrentNode, this);
         this.viewComponent.on('finishedMove', this.handleFinishedMode, this);
+
+        this.viewComponent.on('destroy', () => {
+            this.viewComponent.off('updateCurrentNode', this.updateCurrentNode, this);
+            this.viewComponent.off('finishedMove', this.handleFinishedMode, this);
+        });
     }
 
     onRegister(notificationSubscriptionChange) {
@@ -65,10 +67,8 @@ export class GameCharacterMediator extends Mediator {
             case GameCommands.MAP_GRID_CREATED:
                 const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
                 const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
+                gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
 
-                if (!gameCharacterProxy.currentNode) {
-                    gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
-                }
                 break;
             case GameCommands.NAVIGATE_TO_NODE + this.id:
                 this.handleNavigateToNode(args[0]);
@@ -106,9 +106,8 @@ export class GameCharacterMediator extends Mediator {
         const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
         const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
 
-        if (!gameCharacterProxy.currentNode) {
-            gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
-        }
+        gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
+
 
         const path = Astar.calculatePath(gameCharacterProxy.currentNode, targetNode);
         if (path && path.length > 0) {
@@ -119,6 +118,33 @@ export class GameCharacterMediator extends Mediator {
 
     handleNavigateAlongPath(path) {
         this.viewComponent.script['GameCharacterComponent'].setPath(path);
+    }
+
+    moveToNodeWithPromise(targetNode) {
+        const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
+
+        const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
+
+        if (!gameCharacterProxy.currentNode) {
+        }
+        gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
+
+
+        const path = Astar.calculatePath(gameCharacterProxy.currentNode, targetNode);
+        if (path && path.length > 0) {
+            this.viewComponent.script['GameCharacterComponent'].setPath(path);
+            gameCharacterProxy.currentNode = targetNode;
+        }
+
+        return new Promise((resolve, reject) => {
+            this.viewComponent.on('finishedMove', () => {
+                resolve();
+            });
+
+            this.viewComponent.on('cancelMove', () => {
+                reject();
+            });
+        });
     }
 
     handleNavigateAlongPathWithPromise(path) {
@@ -141,9 +167,7 @@ export class GameCharacterMediator extends Mediator {
     }
 
     handleFinishedMode(newNode) {
-        setTimeout(() => {
-            this.facade.sendNotification(GameCommands.FINISHED_MOVE, this.id, newNode);
-        }, 500);
+        this.facade.sendNotification(GameCommands.FINISHED_MOVE, this.id, newNode);
     }
 
     lookForCharacter(id, node) {
