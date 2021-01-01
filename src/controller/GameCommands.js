@@ -61,6 +61,11 @@ export class GameCommands {
     static get DISPLAY_FLOATING_STATUS() { return "DISPLAY_FLOATING_STATUS" };
     static get ADD_PLAYER_CHARACTER_TO_MAP() { return "ADD_PLAYER_CHARACTER_TO_MAP" };
 
+    static get NAVIGATE_TO_CHARACTER_AND_TALK() { return "NAVIGATE_TO_CHARACTER_AND_TALK" };
+    static get SHOW_DIALOGUE_PANEL() { return "SHOW_DIALOGUE_PANEL" };
+    static get HIDE_DIALOGUE_PANEL() { return "HIDE_DIALOGUE_PANEL" };
+    static get START_DIALOGUE() { return "START_DIALOGUE" };
+
 
 
 }

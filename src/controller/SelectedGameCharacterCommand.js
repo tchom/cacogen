@@ -30,11 +30,8 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
                 facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "No line of sight");
             }
         } else {
-            const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
-            if (pathToTarget) {
-                facade.sendNotification(GameCommands.NAVIGATE_ALONG_PATH + "player", pathToTarget);
+            facade.sendNotification(GameCommands.NAVIGATE_TO_CHARACTER_AND_TALK, id);
 
-            }
         }
     } else if (gameStateProxy.currentMode === gameplayModeTypes.COMBAT) {
         const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
@@ -61,10 +58,8 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
                 // path length includes current node, so deduct on to work out actual moveable distance
                 if (pathToTarget && pathToTarget.length - 1 <= playerCharacterProxy.vo.availableMovement) {
                     if (gameStateProxy.currentAction === 'attack') {
-
                         // Get weapon type
                         facade.sendNotification(GameCommands.MOVE_ALONG_PATH_AND_ATTACK, "player", targetCharacterProxy.id, pathToTarget);
-
 
                     } else {
                         facade.sendNotification(GameCommands.COMBAT_NAVIGATE_TO_NODE, "player", pathToTarget.shift());
