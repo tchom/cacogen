@@ -27,6 +27,10 @@ import { navigateThroughPortalCommand } from './controller/NavigateThroughPortal
 import { addPlayerCharacterToMapCommand } from './controller/AddPlayerCharacterToMapCommand';
 import { navigateToCharacterAndTalkCommand } from './controller/NavigateToCharacterAndTalk';
 import { startDialogueCommand } from './controller/StartDialogueCommand';
+import { continueDialogueTextCommand } from './controller/ContinueDialogueTextCommand';
+import { selectDialogueChoiceCommand } from './controller/SelectDialogueChoiceCommand';
+import { goToDialogueNodeCommand } from './controller/GoToDialogueNodeCommand';
+import { endDialogueCommand } from './controller/EndDialogueCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -79,7 +83,11 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.NAVIGATE_THROUGH_PORTAL, navigateThroughPortalCommand);
         this.registerCommand(GameCommands.ADD_PLAYER_CHARACTER_TO_MAP, addPlayerCharacterToMapCommand);
         this.registerCommand(GameCommands.NAVIGATE_TO_CHARACTER_AND_TALK, navigateToCharacterAndTalkCommand)
-        this.registerCommand(GameCommands.START_DIALOGUE, startDialogueCommand)
+        this.registerCommand(GameCommands.START_DIALOGUE, startDialogueCommand);
+        this.registerCommand(GameCommands.CONTINUE_DIALOGUE_NODE, continueDialogueTextCommand);
+        this.registerCommand(GameCommands.SELECT_DIALOGUE_CHOICE, selectDialogueChoiceCommand);
+        this.registerCommand(GameCommands.GO_TO_DIALOGUE_NODE, goToDialogueNodeCommand);
+        this.registerCommand(GameCommands.END_DIALOGUE, endDialogueCommand);
     }
 
 }

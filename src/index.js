@@ -20,6 +20,7 @@ import { ActionsRemainingPipComponent } from './view/actionsRemainingPanel/Actio
 import { FloatingStatusCreatorComponent } from './view/floatingStatus/FloatingStatusCreatorComponent';
 import { PortalComponent } from './view/portal/PortalComponent';
 import { DialoguePanelComponent } from './view/dialoguePanel/DialoguePanelComponent';
+import { DialogueChoiceComponent } from './view/dialoguePanel/DialogueChoiceComponent';
 
 class Main {
     constructor() {

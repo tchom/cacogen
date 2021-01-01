@@ -1,5 +1,6 @@
 import { GameStateProxy } from '../model/gameState/GameStateProxy';
 import { WeaponsProxy } from '../model/weapons/WeaponsProxy';
+import { StoryProxy } from '../model/storyProxy/StoryProxy';
 const { Facade } = require('@koreez/pure-mvc');
 
 export function startupCommand(multitonKey, notificationName) {
@@ -13,5 +14,6 @@ export function startupCommand(multitonKey, notificationName) {
     if (app) {
         const weaponsData = app.assets.get(40415631).resource;
         Facade.getInstance(multitonKey).registerProxy(new WeaponsProxy(weaponsData));
+        Facade.getInstance(multitonKey).registerProxy(new StoryProxy());
     }
 }

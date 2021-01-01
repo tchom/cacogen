@@ -1,0 +1,48 @@
+{
+    "version": 0.1,
+    "nodes": {
+        "entry": {
+            "steps": [
+                {
+                    "text": "You see a sexy goblin."
+                },
+                {
+                    "text": "He's doing a sexy dance."
+                },
+                {
+                    "text": "\"Greetings human! How do you like my sexy dancing?\"",
+                    "choices": [
+                        {
+                            "text": "\"Very sexy!\"",
+                            "goto": "goblin_sexy"
+                        },
+                        {
+                            "text": "\"Not very sexy!\"",
+                            "goto": "goblin_not_sexy"
+                        }
+                    ]
+                }
+            ]
+        },
+        "goblin_sexy": {
+            "steps": [
+                {
+                    "text": "The goblin is delighted"
+                },
+                {
+                    "text": "\"Thank you for noticing!\""
+                }
+            ]
+        },
+        "goblin_not_sexy": {
+            "steps": [
+                {
+                    "text": "The goblin is visibly hurnt by your words."
+                },
+                {
+                    "text": "\"Well, screw you then...\""
+                }
+            ]
+        }
+    }
+}
