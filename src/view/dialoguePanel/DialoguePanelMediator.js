@@ -11,7 +11,9 @@ export class DialoguePanelMediator extends Mediator {
             GameCommands.SHOW_DIALOGUE_PANEL,
             GameCommands.HIDE_DIALOGUE_PANEL,
             GameCommands.DISPLAY_DIALOGUE_STEP,
-            GameCommands.CLEAR_DIALOGUE_CHOICES
+            GameCommands.CLEAR_DIALOGUE_CHOICES,
+            GameCommands.SHOW_DIALOGUE_CONTINUE_BUTTON,
+            GameCommands.HIDE_DIALOGUE_CONTINUE_BUTTON
         ]);
         this.viewComponent = viewComponent;
 
@@ -37,6 +39,12 @@ export class DialoguePanelMediator extends Mediator {
                 break;
             case GameCommands.CLEAR_DIALOGUE_CHOICES:
                 this.viewComponent.script['DialoguePanelComponent'].clearDialogueChoices();
+                break;
+            case GameCommands.SHOW_DIALOGUE_CONTINUE_BUTTON:
+                this.viewComponent.script['DialoguePanelComponent'].setContinueButton(true);
+                break;
+            case GameCommands.HIDE_DIALOGUE_CONTINUE_BUTTON:
+                this.viewComponent.script['DialoguePanelComponent'].setContinueButton(false);
                 break;
         }
     }

@@ -21,6 +21,7 @@ import { FloatingStatusCreatorComponent } from './view/floatingStatus/FloatingSt
 import { PortalComponent } from './view/portal/PortalComponent';
 import { DialoguePanelComponent } from './view/dialoguePanel/DialoguePanelComponent';
 import { DialogueChoiceComponent } from './view/dialoguePanel/DialogueChoiceComponent';
+import { DefaultAnimationComponent } from './view/gameCharacter/defaultAnim/DefaultAnimationComponent';
 
 class Main {
     constructor() {

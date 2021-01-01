@@ -10,6 +10,7 @@ export function goToDialogueNodeCommand(multitonKey, notificationName, ...args) 
     const currentStep = storyProxy.getCurrentNodeStep();
 
     if (currentStep) {
+        facade.sendNotification(GameCommands.SHOW_DIALOGUE_CONTINUE_BUTTON);
         facade.sendNotification(GameCommands.DISPLAY_DIALOGUE_STEP, {
             treeId: storyProxy.currentTree,
             step: currentStep

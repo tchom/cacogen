@@ -7,6 +7,13 @@ export function continueDialogueTextCommand(multitonKey, notificationName, ...ar
     const storyProxy = facade.retrieveProxy(StoryProxy.NAME);
     const nextStep = storyProxy.continueCurrentNodeStep();
     if (nextStep) {
+
+        if (nextStep.choices) {
+            facade.sendNotification(GameCommands.HIDE_DIALOGUE_CONTINUE_BUTTON);
+        } else {
+            facade.sendNotification(GameCommands.SHOW_DIALOGUE_CONTINUE_BUTTON);
+        }
+
         facade.sendNotification(GameCommands.DISPLAY_DIALOGUE_STEP, {
             treeId: storyProxy.currentTree,
             step: nextStep

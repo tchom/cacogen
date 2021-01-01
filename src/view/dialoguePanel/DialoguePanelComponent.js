@@ -72,7 +72,6 @@ DialoguePanelComponent.prototype.createChoice = function (index, text) {
 }
 
 DialoguePanelComponent.prototype.clearDialogueChoices = function () {
-    console.log(`Clear choices`);
     for (const choice of this.choices) {
         console.log(choice);
         choice.off('click', this.handleSelectChoice, this);
@@ -98,6 +97,6 @@ DialoguePanelComponent.prototype.resizeToContents = function () {
     this.contentEntity.element.height = Math.max(this.contentHeight, height);
 }
 
-DialoguePanelComponent.prototype.postInitialize = function () {
-
+DialoguePanelComponent.prototype.setContinueButton = function (value) {
+    this.continueButtonEntity.enabled = value;
 }
