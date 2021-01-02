@@ -16,8 +16,6 @@ InputLayerComponent.attributes.add("dragTime", {
     default: 0.4
 });
 
-InputLayerComponent.prototype.window = window;
-
 InputLayerComponent.prototype.initialize = function () {
     this.facade = Facade.getInstance(GameFacade.KEY);
     if (this.facade.hasMediator(InputLayerMediator.NAME)) {
@@ -61,21 +59,6 @@ InputLayerComponent.prototype.initialize = function () {
         });
     }
 
-    this.onResize();
-
-    this.window.addEventListener('resize', this.onResize.bind(this), false);
-
-}
-
-InputLayerComponent.prototype.onResize = function () {
-    const graphicsDevice = this.app.graphicsDevice;
-
-    // Flip blend
-    if (graphicsDevice.width < graphicsDevice.height) {
-        this.entity.element.screen.screen.scaleBlend = 1;
-    } else {
-        this.entity.element.screen.screen.scaleBlend = 0;
-    }
 }
 
 InputLayerComponent.prototype.onMouseDown = function (evt) {

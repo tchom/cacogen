@@ -25,6 +25,7 @@ import { DefaultAnimationComponent } from './view/gameCharacter/defaultAnim/Defa
 import { DialogueTextComponent } from './view/dialoguePanel/DialogueTextComponent';
 import { AttackButtonComponent } from './view/actionPanel/attackButton/AttackButtonComponent';
 import { VehicleComponent } from './components/vehicle/VehicleComponent';
+import { ScreenResizeComponent } from './components/screenResize/ScreenResizeComponent';
 
 class Main {
     constructor() {
