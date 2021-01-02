@@ -18,7 +18,9 @@ export function navigateToCharacterAndAttackCommand(multitonKey, notificationNam
     const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
     if (pathToTarget) {
         playerCharacterMediator.handleNavigateAlongPathWithPromise(pathToTarget).then(() => {
+            facade.sendNotification(GameCommands.START_COMBAT, targetCharacterId);
             facade.sendNotification(GameCommands.RESOLVE_ATTACK, "player", targetCharacterId);
+
         });
     }
 }
