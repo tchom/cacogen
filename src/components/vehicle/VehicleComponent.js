@@ -3,7 +3,7 @@ export const VehicleComponent = pc.createScript('VehicleComponent');
 VehicleComponent.attributes.add("mass", {
     type: "number",
     title: "Mass",
-    default: 0.1
+    default: 3
 });
 
 VehicleComponent.attributes.add("maxSpeed", {
@@ -15,7 +15,7 @@ VehicleComponent.attributes.add("maxSpeed", {
 VehicleComponent.attributes.add("maxForce", {
     type: "number",
     title: "Max Force",
-    default: 1
+    default: 0.5
 });
 
 VehicleComponent.attributes.add("arriveThreshold", {
