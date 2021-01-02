@@ -37,7 +37,6 @@ export class GameCommands {
 
     static get SELECT_GAME_CHARACTER() { return "SELECT_GAME_CHARACTER" };
 
-    static get SET_PLAYER_ACTION() { return "SET_PLAYER_ACTION" };
     static get TOGGLE_BUTTON() { return "TOGGLE_BUTTON" };
 
     static get USE_PLAYER_ACTION() { return "USE_PLAYER_ACTION" };
@@ -80,5 +79,6 @@ export class GameCommands {
     static get END_DIALOGUE() { return "END_DIALOGUE" };
 
 
+    static get GAMEPLAY_ACTION_CHANGED() { return "GAMEPLAY_ACTION_CHANGED" };
 
 }

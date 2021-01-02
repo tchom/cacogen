@@ -23,6 +23,7 @@ import { DialoguePanelComponent } from './view/dialoguePanel/DialoguePanelCompon
 import { DialogueChoiceComponent } from './view/dialoguePanel/DialogueChoiceComponent';
 import { DefaultAnimationComponent } from './view/gameCharacter/defaultAnim/DefaultAnimationComponent';
 import { DialogueTextComponent } from './view/dialoguePanel/DialogueTextComponent';
+import { AttackButtonComponent } from './view/actionPanel/attackButton/AttackButtonComponent';
 
 class Main {
     constructor() {

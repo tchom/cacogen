@@ -32,6 +32,7 @@ import { selectDialogueChoiceCommand } from './controller/SelectDialogueChoiceCo
 import { goToDialogueNodeCommand } from './controller/GoToDialogueNodeCommand';
 import { endDialogueCommand } from './controller/EndDialogueCommand';
 import { navigateToCharacterAndAttackCommand } from './controller/NavigateToCharacterAndAttackCommand';
+import { changeGameplayActionCommand } from './controller/ChangeGameplayActionCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -72,7 +73,6 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.AWAIT_PLAYER_COMBAT_INPUT, awaitPlayerCombatInputCommand);
         this.registerCommand(GameCommands.FINISHED_MOVE, endMovementCommand);
         this.registerCommand(GameCommands.SELECT_GAME_CHARACTER, selectedGameCharacterCommand);
-        this.registerCommand(GameCommands.SET_PLAYER_ACTION, changePlayerActionCommand);
 
         this.registerCommand(GameCommands.RESOLVE_ATTACK, resolveAttackCommand);
         this.registerCommand(GameCommands.RESOLVE_RANGED_ATTACK, resolveRangedAttackCommand);
@@ -90,6 +90,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.SELECT_DIALOGUE_CHOICE, selectDialogueChoiceCommand);
         this.registerCommand(GameCommands.GO_TO_DIALOGUE_NODE, goToDialogueNodeCommand);
         this.registerCommand(GameCommands.END_DIALOGUE, endDialogueCommand);
+        this.registerCommand(GameCommands.GAMEPLAY_ACTION_CHANGED, changeGameplayActionCommand);
     }
 
 }
