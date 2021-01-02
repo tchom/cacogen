@@ -4,15 +4,38 @@
         "entry": {
             "steps": [
                 {
-                    "text": "You see a sexy goblin."
+                    "text": "You see a sexy goblin.",
+                    "conditions": [
+                        "!seen_sexy_goblin"
+                    ]
                 },
                 {
-                    "text": "He's doing a sexy dance."
+                    "text": "He's doing a sexy dance.",
+                    "conditions": [
+                        "!seen_sexy_goblin",
+                        "+seen_sexy_goblin"
+                    ]
                 },
                 {
                     "title": "Mr Goblin",
                     "titleColour": "#11808C",
-                    "text": "\"Greetings human! How do you like my sexy dancing?\"",
+                    "text": "\"Look who's back for more\"",
+                    "conditions": [
+                        "sexy_goblin_happy"
+                    ]
+                },
+                {
+                    "title": "Mr Goblin",
+                    "titleColour": "#11808C",
+                    "text": "\"Oh look, it's the butthole who hates my dancing\"",
+                    "conditions": [
+                        "sexy_goblin_angry"
+                    ]
+                },
+                {
+                    "title": "Mr Goblin",
+                    "titleColour": "#11808C",
+                    "text": "\"How do you like my sexy dancing?\"",
                     "choices": [
                         {
                             "text": "\"Very sexy!\"",
@@ -29,7 +52,11 @@
         "goblin_sexy": {
             "steps": [
                 {
-                    "text": "The goblin is delighted"
+                    "text": "The goblin is delighted",
+                    "conditions": [
+                        "+sexy_goblin_happy",
+                        "-sexy_goblin_angry"
+                    ]
                 },
                 {
                     "title": "Mr Goblin",
@@ -41,7 +68,11 @@
         "goblin_not_sexy": {
             "steps": [
                 {
-                    "text": "The goblin is visibly hurt by your words."
+                    "text": "The goblin is visibly hurt by your words.",
+                    "conditions": [
+                        "-sexy_goblin_happy",
+                        "+sexy_goblin_angry"
+                    ]
                 },
                 {
                     "title": "Mr Goblin",

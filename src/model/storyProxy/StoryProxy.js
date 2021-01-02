@@ -30,6 +30,7 @@ export class StoryProxy extends Proxy {
         this.currentTree = undefined;
         this.currentNode = undefined;
         this.currentStepIndex = 0;
+        this.currentConditions = [];
     }
 
     getTree(treeId) {
@@ -81,7 +82,7 @@ export class StoryProxy extends Proxy {
     getCurrentNodeStep() {
         const tree = this.getTree(this.currentTree);
         const currentNode = this.getNode(tree, this.currentNode);
-        return this.getStep(currentNode, this.currentStepIndex);
+        return this.getValidStep(currentNode, this.currentStepIndex);
     }
 
 
@@ -91,7 +92,23 @@ export class StoryProxy extends Proxy {
         // increment stepIndex
         this.currentStepIndex++;
 
-        return this.getStep(currentNode, this.currentStepIndex);
+        return this.getValidStep(currentNode, this.currentStepIndex);
+    }
+
+    getValidStep(node, stepIndex) {
+        let nextValidStep = this.getStep(node, stepIndex);
+
+        if (nextValidStep && nextValidStep.conditions) {
+            if (this.testConditions(nextValidStep.conditions)) {
+                return nextValidStep;
+            } else {
+                this.currentStepIndex = stepIndex + 1;
+                return this.getValidStep(node, this.currentStepIndex);
+            }
+
+        } else {
+            return nextValidStep;
+        }
     }
 
     selectChoice(choiceIndex) {
@@ -100,5 +117,72 @@ export class StoryProxy extends Proxy {
         return selectedChoice;
     }
 
+    addCondition(condition) {
+        if (this.currentConditions.indexOf(condition) === -1) {
+            this.currentConditions.push(condition);
+        }
+    }
 
+    removeCondition(condition) {
+        const index = this.currentConditions.indexOf(condition);
+        if (index > -1) {
+            this.currentConditions.splice(index, 1);
+        }
+    }
+
+    testConditions(conditions) {
+        let success = true;
+
+        for (const condition of conditions) {
+            // check for operators
+            const orDelimitered = "||";
+            const orConditions = condition.split(orDelimitered);
+
+            if (orConditions.length > 1) {
+                // Only one needs to be true
+                let orSuccess = false;
+                for (const optionalCondition of orConditions) {
+                    if (this.checkCondition(optionalCondition)) {
+                        orSuccess = true;
+                    }
+                }
+                if (success) {
+                    success = orSuccess;
+                }
+            } else {
+                if (success) {
+                    success = this.checkCondition(condition);
+                }
+            }
+        }
+
+        return success;
+    }
+
+    checkCondition(condition) {
+        let success = true;
+
+        // determine if positive of negative
+        if (condition.startsWith("!")) {
+            const strippedString = condition.slice(1, condition.length);
+
+            if (this.currentConditions.indexOf(strippedString) > -1) {
+                success = false;
+            }
+        } else if (condition.startsWith("+")) {
+            const strippedString = condition.slice(1, condition.length);
+            this.addCondition(strippedString);
+            success = true;
+        } else if (condition.startsWith("-")) {
+            const strippedString = condition.slice(1, condition.length);
+            this.removeCondition(strippedString);
+            success = true;
+        } else {
+            if (this.currentConditions.indexOf(condition) === -1) {
+                success = false;
+            }
+        }
+
+        return success;
+    }
 }
