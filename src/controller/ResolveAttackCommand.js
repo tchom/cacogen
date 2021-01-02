@@ -25,6 +25,9 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
 
     // Determine winner
     if (attackerRoll === defenderRoll) {
+        facade.sendNotification(GameCommands.DISPLAY_ATTACK + attackerId);
+        facade.sendNotification(GameCommands.DISPLAY_ATTACK + defenderId);
+
         facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `Attack tied(${attackerRoll}/${defenderRoll})`);
     } else {
         if (attackerRoll > defenderRoll) {
