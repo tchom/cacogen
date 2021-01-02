@@ -2,6 +2,7 @@ export const gameplayModeTypes = {
     EXPLORATION: 'EXPLORATION',
     COMBAT: 'COMBAT',
     DIALOGUE: 'DIALOGUE',
+    GAME_OVER: 'GAME_OVER',
 
 }
 

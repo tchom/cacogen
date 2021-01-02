@@ -15,11 +15,12 @@ export function endCombatCommand(multitonKey, notificationName, ...args) {
 
 
     const gameStateProxy = facade.retrieveProxy(GameStateProxy.NAME);
-    gameStateProxy.updateGameStateType(gameplayModeTypes.EXPLORATION);
 
     if (losingTeam === 'player_team') {
+        gameStateProxy.updateGameStateType(gameplayModeTypes.GAME_OVER);
         facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `Game Over`);
     } else {
+        gameStateProxy.updateGameStateType(gameplayModeTypes.EXPLORATION);
         facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `Victory`);
     }
 }

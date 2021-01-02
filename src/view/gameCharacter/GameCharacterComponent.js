@@ -4,6 +4,7 @@ import { GameCharacterProxy } from "../../model/gameCharacter/GameCharacterProxy
 import { GameCharacterMediator } from './GameCharacterMediator';
 import { botBehaviourEnums } from '../../behaviourTree/BotBehaviourTypes';
 import { weaponEnums } from "../../data/WeaponTypes";
+import { GameMapProxy } from '../../model/gameMap/GameMapProxy';
 
 export const GameCharacterComponent = pc.createScript('GameCharacterComponent');
 
@@ -153,14 +154,22 @@ GameCharacterComponent.prototype.postInitialize = function () {
     }
 
     if (this.facade.hasProxy(GameCharacterProxy.NAME + this.characterId)) {
-        this.facade.removeProxy(GameCharacterProxy.NAME + this.characterId);
+        // this.facade.removeProxy(GameCharacterProxy.NAME + this.characterId);
     }
 
     if (this.facade.hasMediator(GameCharacterMediator.NAME + this.characterId)) {
         this.facade.removeMediator(GameCharacterMediator.NAME + this.characterId);
     }
 
-    this.facade.registerProxy(new GameCharacterProxy(proxyParams));
+    const characterProxy = new GameCharacterProxy(proxyParams);
+    // Set current node if game character was created after the map
+    const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
+    if (gameMapProxy) {
+        const currentNode = gameMapProxy.findNearestNode(this.entity.getPosition());
+        characterProxy.currentNode = currentNode;
+    }
+
+    this.facade.registerProxy(characterProxy);
     this.facade.registerMediator(new GameCharacterMediator(this.characterId, this.entity, this.preregisteredNotifications));
 
     this.entity.animation.play('idle.glb', 0.1);
