@@ -72,7 +72,6 @@ VehicleComponent.prototype.arrive = function (target) {
 }
 
 function clampVec3(vec3, maxValue) {
-    console.log(vec3.length());
     if (vec3.length() < maxValue) {
         return vec3;
     } else {

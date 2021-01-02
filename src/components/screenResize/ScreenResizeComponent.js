@@ -11,7 +11,6 @@ ScreenResizeComponent.prototype.postInitialize = function () {
 
 ScreenResizeComponent.prototype.onResize = function () {
     const graphicsDevice = this.app.graphicsDevice;
-    console.log(this.entity.screen);
     // Flip blend
     if (graphicsDevice.width < graphicsDevice.height) {
         this.entity.screen.scaleBlend = 1;
@@ -21,6 +20,4 @@ ScreenResizeComponent.prototype.onResize = function () {
 
     this.entity.screen.referenceResolution = new pc.Vec2(graphicsDevice.width, graphicsDevice.height);
 
-    /*this.entity.screen.width = graphicsDevice.width;
-    this.entity.screen.height = graphicsDevice.height;*/
 }

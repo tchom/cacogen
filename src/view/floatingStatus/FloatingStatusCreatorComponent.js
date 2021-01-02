@@ -41,7 +41,7 @@ FloatingStatusCreatorComponent.prototype.displayStatus = function (name, targetP
         const newStatus = scheme.template.resource.instantiate();
         newStatus.script['TemporaryFloatingStatusComponent'].setWorldPosition(targetPos,
             this.cameraEntity, this.screenEntity);
-        this.entity.addChild(newStatus);
+        this.entity.parent.addChild(newStatus);
 
     } else {
         throw new Error(`Cannot create floating status: ${name}`);

@@ -18,7 +18,7 @@ TemporaryFloatingStatusComponent.prototype.setWorldPosition = function (worldPos
 }
 
 // update code called every frame
-TemporaryFloatingStatusComponent.prototype.update = function (dt) {
+TemporaryFloatingStatusComponent.prototype.postUpdate = function (dt) {
     const position = this.worldSpaceToScreenSpace(this.worldPosition.clone());
     if (position) {
         this.entity.setLocalPosition(position);
@@ -31,13 +31,15 @@ TemporaryFloatingStatusComponent.prototype.worldSpaceToScreenSpace = function (p
         const screenPos = new pc.Vec3();
         // get screen space co-ord
         this.cameraEntity.camera.worldToScreen(worldPos, screenPos);
+        const pixelRatio = this.app.graphicsDevice.maxPixelRatio;
+        screenPos.x *= pixelRatio;
+        screenPos.y *= pixelRatio;
+
         const screenComp = this.screenEntity.screen;
 
-        const ratioScale = screenComp.referenceResolution.x / screenComp.resolution.x;
-
-        const x = (screenPos.x * ratioScale);
-        const y = (-1 * screenPos.y * ratioScale) + this.screenEntity.screen.resolution.y * ratioScale;
-
+        const ratioScale = screenComp.scale;
+        const x = (screenPos.x / ratioScale);
+        const y = (this.device.height - screenPos.y) / ratioScale;
 
         return new pc.Vec3(x, y, 0);
     }
