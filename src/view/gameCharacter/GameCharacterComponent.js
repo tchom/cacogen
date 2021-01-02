@@ -153,23 +153,25 @@ GameCharacterComponent.prototype.postInitialize = function () {
         proxyParams.combatGroup = combatGroup;
     }
 
-    if (this.facade.hasProxy(GameCharacterProxy.NAME + this.characterId)) {
-        // this.facade.removeProxy(GameCharacterProxy.NAME + this.characterId);
-    }
-
     if (this.facade.hasMediator(GameCharacterMediator.NAME + this.characterId)) {
         this.facade.removeMediator(GameCharacterMediator.NAME + this.characterId);
     }
 
-    const characterProxy = new GameCharacterProxy(proxyParams);
-    // Set current node if game character was created after the map
-    const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
-    if (gameMapProxy) {
-        const currentNode = gameMapProxy.findNearestNode(this.entity.getPosition());
-        characterProxy.currentNode = currentNode;
+    if (this.facade.hasProxy(GameCharacterProxy.NAME + this.characterId)) {
+        // this.facade.removeProxy(GameCharacterProxy.NAME + this.characterId);
+    } else {
+        const characterProxy = new GameCharacterProxy(proxyParams);
+        // Set current node if game character was created after the map
+        const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
+        if (gameMapProxy) {
+            const currentNode = gameMapProxy.findNearestNode(this.entity.getPosition());
+            characterProxy.currentNode = currentNode;
+        }
+
+        this.facade.registerProxy(characterProxy);
     }
 
-    this.facade.registerProxy(characterProxy);
+
     this.facade.registerMediator(new GameCharacterMediator(this.characterId, this.entity, this.preregisteredNotifications));
 
     this.entity.animation.play('idle.glb', 0.1);

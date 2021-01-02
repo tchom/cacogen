@@ -31,6 +31,7 @@ import { continueDialogueTextCommand } from './controller/ContinueDialogueTextCo
 import { selectDialogueChoiceCommand } from './controller/SelectDialogueChoiceCommand';
 import { goToDialogueNodeCommand } from './controller/GoToDialogueNodeCommand';
 import { endDialogueCommand } from './controller/EndDialogueCommand';
+import { navigateToCharacterAndAttackCommand } from './controller/NavigateToCharacterAndAttackCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -76,6 +77,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.RESOLVE_ATTACK, resolveAttackCommand);
         this.registerCommand(GameCommands.RESOLVE_RANGED_ATTACK, resolveRangedAttackCommand);
         this.registerCommand(GameCommands.MOVE_ALONG_PATH_AND_ATTACK, moveAlongPathAndAttackCommand);
+        this.registerCommand(GameCommands.NAVIGATE_TO_CHARACTER_AND_ATTACK, navigateToCharacterAndAttackCommand);
 
         this.registerCommand(GameCommands.KILL_GAME_CHARACTER, killGameCharacterCommand);
         this.registerCommand(GameCommands.END_COMBAT, endCombatCommand);

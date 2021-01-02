@@ -62,6 +62,7 @@ export class GameCommands {
     static get ADD_PLAYER_CHARACTER_TO_MAP() { return "ADD_PLAYER_CHARACTER_TO_MAP" };
 
     static get NAVIGATE_TO_CHARACTER_AND_TALK() { return "NAVIGATE_TO_CHARACTER_AND_TALK" };
+    static get NAVIGATE_TO_CHARACTER_AND_ATTACK() { return "NAVIGATE_TO_CHARACTER_AND_ATTACK" };
     static get SHOW_DIALOGUE_PANEL() { return "SHOW_DIALOGUE_PANEL" };
     static get HIDE_DIALOGUE_PANEL() { return "HIDE_DIALOGUE_PANEL" };
 

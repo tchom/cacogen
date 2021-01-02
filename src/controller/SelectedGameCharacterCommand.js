@@ -30,8 +30,13 @@ export function selectedGameCharacterCommand(multitonKey, notificationName, ...a
                 facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, "No line of sight");
             }
         } else {
-            facade.sendNotification(GameCommands.NAVIGATE_TO_CHARACTER_AND_TALK, id);
+            if (gameStateProxy.currentAction === 'attack') {
+                facade.sendNotification(GameCommands.NAVIGATE_TO_CHARACTER_AND_ATTACK, id);
 
+            } else {
+                facade.sendNotification(GameCommands.NAVIGATE_TO_CHARACTER_AND_TALK, id);
+
+            }
         }
     } else if (gameStateProxy.currentMode === gameplayModeTypes.COMBAT) {
         const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
