@@ -24,6 +24,7 @@ import { DialogueChoiceComponent } from './view/dialoguePanel/DialogueChoiceComp
 import { DefaultAnimationComponent } from './view/gameCharacter/defaultAnim/DefaultAnimationComponent';
 import { DialogueTextComponent } from './view/dialoguePanel/DialogueTextComponent';
 import { AttackButtonComponent } from './view/actionPanel/attackButton/AttackButtonComponent';
+import { VehicleComponent } from './components/vehicle/VehicleComponent';
 
 class Main {
     constructor() {

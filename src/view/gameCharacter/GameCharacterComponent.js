@@ -174,6 +174,7 @@ GameCharacterComponent.prototype.postInitialize = function () {
 
     this.facade.registerMediator(new GameCharacterMediator(this.characterId, this.entity, this.preregisteredNotifications));
 
+    this.vehicle = this.entity.script['VehicleComponent'];
     this.entity.animation.play('idle.glb', 0.1);
 
 };
@@ -206,18 +207,10 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
     if (this.movementPath.length > 0) {
         const nextPathPoint = this.movementPath[this.movementPath.length - 1];
         const localPos = this.entity.getLocalPosition();
-        const newPosition = new pc.Vec3();
-        const speed = new pc.Vec3(dt * this.characterSpeed, dt * this.characterSpeed, dt * this.characterSpeed);
         const nodePoint = new pc.Vec3(nextPathPoint.x, nextPathPoint.y, nextPathPoint.z);
-        newPosition.sub2(nodePoint, localPos);
-        newPosition.normalize();
-        newPosition.mul(speed);
-        newPosition.add(localPos);
 
-        this.entity.setLocalPosition(newPosition);
-        this.lookAtPoint(nextPathPoint);
 
-        const distanceToNextPath = newPosition.distance(nodePoint);
+        const distanceToNextPath = localPos.distance(nodePoint);
         if (distanceToNextPath <= (dt * this.characterSpeed)) {
             const currentNode = this.movementPath.pop();
 
@@ -227,6 +220,13 @@ GameCharacterComponent.prototype.moveAlongPath = function (dt) {
                 this.entity.animation.play('idle.glb', 0.1);
             }
             this.entity.fire('updateCurrentNode', currentNode);
+        } else {
+            if (this.movementPath.length > 1) {
+                this.vehicle.seek(nodePoint, dt);
+            } else {
+                this.vehicle.arrive(nodePoint, dt);
+            }
+            this.vehicle.processVelocity(dt);
         }
     }
 }

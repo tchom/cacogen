@@ -15,7 +15,6 @@ import { hideWalkableAreaCommand } from './controller/HideWalkableAreaCommand';
 import { awaitPlayerCombatInputCommand } from './controller/AwaitPlayerCombatInputCommand';
 import { endMovementCommand } from './controller/EndMovementCommand';
 import { selectedGameCharacterCommand } from './controller/SelectedGameCharacterCommand';
-import { changePlayerActionCommand } from './controller/ChangePlayerActionCommand';
 import { resolveAttackCommand } from './controller/ResolveAttackCommand';
 import { moveAlongPathAndAttackCommand } from './controller/MoveAlongPathAndAttackCommand';
 import { killGameCharacterCommand } from './controller/KillGameCharacterCommand';
