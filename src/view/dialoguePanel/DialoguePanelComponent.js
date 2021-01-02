@@ -81,8 +81,8 @@ DialoguePanelComponent.prototype.clearDialogueChoices = function () {
 }
 
 DialoguePanelComponent.prototype.clearPanel = function () {
-    for (child of this.feedEntity.children) {
-        child.destroy();
+    while (this.feedEntity.children.length > 0) {
+        this.feedEntity.children[0].destroy();
     }
 }
 
