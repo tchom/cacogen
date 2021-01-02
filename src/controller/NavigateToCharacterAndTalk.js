@@ -25,21 +25,28 @@ export function navigateToCharacterAndTalkCommand(multitonKey, notificationName,
 
 function navigateToCharacter(playerCharacterProxy, targetCharacterProxy) {
     const connectedNodes = targetCharacterProxy.currentNode.connectedNodes;
+    const playerNode = playerCharacterProxy.currentNode;
 
-    const unoccupiedNodes = connectedNodes.filter(node => !node.occupied);
-    if (unoccupiedNodes.length > 0) {
-        const playerNode = playerCharacterProxy.currentNode;
+    const isAdjacent = connectedNodes.some(n => n.equals(playerNode));
 
-        let shortestPath = Astar.calculatePath(playerNode, unoccupiedNodes[0]);
+    if (isAdjacent) {
+        // Already there
+        return [playerNode];
+    } else {
+        const unoccupiedNodes = connectedNodes.filter(node => !node.occupied);
+        if (unoccupiedNodes.length > 0) {
 
-        for (let i = 1; i < unoccupiedNodes.length; i++) {
-            const otherPath = Astar.calculatePath(playerNode, unoccupiedNodes[i]);
-            if (otherPath.length < shortestPath.length) {
-                shortestPath = otherPath;
+            let shortestPath = Astar.calculatePath(playerNode, unoccupiedNodes[0]);
+
+            for (let i = 1; i < unoccupiedNodes.length; i++) {
+                const otherPath = Astar.calculatePath(playerNode, unoccupiedNodes[i]);
+                if (otherPath.length < shortestPath.length) {
+                    shortestPath = otherPath;
+                }
             }
-        }
 
-        return shortestPath;
+            return shortestPath;
+        }
+        return undefined;
     }
-    return undefined;
 }
