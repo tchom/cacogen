@@ -34,7 +34,7 @@ DialoguePanelComponent.prototype.initialize = function () {
 };
 
 DialoguePanelComponent.prototype.createStep = function (stepData) {
-    this.createText(stepData.step.text);
+    this.createText(stepData.step);
 
     if (stepData.step.choices) {
         for (let i = 0; i < stepData.step.choices.length; i++) {
@@ -44,9 +44,9 @@ DialoguePanelComponent.prototype.createStep = function (stepData) {
     }
 }
 
-DialoguePanelComponent.prototype.createText = function (text) {
+DialoguePanelComponent.prototype.createText = function (stepData) {
     const newText = this.textEntryTemplate.resource.instantiate();
-    newText.element.text = text;
+    newText.script["DialogueTextComponent"].setup(stepData);
     this.feedEntity.addChild(newText);
     this.resizeToContents();
 
@@ -73,12 +73,17 @@ DialoguePanelComponent.prototype.createChoice = function (index, text) {
 
 DialoguePanelComponent.prototype.clearDialogueChoices = function () {
     for (const choice of this.choices) {
-        console.log(choice);
         choice.off('click', this.handleSelectChoice, this);
         choice.destroy();
     }
 
     this.choices = [];
+}
+
+DialoguePanelComponent.prototype.clearPanel = function () {
+    for (child of this.feedEntity.children) {
+        child.destroy();
+    }
 }
 
 DialoguePanelComponent.prototype.handleSelectChoice = function (index) {

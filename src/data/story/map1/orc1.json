@@ -10,6 +10,8 @@
                     "text": "He's doing a sexy dance."
                 },
                 {
+                    "title": "Mr Goblin",
+                    "titleColour": "#11808C",
                     "text": "\"Greetings human! How do you like my sexy dancing?\"",
                     "choices": [
                         {
@@ -30,6 +32,8 @@
                     "text": "The goblin is delighted"
                 },
                 {
+                    "title": "Mr Goblin",
+                    "titleColour": "#11808C",
                     "text": "\"Thank you for noticing!\""
                 }
             ]
@@ -37,9 +41,11 @@
         "goblin_not_sexy": {
             "steps": [
                 {
-                    "text": "The goblin is visibly hurnt by your words."
+                    "text": "The goblin is visibly hurt by your words."
                 },
                 {
+                    "title": "Mr Goblin",
+                    "titleColour": "#11808C",
                     "text": "\"Well, screw you then...\""
                 }
             ]

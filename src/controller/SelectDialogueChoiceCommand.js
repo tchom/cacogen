@@ -9,9 +9,16 @@ export function selectDialogueChoiceCommand(multitonKey, notificationName, ...ar
     const selectedChoice = storyProxy.selectChoice(choiceIndex);
 
     facade.sendNotification(GameCommands.CLEAR_DIALOGUE_CHOICES);
+
+    const response = {
+        title: "YOU",
+        text: selectedChoice.text,
+        titleColour: '#DB831C'
+    }
+
     facade.sendNotification(GameCommands.DISPLAY_DIALOGUE_STEP, {
         treeId: storyProxy.currentTree,
-        step: selectedChoice
+        step: response
     });
 
     console.log(selectedChoice);

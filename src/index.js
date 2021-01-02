@@ -22,10 +22,10 @@ import { PortalComponent } from './view/portal/PortalComponent';
 import { DialoguePanelComponent } from './view/dialoguePanel/DialoguePanelComponent';
 import { DialogueChoiceComponent } from './view/dialoguePanel/DialogueChoiceComponent';
 import { DefaultAnimationComponent } from './view/gameCharacter/defaultAnim/DefaultAnimationComponent';
+import { DialogueTextComponent } from './view/dialoguePanel/DialogueTextComponent';
 
 class Main {
     constructor() {
-        console.log("Main start");
         PureMVC.debug = true;
         Facade.getInstance = GameFacade.getInstance;
         console.log(Facade);
