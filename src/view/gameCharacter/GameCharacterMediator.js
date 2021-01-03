@@ -15,6 +15,7 @@ export class GameCharacterMediator extends Mediator {
         let notifications = [
             GameCommands.CHANGE_SCENE_COMPLETE,
             GameCommands.NAVIGATE_TO_NODE + this.id,
+            GameCommands.NAVIGATE_TO_WAYPOINT + this.id,
             GameCommands.NAVIGATE_ALONG_PATH + this.id,
             GameCommands.SET_CHARACTER_TO_NODE + this.id,
             GameCommands.DISPLAY_DEATH + this.id,
@@ -73,6 +74,9 @@ export class GameCharacterMediator extends Mediator {
             case GameCommands.NAVIGATE_TO_NODE + this.id:
                 this.handleNavigateToNode(args[0]);
                 break;
+            case GameCommands.NAVIGATE_TO_WAYPOINT + this.id:
+                this.handleNavigateToWaypoint(args[0]);
+                break;
             case GameCommands.NAVIGATE_ALONG_PATH + this.id:
                 this.handleNavigateAlongPath(args[0]);
                 break;
@@ -108,11 +112,86 @@ export class GameCharacterMediator extends Mediator {
 
         gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
 
-
         const path = Astar.calculatePath(gameCharacterProxy.currentNode, targetNode);
         if (path && path.length > 0) {
             this.viewComponent.script['GameCharacterComponent'].setPath(path);
             gameCharacterProxy.currentNode = targetNode;
+        }
+
+    }
+
+    handleNavigateToWaypoint(targetNode) {
+        const gameMapProxy = this.facade.retrieveProxy(GameMapProxy.NAME);
+        const gameCharacterProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + this.id);
+
+        gameCharacterProxy.currentNode = gameMapProxy.findNearestNode(this.viewComponent.getLocalPosition());
+        const currentNode = gameCharacterProxy.currentNode;
+
+        const nearestWaypoint = gameMapProxy.findNearestWaypoint(this.viewComponent.getLocalPosition());
+        const nearestTargetWaypoint = gameMapProxy.findNearestWaypoint(targetNode);
+
+        /*const path = Astar.calculateWaypointsPath(nearestWaypoint, nearestTargetWaypoint);
+        if (path && path.length > 0) {
+            let hasLineToPoint = true;
+            while (path.length > 0 && hasLineToPoint) {
+                if (gameMapProxy.hasValidLine(path[path.length - 1], currentNode)) {
+                    path.pop();
+                } else {
+                    hasLineToPoint = false;
+                }
+            }
+
+            if (path.length > 1) {
+                // See if end of path can be trimmed
+                if (gameMapProxy.hasValidLine(path[1], targetNode)) {
+                    path.shift();
+                }
+            }
+
+            path.unshift(targetNode);
+
+            this.viewComponent.script['GameCharacterComponent'].setPath(path);
+            gameCharacterProxy.currentNode = targetNode;
+        }*/
+
+        // Is straight line?
+        if (gameMapProxy.hasValidLine(currentNode, targetNode)) {
+            const path = [targetNode, currentNode];
+            this.viewComponent.script['GameCharacterComponent'].setPath(path);
+            gameCharacterProxy.currentNode = targetNode;
+        } else {
+            const path = Astar.calculateWaypointsPath(nearestWaypoint, nearestTargetWaypoint);
+            if (path && path.length > 0) {
+                // path.shift();
+
+                /*const distFromCurrent = Astar.getDistSquared(gameCharacterProxy.currentNode, targetNode);
+                const distFromFirst = Astar.getDistSquared(path[path.length - 1], targetNode);
+                if (distFromCurrent < distFromFirst) {
+                    path.pop();
+                }*/
+
+                if (path.length > 1) {
+                    // See if end of path can be trimmed
+                    if (gameMapProxy.hasValidLine(path[1], targetNode)) {
+                        path.shift();
+                    }
+                }
+
+                let hasLineToPoint = true;
+                while (path.length > 1 && hasLineToPoint) {
+                    if (gameMapProxy.hasValidLine(path[path.length - 2], currentNode)) {
+                        path.pop();
+                    } else {
+                        hasLineToPoint = false;
+                    }
+                }
+
+
+                path.unshift(targetNode);
+
+                this.viewComponent.script['GameCharacterComponent'].setPath(path);
+                gameCharacterProxy.currentNode = targetNode;
+            }
         }
     }
 

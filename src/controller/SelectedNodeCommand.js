@@ -10,7 +10,7 @@ export function selectedNodeCommand(multitonKey, notificationName, ...args) {
     const node = args[0];
 
     if (gameStateProxy.currentMode === gameplayModeTypes.EXPLORATION) {
-        facade.sendNotification(GameCommands.NAVIGATE_TO_NODE + "player", node);
+        facade.sendNotification(GameCommands.NAVIGATE_TO_WAYPOINT + "player", node);
     } else if (gameStateProxy.currentMode === gameplayModeTypes.COMBAT) {
         const combatProxy = facade.retrieveProxy(CombatProxy.NAME);
         if (combatProxy.activeParticipant === "player") {

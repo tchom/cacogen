@@ -1,6 +1,7 @@
 import { NavigationNode } from '../model/gameMap/navigation/NavigationNode';
 import { GameMapProxy } from '../model/gameMap/GameMapProxy';
 import { GameCommands } from './GameCommands';
+import { Astar } from '../model/gameMap/navigation/Astar';
 const { Facade } = require('@koreez/pure-mvc');
 
 export function parseGameMapCommand(multitonKey, notificationName, ...args) {
@@ -13,6 +14,8 @@ export function parseGameMapCommand(multitonKey, notificationName, ...args) {
     const cover = createMapCover(app, floorGrid);
     const portals = createPortals(app);
 
+    // waypoints
+    const waypointsMap = createWaypointsMap(floorGrid);
 
     // Register mediators
 
@@ -21,8 +24,7 @@ export function parseGameMapCommand(multitonKey, notificationName, ...args) {
         facade.removeProxy(GameMapProxy.NAME)
     }
 
-    facade.registerProxy(new GameMapProxy(floorGrid, walls, cover, portals));
-    console.log('MAP_GRID_CREATED');
+    facade.registerProxy(new GameMapProxy(floorGrid, walls, cover, portals, waypointsMap));
     facade.sendNotification(GameCommands.MAP_GRID_CREATED);
 }
 
@@ -97,11 +99,8 @@ function createFloorUnderWalls(wall, floorGrid) {
                     }
                 }
             }
-
         }
-
     }
-
 }
 
 function createPartialGridFromFloor(floorEntity) {
@@ -222,4 +221,75 @@ function createPortals(app) {
 
     return portals;
 
+}
+
+function createWaypointsMap(floorGrid) {
+    const waypoints = [];
+    for (const floorNode of floorGrid) {
+        // Check if diagonals intersect walls
+
+        if (isWaypoint(floorNode, floorGrid)) {
+            waypoints.push(new NavigationNode(floorNode.x, floorNode.y, floorNode.z));
+        }
+    }
+
+    for (const waypoint of waypoints) {
+        for (const otherWaypoint of waypoints) {
+            if (!waypoint.equals(otherWaypoint) || !otherWaypoint.isConnected(waypoint)) {
+                const line = Astar.calculateBresenhamLine(waypoint.x, waypoint.z, otherWaypoint.x, otherWaypoint.z);
+                if (Astar.checkValidLine(line, floorGrid)) {
+                    waypoint.addConnectedNode(otherWaypoint);
+                    otherWaypoint.addConnectedNode(waypoint);
+                }
+            }
+        }
+    }
+
+    return waypoints;
+}
+
+function isWaypoint(floorNode, floorMap) {
+    //Check nw
+    const northwest = new pc.Vec3(floorNode.x - 1, floorNode.y, floorNode.z - 1);
+    const north = new pc.Vec3(floorNode.x, floorNode.y, floorNode.z - 1);
+    const northeast = new pc.Vec3(floorNode.x + 1, floorNode.y, floorNode.z - 1);
+    const east = new pc.Vec3(floorNode.x + 1, floorNode.y, floorNode.z);
+    const southeast = new pc.Vec3(floorNode.x + 1, floorNode.y, floorNode.z + 1);
+    const south = new pc.Vec3(floorNode.x, floorNode.y, floorNode.z + 1);
+    const southwest = new pc.Vec3(floorNode.x - 1, floorNode.y, floorNode.z + 1);
+    const west = new pc.Vec3(floorNode.x - 1, floorNode.y, floorNode.z);
+
+    // northwest
+    if (!floorMap.some(n => n.equals(northwest))) {
+        if (floorNode.connectedNodes.some(n => n.equals(north))
+            && floorNode.connectedNodes.some(n => n.equals(west))) {
+            return true;
+        }
+    }
+
+    // northeast
+    if (!floorMap.some(n => n.equals(northeast))) {
+        if (floorNode.connectedNodes.some(n => n.equals(north))
+            && floorNode.connectedNodes.some(n => n.equals(east))) {
+            return true;
+        }
+    }
+
+    // southeast
+    if (!floorMap.some(n => n.equals(southeast))) {
+        if (floorNode.connectedNodes.some(n => n.equals(south))
+            && floorNode.connectedNodes.some(n => n.equals(east))) {
+            return true;
+        }
+    }
+
+    // southwest
+    if (!floorMap.some(n => n.equals(southwest))) {
+        if (floorNode.connectedNodes.some(n => n.equals(south))
+            && floorNode.connectedNodes.some(n => n.equals(west))) {
+            return true;
+        }
+    }
+
+    return false;
 }

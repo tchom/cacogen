@@ -8,8 +8,8 @@ export class NavigationNode {
     }
 
     isConnected(otherNode) {
-        return this.connectedNodes.find(node => node.x === otherNode.x
-            && node.y === otherNode.y && node.z === otherNode.z) !== undefined;
+        return this.connectedNodes.some(node => node.x === otherNode.x
+            && node.y === otherNode.y && node.z === otherNode.z);
     }
 
     equals(otherNode) {

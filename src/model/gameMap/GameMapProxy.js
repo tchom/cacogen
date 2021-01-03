@@ -9,14 +9,15 @@ export class GameMapProxy extends Proxy {
     }
     static get NAME() { return "GameMapProxy" };
 
-    constructor(mapGrid, wallBoundingBoxes, cover, portals) {
+    constructor(mapGrid, wallBoundingBoxes, cover, portals, navGrid) {
         super(GameMapProxy.NAME);
 
         this.setData({
             mapGrid: mapGrid,
             wallBoundingBoxes: wallBoundingBoxes,
             cover: cover,
-            portals: portals
+            portals: portals,
+            navigationGrid: navGrid
         });
     }
 
@@ -30,6 +31,23 @@ export class GameMapProxy extends Proxy {
         let nearestNode = mapGrid[0];
         let distSqrtToNearestNode = Astar.getDistSquared(nearestNode, targetPoint);
         for (const node of mapGrid) {
+            const distToNode = Astar.getDistSquared(node, targetPoint);
+
+            if (distToNode < distSqrtToNearestNode) {
+                distSqrtToNearestNode = distToNode;
+                nearestNode = node;
+            }
+        }
+
+        return nearestNode;
+    }
+
+    findNearestWaypoint(targetPoint) {
+        const navGrid = this.vo.navigationGrid;
+
+        let nearestNode = navGrid[0];
+        let distSqrtToNearestNode = Astar.getDistSquared(nearestNode, targetPoint);
+        for (const node of navGrid) {
             const distToNode = Astar.getDistSquared(node, targetPoint);
 
             if (distToNode < distSqrtToNearestNode) {
@@ -94,5 +112,11 @@ export class GameMapProxy extends Proxy {
 
     retrievePortal(portalId) {
         return this.vo.portals.get(portalId);
+    }
+
+    hasValidLine(nodeA, nodeB) {
+        const line = Astar.calculateBresenhamLine(nodeA.x, nodeA.z, nodeB.x, nodeB.z);
+        console.log(line);
+        return Astar.checkValidLine(line, this.vo.mapGrid);
     }
 }
