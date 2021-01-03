@@ -8,7 +8,7 @@ export const CacogenGame = pc.createScript('CacogenGame');
 CacogenGame.prototype.initialize = function () {
     this.facade = Facade.getInstance(GameFacade.KEY);
     this.facade.sendNotification(GameCommands.APP_INITIALISED);
-    this.facade.sendNotification(GameCommands.CHANGE_SCENE, "Map1", "entrance");
+    this.facade.sendNotification(GameCommands.CHANGE_SCENE, "Port Taringo", "entrance");
 };
 
 // update code called every frame

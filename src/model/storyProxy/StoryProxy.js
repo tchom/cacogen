@@ -82,7 +82,12 @@ export class StoryProxy extends Proxy {
     getCurrentNodeStep() {
         const tree = this.getTree(this.currentTree);
         const currentNode = this.getNode(tree, this.currentNode);
-        return this.getValidStep(currentNode, this.currentStepIndex);
+        const validStep = this.getValidStep(currentNode, this.currentStepIndex);
+        if (validStep && validStep.once) {
+            const onceCondition = this.getConditionStringForStep(this.currentTree, this.currentNode, this.currentStepIndex);
+            this.addCondition(onceCondition);
+        }
+        return validStep;
     }
 
 
@@ -92,14 +97,32 @@ export class StoryProxy extends Proxy {
         // increment stepIndex
         this.currentStepIndex++;
 
-        return this.getValidStep(currentNode, this.currentStepIndex);
+        const validStep = this.getValidStep(currentNode, this.currentStepIndex);
+        if (validStep && validStep.once) {
+            const onceCondition = this.getConditionStringForStep(this.currentTree, this.currentNode, this.currentStepIndex);
+            this.addCondition(onceCondition);
+        }
+        return validStep;
     }
 
     getValidStep(node, stepIndex) {
         let nextValidStep = this.getStep(node, stepIndex);
 
-        if (nextValidStep && nextValidStep.conditions) {
-            if (this.testConditions(nextValidStep.conditions)) {
+
+        if (nextValidStep) {
+            let testConditions = [];
+            if (nextValidStep.conditions) {
+                testConditions = testConditions.concat(nextValidStep.conditions);
+            }
+
+            if (nextValidStep.once) {
+                const onceCondition = this.getInvertedConditionStringForStep(this.currentTree, this.currentNode, stepIndex);
+                testConditions = testConditions.concat(onceCondition);
+                console.log('Test valid step');
+                console.log(testConditions);
+            }
+
+            if (this.testConditions(testConditions)) {
                 return nextValidStep;
             } else {
                 this.currentStepIndex = stepIndex + 1;
@@ -109,6 +132,14 @@ export class StoryProxy extends Proxy {
         } else {
             return nextValidStep;
         }
+    }
+
+    getConditionStringForStep(treeId, nodeId, stepIndex) {
+        return `${treeId}${nodeId}${stepIndex}`;
+    }
+
+    getInvertedConditionStringForStep(treeId, nodeId, stepIndex) {
+        return `!${treeId}${nodeId}${stepIndex}`;
     }
 
     selectChoice(choiceIndex) {

@@ -1,0 +1,52 @@
+{
+    "version": 0.1,
+    "nodes": {
+        "entry": {
+            "steps": [
+                {
+                    "text": "A dapper gentleman greets you at the dock.",
+                    "once": true
+                },
+                {
+                    "title": "The Governor",
+                    "titleColour": "#11808C",
+                    "text": "\"Welcome to Port Taringo, friend!\"",
+                    "once": true
+                },
+                {
+                    "title": "The Governor",
+                    "titleColour": "#11808C",
+                    "text": "\"How can I help you?\"",
+                    "choices": [
+                        {
+                            "text": "\"I'm looking for a sexy goblin\"",
+                            "goto": "sexy_goblin_location"
+                        },
+                        {
+                            "text": "\"Just saying 'hello'\"",
+                            "goto": "goodbye"
+                        }
+                    ]
+                }
+            ]
+        },
+        "sexy_goblin_location": {
+            "steps": [
+                {
+                    "title": "The Governor",
+                    "titleColour": "#11808C",
+                    "text": "\"Ah yes! We have a sexy goblin in the booth behind me. I've spent many an hour enjoing his gyration\""
+                }
+            ]
+        },
+        "goodbye": {
+            "steps": [
+                {
+                    "title": "The Governor",
+                    "titleColour": "#11808C",
+                    "text": "\"Well, hello to you to. Stop by any time\""
+                }
+            ]
+        }
+    }
+}
