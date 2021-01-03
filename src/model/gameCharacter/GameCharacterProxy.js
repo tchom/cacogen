@@ -42,6 +42,10 @@ export class GameCharacterProxy extends Proxy {
         return this.vo.id;
     }
 
+    get dialogueTree() {
+        return this.vo.dialogueTree;
+    }
+
     get currentNode() {
         return this.vo.currentNode;
     }

@@ -1,0 +1,25 @@
+{
+    "version": 0.1,
+    "nodes": {
+        "entry": {
+            "steps": [
+                {
+                    "title": "Soldier",
+                    "titleColour": "#11808C",
+                    "text": "\"I should kill you where you stand for hurting our beloved sexy goblin's feelings\"",
+                    "conditions": [
+                        "sexy_goblin_angry"
+                    ]
+                },
+                {
+                    "title": "Soldier",
+                    "titleColour": "#11808C",
+                    "text": "\"Move along citizen\"",
+                    "conditions": [
+                        "!sexy_goblin_angry"
+                    ]
+                }
+            ]
+        }
+    }
+}

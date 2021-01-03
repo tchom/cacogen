@@ -11,10 +11,11 @@ export function startDialogueCommand(multitonKey, notificationName, ...args) {
     const targetCharacterId = args[0];
 
     const storyProxy = facade.retrieveProxy(StoryProxy.NAME);
-    const storyTree = storyProxy.startDialogueTree(targetCharacterId);
 
     const playerCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + "player")
     const targetCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + targetCharacterId);
+    const dialogueTree = targetCharacterProxy.dialogueTree;
+    const storyTree = storyProxy.startDialogueTree(dialogueTree);
 
     gamestateProxy.updateGameStateType(gameplayModeTypes.DIALOGUE);
 
@@ -24,7 +25,7 @@ export function startDialogueCommand(multitonKey, notificationName, ...args) {
 
     const openingStep = storyProxy.getCurrentNodeStep();
     facade.sendNotification(GameCommands.DISPLAY_DIALOGUE_STEP, {
-        treeId: targetCharacterId,
+        treeId: dialogueTree,
         step: openingStep
     });
 }

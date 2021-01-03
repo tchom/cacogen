@@ -93,6 +93,11 @@ GameCharacterComponent.attributes.add("combatGroupName", {
     title: "Combat Group Name"
 });
 
+GameCharacterComponent.attributes.add("dialogueTreeName", {
+    type: "string",
+    title: "Dialogue Tree Name"
+});
+
 GameCharacterComponent.attributes.add("botBehaviour", {
     type: "number",
     title: "Bot Behaviour",
@@ -136,7 +141,8 @@ GameCharacterComponent.prototype.postInitialize = function () {
         advancedSkills: this.advancedSkills,
         equippedWeapon: this.equippedWeapon,
         ...statsOverrides,
-        botBehaviour: this.botBehaviour
+        botBehaviour: this.botBehaviour,
+        dialogueTree: this.dialogueTreeName
     };
 
     if (this.combatGroupName && this.combatGroupName !== "") {

@@ -1,0 +1,25 @@
+{
+    "version": 0.1,
+    "nodes": {
+        "entry": {
+            "steps": [
+                {
+                    "title": "Sailor",
+                    "titleColour": "#11808C",
+                    "text": "\"Another sexy goblin aficionado, I see\"",
+                    "conditions": [
+                        "sexy_goblin_happy"
+                    ]
+                },
+                {
+                    "title": "Sailor",
+                    "titleColour": "#11808C",
+                    "text": "\"I've got nothin' to say to ye\"",
+                    "conditions": [
+                        "!sexy_goblin_happy"
+                    ]
+                }
+            ]
+        }
+    }
+}

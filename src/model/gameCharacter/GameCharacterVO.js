@@ -3,6 +3,7 @@ export class GameCharacterVO {
         this.id = params.id;
         this.isNPC = params.isNPC;
         this.combatGroup = params.combatGroup || [];
+        this.dialogueTree = params.dialogueTree || this.id;
         this.currentNode = undefined;
 
         // Troika stats

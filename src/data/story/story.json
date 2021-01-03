@@ -2,6 +2,8 @@
     "version": 0.1,
     "trees": {
         "orc1": 40529926,
-        "governor": 40551613
+        "governor": 40551613,
+        "sailor1": 40551916,
+        "soldier_port_taringo": 40552028
     }
 }
