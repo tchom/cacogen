@@ -40,7 +40,7 @@ function navigateToCharacter(playerCharacterProxy, targetCharacterProxy) {
 
             for (let i = 1; i < unoccupiedNodes.length; i++) {
                 const otherPath = Astar.calculatePath(playerNode, unoccupiedNodes[i]);
-                if (otherPath.length < shortestPath.length) {
+                if (!shortestPath || (otherPath && otherPath.length < shortestPath.length)) {
                     shortestPath = otherPath;
                 }
             }
