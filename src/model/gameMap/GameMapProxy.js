@@ -119,4 +119,9 @@ export class GameMapProxy extends Proxy {
         console.log(line);
         return Astar.checkValidLine(line, this.vo.mapGrid);
     }
+
+    hasValidNode(node) {
+        return this.vo.mapGrid.some(n => n.equals(node));
+
+    }
 }
