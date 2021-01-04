@@ -162,14 +162,6 @@ export class GameCharacterMediator extends Mediator {
         } else {
             const path = Astar.calculateWaypointsPath(nearestWaypoint, nearestTargetWaypoint);
             if (path && path.length > 0) {
-                // path.shift();
-
-                /*const distFromCurrent = Astar.getDistSquared(gameCharacterProxy.currentNode, targetNode);
-                const distFromFirst = Astar.getDistSquared(path[path.length - 1], targetNode);
-                if (distFromCurrent < distFromFirst) {
-                    path.pop();
-                }*/
-
                 if (path.length > 1) {
                     // See if end of path can be trimmed
                     if (gameMapProxy.hasValidLine(path[1], targetNode)) {

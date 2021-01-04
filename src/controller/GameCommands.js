@@ -70,9 +70,11 @@ export class GameCommands {
     static get HIDE_DIALOGUE_CONTINUE_BUTTON() { return "HIDE_DIALOGUE_CONTINUE_BUTTON" };
 
     static get DISPLAY_DIALOGUE_STEP() { return "DISPLAY_DIALOGUE_STEP" };
+    static get DISPLAY_DIALOGUE_SKILL_TEST() { return "DISPLAY_DIALOGUE_SKILL_TEST" };
 
     static get CONTINUE_DIALOGUE_NODE() { return "CONTINUE_DIALOGUE_NODE" };
     static get SELECT_DIALOGUE_CHOICE() { return "SELECT_DIALOGUE_CHOICE" };
+    static get RESOLVE_DIALOGUE_SKILL_TEST() { return "RESOLVE_DIALOGUE_SKILL_TEST" };
     static get CLEAR_DIALOGUE_CHOICES() { return "CLEAR_DIALOGUE_CHOICES" };
     static get GO_TO_DIALOGUE_NODE() { return "GO_TO_DIALOGUE_NODE" };
 

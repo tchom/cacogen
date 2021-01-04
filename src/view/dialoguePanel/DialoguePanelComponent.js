@@ -10,6 +10,7 @@ DialoguePanelComponent.attributes.add('contentHeight', { type: 'number', title: 
 
 DialoguePanelComponent.attributes.add('textEntryTemplate', { type: 'asset', title: 'Text Entry Asset' });
 DialoguePanelComponent.attributes.add('choiceEntryTemplate', { type: 'asset', title: 'Choice Entry Asset' });
+DialoguePanelComponent.attributes.add('skillTestEntryTemplate', { type: 'asset', title: 'Skill Test Entry Asset' });
 
 DialoguePanelComponent.attributes.add('continueButtonEntity', { type: 'entity', title: 'Continue Button' });
 
@@ -63,6 +64,18 @@ DialoguePanelComponent.prototype.createChoice = function (index, text) {
     this.choices.push(newChoice);
 
     newChoice.on('click', this.handleSelectChoice, this);
+
+    this.resizeToContents();
+
+    setTimeout(() => {
+        this.scrollbarViewEntity.scrollbar.value = 1;
+    }, 50);
+}
+
+DialoguePanelComponent.prototype.createSkillTest = function (skillName, skillValue, die1, die2, wasSuccess) {
+    const newSkillTest = this.skillTestEntryTemplate.resource.instantiate();
+    newSkillTest.script["DialogueSkillTestComponent"].setup(skillName, skillValue, die1, die2, wasSuccess);
+    this.feedEntity.addChild(newSkillTest);
 
     this.resizeToContents();
 

@@ -26,6 +26,7 @@ import { DialogueTextComponent } from './view/dialoguePanel/DialogueTextComponen
 import { AttackButtonComponent } from './view/actionPanel/attackButton/AttackButtonComponent';
 import { VehicleComponent } from './components/vehicle/VehicleComponent';
 import { ScreenResizeComponent } from './components/screenResize/ScreenResizeComponent';
+import { DialogueSkillTestComponent } from './view/dialoguePanel/DialogueSkillTestComponent';
 
 class Main {
     constructor() {

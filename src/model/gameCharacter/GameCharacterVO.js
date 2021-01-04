@@ -22,7 +22,7 @@ export class GameCharacterVO {
         this.maxLuck = params.maxLuck || 1;
         this.currentLuck = this.maxLuck;
 
-        this.advancedSkills = params.advancedSkills || {};
+        this.advancedSkills = params.advancedSkills || new Map();
 
         this.botBehaviour = params.botBehaviour || 0;
 

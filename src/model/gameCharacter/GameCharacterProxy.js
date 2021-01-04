@@ -38,6 +38,14 @@ export class GameCharacterProxy extends Proxy {
         this.facade.sendNotification(GameCommands.CHANGE_STAMINA + this.id, this.vo.currentStamina, this.vo.maxStamina);
     }
 
+    getSkillTotal(skillKey) {
+        if (this.vo.advancedSkills.has(skillKey)) {
+            return this.skill + this.vo.advancedSkills.get(skillKey);
+        } else {
+            return this.skill;
+        }
+    }
+
     get id() {
         return this.vo.id;
     }

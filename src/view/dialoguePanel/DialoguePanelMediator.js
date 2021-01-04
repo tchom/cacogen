@@ -11,6 +11,7 @@ export class DialoguePanelMediator extends Mediator {
             GameCommands.SHOW_DIALOGUE_PANEL,
             GameCommands.HIDE_DIALOGUE_PANEL,
             GameCommands.DISPLAY_DIALOGUE_STEP,
+            GameCommands.DISPLAY_DIALOGUE_SKILL_TEST,
             GameCommands.CLEAR_DIALOGUE_CHOICES,
             GameCommands.SHOW_DIALOGUE_CONTINUE_BUTTON,
             GameCommands.HIDE_DIALOGUE_CONTINUE_BUTTON
@@ -37,6 +38,9 @@ export class DialoguePanelMediator extends Mediator {
                 break;
             case GameCommands.DISPLAY_DIALOGUE_STEP:
                 this.viewComponent.script['DialoguePanelComponent'].createStep(args[0]);
+                break;
+            case GameCommands.DISPLAY_DIALOGUE_SKILL_TEST:
+                this.viewComponent.script['DialoguePanelComponent'].createSkillTest(...args);
                 break;
             case GameCommands.CLEAR_DIALOGUE_CHOICES:
                 this.viewComponent.script['DialoguePanelComponent'].clearDialogueChoices();

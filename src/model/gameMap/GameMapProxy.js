@@ -116,7 +116,6 @@ export class GameMapProxy extends Proxy {
 
     hasValidLine(nodeA, nodeB) {
         const line = Astar.calculateBresenhamLine(nodeA.x, nodeA.z, nodeB.x, nodeB.z);
-        console.log(line);
         return Astar.checkValidLine(line, this.vo.mapGrid);
     }
 

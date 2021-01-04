@@ -21,10 +21,13 @@ export function selectDialogueChoiceCommand(multitonKey, notificationName, ...ar
         step: response
     });
 
-    console.log(selectedChoice);
+    if (selectedChoice.test) {
+        console.log('Perform a test!');
+        facade.sendNotification(GameCommands.RESOLVE_DIALOGUE_SKILL_TEST, selectedChoice.test);
 
-    if (selectedChoice.goto) {
-        facade.sendNotification(GameCommands.GO_TO_DIALOGUE_NODE, selectedChoice.goto);
+    } else {
+        if (selectedChoice.goto) {
+            facade.sendNotification(GameCommands.GO_TO_DIALOGUE_NODE, selectedChoice.goto);
+        }
     }
-
 }

@@ -1,0 +1,65 @@
+{
+    "version": 0.1,
+    "nodes": {
+        "entry": {
+            "steps": [
+                {
+                    "title": "Ghost",
+                    "titleColour": "#11808C",
+                    "text": "\"Wooooo! I'm a ghost. Please release me from my torment.\"",
+                    "choices": [
+                        {
+                            "text": "\"I'll try\"",
+                            "test": {
+                                "type": "str",
+                                "success": {
+                                    "goto": "save_ghost_success"
+                                },
+                                "failure": {
+                                    "goto": "save_ghost_failure"
+                                }
+                            }
+                        },
+                        {
+                            "text": "\"Maybe later\"",
+                            "goto": "goodbye"
+                        }
+                    ]
+                }
+            ]
+        },
+        "save_ghost_success": {
+            "steps": [
+                {
+                    "text": "The ghost floats off to heaven or something"
+                },
+                {
+                    "title": "Ghost",
+                    "titleColour": "#11808C",
+                    "text": "\"Hurray! Cheers champ\""
+                }
+            ]
+        },
+        "save_ghost_failure": {
+            "steps": [
+                {
+                    "text": "You strain but nothing happens."
+                },
+                {
+                    "title": "Ghost",
+                    "titleColour": "#11808C",
+                    "text": "\"Ah crap, I really hate being a ghost.\""
+                }
+            ]
+        },
+        "goodbye": {
+            "steps": [
+                {
+                    "title": "Ghost",
+                    "titleColour": "#11808C",
+                    "text": "\"No worries\""
+                }
+            ]
+        }
+    }
+}

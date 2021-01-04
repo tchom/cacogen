@@ -32,6 +32,7 @@ import { goToDialogueNodeCommand } from './controller/GoToDialogueNodeCommand';
 import { endDialogueCommand } from './controller/EndDialogueCommand';
 import { navigateToCharacterAndAttackCommand } from './controller/NavigateToCharacterAndAttackCommand';
 import { changeGameplayActionCommand } from './controller/ChangeGameplayActionCommand';
+import { resolveDialogueSkillTestCommand } from './controller/ResolveDialogueSkillTestCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -90,6 +91,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.GO_TO_DIALOGUE_NODE, goToDialogueNodeCommand);
         this.registerCommand(GameCommands.END_DIALOGUE, endDialogueCommand);
         this.registerCommand(GameCommands.GAMEPLAY_ACTION_CHANGED, changeGameplayActionCommand);
+        this.registerCommand(GameCommands.RESOLVE_DIALOGUE_SKILL_TEST, resolveDialogueSkillTestCommand);
     }
 
 }

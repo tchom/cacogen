@@ -47,7 +47,7 @@ const advancedSkillsSchema = [
     {
         name: 'skillValue',
         title: 'Skill Value',
-        type: 'string'
+        type: 'number'
     }
 ];
 
@@ -138,7 +138,7 @@ GameCharacterComponent.prototype.postInitialize = function () {
         id: this.characterId,
         isNPC: this.isNPC,
         height: this.characterHeight,
-        advancedSkills: this.advancedSkills,
+        advancedSkills: advancedSkillsSchemaToMap(this.advancedSkills),
         equippedWeapon: this.equippedWeapon,
         ...statsOverrides,
         botBehaviour: this.botBehaviour,
@@ -259,4 +259,16 @@ GameCharacterComponent.prototype.animateHit = function () {
 GameCharacterComponent.prototype.animateAttack = function () {
     this.entity.animation.loop = false;
     this.entity.animation.play('attack.glb', 0.1);
+}
+
+function advancedSkillsSchemaToMap(advancedSkillsSchema) {
+    const map = new Map();
+
+    for (const skillObject of advancedSkillsSchema) {
+        console.log(skillObject.skillName);
+        console.log(skillObject.skillValue);
+        map.set(skillObject.skillName, skillObject.skillValue);
+    }
+
+    return map;
 }
