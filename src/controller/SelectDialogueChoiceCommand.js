@@ -22,7 +22,6 @@ export function selectDialogueChoiceCommand(multitonKey, notificationName, ...ar
     });
 
     if (selectedChoice.test) {
-        console.log('Perform a test!');
         facade.sendNotification(GameCommands.RESOLVE_DIALOGUE_SKILL_TEST, selectedChoice.test);
 
     } else {

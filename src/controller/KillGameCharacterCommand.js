@@ -10,6 +10,8 @@ export function killGameCharacterCommand(multitonKey, notificationName, ...args)
     console.log(`Kill character:: ${characterId}`);
     const characterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + characterId);
     facade.sendNotification(GameCommands.DISPLAY_FLOATING_STATUS, "death", characterProxy);
+    facade.sendNotification(GameCommands.DISPLAY_DEATH + characterId);
+
 
     if (characterProxy) {
         characterProxy.currentNode.occupied = false;

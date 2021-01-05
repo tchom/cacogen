@@ -14,6 +14,12 @@ export function continueDialogueTextCommand(multitonKey, notificationName, ...ar
             facade.sendNotification(GameCommands.SHOW_DIALOGUE_CONTINUE_BUTTON);
         }
 
+        if (nextStep.notifications) {
+            for (const notification of nextStep.notifications) {
+                facade.sendNotification(notification.name, ...notification.args);
+            }
+        }
+
         facade.sendNotification(GameCommands.DISPLAY_DIALOGUE_STEP, {
             treeId: storyProxy.currentTree,
             step: nextStep

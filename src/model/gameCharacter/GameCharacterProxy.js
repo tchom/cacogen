@@ -39,6 +39,9 @@ export class GameCharacterProxy extends Proxy {
     }
 
     getSkillTotal(skillKey) {
+        console.log(`Skill ${skillKey}`);
+        console.log(this.vo.advancedSkills);
+        console.log(this.vo.advancedSkills.get(skillKey));
         if (this.vo.advancedSkills.has(skillKey)) {
             return this.skill + this.vo.advancedSkills.get(skillKey);
         } else {

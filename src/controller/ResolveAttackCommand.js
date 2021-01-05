@@ -39,7 +39,6 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
             facade.sendNotification(GameCommands.DISPLAY_ATTACK + attackerId);
 
             if (defenderProxy.isDead) {
-                facade.sendNotification(GameCommands.DISPLAY_DEATH + defenderId);
                 facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, defenderId);
             } else {
                 facade.sendNotification(GameCommands.DISPLAY_HIT + defenderId);
@@ -61,7 +60,6 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
             facade.sendNotification(GameCommands.DISPLAY_ATTACK + defenderId);
 
             if (attackerProxy.isDead) {
-                facade.sendNotification(GameCommands.DISPLAY_DEATH + attackerId);
                 facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, attackerId);
 
             } else {

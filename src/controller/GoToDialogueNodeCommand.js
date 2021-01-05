@@ -15,6 +15,15 @@ export function goToDialogueNodeCommand(multitonKey, notificationName, ...args) 
             treeId: storyProxy.currentTree,
             step: currentStep
         });
+        console.log("*****");
+        console.log(currentStep);
+
+        if (currentStep.notifications) {
+            for (const notification of currentStep.notifications) {
+                console.log(`SHOOT COMMAND: ${notification.name}`);
+                facade.sendNotification(notification.name, ...notification.args);
+            }
+        }
     } else {
         facade.sendNotification(GameCommands.END_DIALOGUE);
     }

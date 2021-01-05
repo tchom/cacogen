@@ -11,7 +11,7 @@
                         {
                             "text": "\"I'll try\"",
                             "test": {
-                                "type": "str",
+                                "skill": "secondSight",
                                 "success": {
                                     "goto": "save_ghost_success"
                                 },
@@ -36,7 +36,15 @@
                 {
                     "title": "Ghost",
                     "titleColour": "#11808C",
-                    "text": "\"Hurray! Cheers champ\""
+                    "text": "\"Hurray! Cheers champ\"",
+                    "notifications": [
+                        {
+                            "name": "KILL_GAME_CHARACTER",
+                            "args": [
+                                "ghost"
+                            ]
+                        }
+                    ]
                 }
             ]
         },
