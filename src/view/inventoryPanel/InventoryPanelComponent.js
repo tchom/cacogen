@@ -6,6 +6,7 @@ import { InventoryPanelMediator } from './InventoryPanelMediator';
 InventoryPanelComponent.attributes.add('slotContainer', { type: 'entity', title: 'Slot Container' });
 InventoryPanelComponent.attributes.add('itemContainer', { type: 'entity', title: 'Item Container' });
 InventoryPanelComponent.attributes.add('separatorHighlight', { type: 'entity', title: 'Separator Highlight' });
+InventoryPanelComponent.attributes.add('closeButton', { type: 'entity', title: 'Close Button' });
 InventoryPanelComponent.attributes.add('itemAsset', { type: 'asset', title: 'Item Asset' });
 
 InventoryPanelComponent.prototype.initialize = function () {
@@ -18,6 +19,7 @@ InventoryPanelComponent.prototype.initialize = function () {
     this.itemContainer.on('drag:item', this.handleItemDrag, this);
     this.itemContainer.on('move:item', this.handleItemMove, this);
     this.itemContainer.on('drop:item', this.handleItemDrop, this);
+    this.closeButton.element.on('click', this.handleClose, this);
 
     this.separatorHighlight.enabled = false;
 }
@@ -79,6 +81,9 @@ InventoryPanelComponent.prototype.getIndexOfItem = function (itemEntity) {
     return this.itemContainer.children.indexOf(itemEntity);
 }
 
+InventoryPanelComponent.prototype.handleClose = function () {
+    return this.entity.enabled = false;
+}
 
 InventoryPanelComponent.prototype.displayItems = function (items) {
     this.clearPanel();

@@ -22,7 +22,6 @@ export class InventoryProxy extends Proxy {
     }
 
     reorderInventoryItem(originalIndex, slotIndex) {
-        console.log(`Slot index ${slotIndex}`);
         let runningIndexTotal = 0;
         let newIndex = 0;
         for (let i = 0; i < this.inventoryItems.length; i++) {
