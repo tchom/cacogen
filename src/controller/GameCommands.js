@@ -84,4 +84,9 @@ export class GameCommands {
 
     static get GAMEPLAY_ACTION_CHANGED() { return "GAMEPLAY_ACTION_CHANGED" };
 
+    // Inventory Commands
+    static get CLICK_INVENTORY_BUTTON() { return "CLICK_INVENTORY_BUTTON" };
+    static get DISPLAY_INVENTORY_PANEL() { return "DISPLAY_INVENTORY_PANEL" };
+    static get REORDER_INVETORY_ITEM() { return "REORDER_INVETORY_ITEM" };
+
 }

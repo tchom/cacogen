@@ -265,8 +265,6 @@ function advancedSkillsSchemaToMap(advancedSkillsSchema) {
     const map = new Map();
 
     for (const skillObject of advancedSkillsSchema) {
-        console.log(skillObject.skillName);
-        console.log(skillObject.skillValue);
         map.set(skillObject.skillName, skillObject.skillValue);
     }
 

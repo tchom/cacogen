@@ -33,6 +33,8 @@ import { endDialogueCommand } from './controller/EndDialogueCommand';
 import { navigateToCharacterAndAttackCommand } from './controller/NavigateToCharacterAndAttackCommand';
 import { changeGameplayActionCommand } from './controller/ChangeGameplayActionCommand';
 import { resolveDialogueSkillTestCommand } from './controller/ResolveDialogueSkillTestCommand';
+import { clickInventoryButtonCommand } from './controller/ClickInventoryButtonCommand';
+import { reorderInventoryItemCommand } from './controller/ReorderInventoryItemCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -92,6 +94,10 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.END_DIALOGUE, endDialogueCommand);
         this.registerCommand(GameCommands.GAMEPLAY_ACTION_CHANGED, changeGameplayActionCommand);
         this.registerCommand(GameCommands.RESOLVE_DIALOGUE_SKILL_TEST, resolveDialogueSkillTestCommand);
+
+        // Inventory commands
+        this.registerCommand(GameCommands.CLICK_INVENTORY_BUTTON, clickInventoryButtonCommand);
+        this.registerCommand(GameCommands.REORDER_INVETORY_ITEM, reorderInventoryItemCommand);
     }
 
 }

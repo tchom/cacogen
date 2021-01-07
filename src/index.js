@@ -27,6 +27,8 @@ import { AttackButtonComponent } from './view/actionPanel/attackButton/AttackBut
 import { VehicleComponent } from './components/vehicle/VehicleComponent';
 import { ScreenResizeComponent } from './components/screenResize/ScreenResizeComponent';
 import { DialogueSkillTestComponent } from './view/dialoguePanel/DialogueSkillTestComponent';
+import { InventoryItemComponent } from './view/inventoryPanel/InventoryItemComponent';
+import { InventoryPanelComponent } from './view/inventoryPanel/InventoryPanelComponent';
 
 class Main {
     constructor() {
