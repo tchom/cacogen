@@ -1,6 +1,9 @@
 export class InventoryItem {
-    constructor(name, size) {
-        this.name = name;
-        this.size = size;
+    constructor(data) {
+        this.id = data.id;
+        this.name = data.name;
+        this.type = data.type;
+        this.size = data.size ?? 1;
+        this.equippable = data.equippable ?? false;
     }
 }

@@ -4,17 +4,37 @@ export class InventoryVO {
     constructor() {
         this.inventoryItems = [];
 
-        this.addItem("Test One");
-        this.addItem("Test Two");
-        this.addItem("Test Three");
-        this.addItem("Test Four");
-        this.addItem("Test Five", 3);
+        const swordWeapon = {
+            id: 'sword',
+            name: 'Basic Sword',
+            type: 'weapon'
+        };
+
+        const bowWeapon = {
+            id: 'bow',
+            name: 'Bow',
+            type: 'weapon'
+        };
+
+        const armour = {
+            id: 'armour',
+            name: 'Armour',
+            type: 'armour',
+            size: 3
+        };
+
+
+        this.addItem(swordWeapon);
+        this.addItem(bowWeapon);
+        this.addItem(armour);
+        this.addItem(swordWeapon);
+        this.addItem(bowWeapon);
 
     }
 
-    addItem(itemName, size = 1) {
+    addItem(itemData) {
         this.inventoryItems.push(
-            new InventoryItem(itemName, size)
+            new InventoryItem(itemData)
         );
     }
 }

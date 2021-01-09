@@ -29,6 +29,7 @@ import { ScreenResizeComponent } from './components/screenResize/ScreenResizeCom
 import { DialogueSkillTestComponent } from './view/dialoguePanel/DialogueSkillTestComponent';
 import { InventoryItemComponent } from './view/inventoryPanel/InventoryItemComponent';
 import { InventoryPanelComponent } from './view/inventoryPanel/InventoryPanelComponent';
+import { InventoryDragIconComponent } from './view/inventoryPanel/InventoryDragIconComponent';
 
 class Main {
     constructor() {
