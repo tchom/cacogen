@@ -30,6 +30,7 @@ import { DialogueSkillTestComponent } from './view/dialoguePanel/DialogueSkillTe
 import { InventoryItemComponent } from './view/inventoryPanel/InventoryItemComponent';
 import { InventoryPanelComponent } from './view/inventoryPanel/InventoryPanelComponent';
 import { InventoryDragIconComponent } from './view/inventoryPanel/InventoryDragIconComponent';
+import { InventoryEquippedSlotComponent } from './view/inventoryPanel/InventoryEquippedSlotComponent';
 
 class Main {
     constructor() {

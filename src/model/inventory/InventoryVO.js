@@ -3,6 +3,7 @@ import { InventoryItem } from "./items/InventoryItem";
 export class InventoryVO {
     constructor() {
         this.inventoryItems = [];
+        this.equipmentSlots = new Map();
 
         const swordWeapon = {
             id: 'sword',

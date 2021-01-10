@@ -11,5 +11,5 @@ export function reorderInventoryItemCommand(multitonKey, notificationName, ...ar
 
     inventoryProxy.reorderInventoryItem(originalIndex, newIndex);
 
-    facade.sendNotification(GameCommands.DISPLAY_INVENTORY_PANEL, inventoryProxy.inventoryItems);
+    facade.sendNotification(GameCommands.DISPLAY_INVENTORY_PANEL, inventoryProxy.inventoryItems, inventoryProxy.equipmentSlots);
 }

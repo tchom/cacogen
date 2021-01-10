@@ -21,6 +21,11 @@ export class InventoryProxy extends Proxy {
         this.vo.inventoryItems = value;
     }
 
+    get equipmentSlots() {
+        return this.vo.equipmentSlots;
+    }
+
+
     reorderInventoryItem(originalIndex, slotIndex) {
         // Delete the item from it's current position
         const originalItem = this.inventoryItems.splice(originalIndex, 1);
@@ -55,6 +60,12 @@ export class InventoryProxy extends Proxy {
 
         // Move the item to its new position
         this.inventoryItems.splice(newIndex, 0, originalItem[0]);
+    }
+
+    attemptToEquipItemToSlot(slotKey, itemData) {
+        this.equipmentSlots.set(slotKey, itemData)
+
+        return true;
     }
 
 }

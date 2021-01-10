@@ -13,6 +13,7 @@ export class InventoryPanelMediator extends Mediator {
         ]);
         this.viewComponent = viewComponent;
         this.viewComponent.on('reorderItem', this.handeReorderItem, this);
+        this.viewComponent.on('equipItem', this.handleEquipItem, this);
         this.viewComponent.enabled = false;
     }
 
@@ -24,7 +25,8 @@ export class InventoryPanelMediator extends Mediator {
         switch (notificationName) {
             case GameCommands.DISPLAY_INVENTORY_PANEL:
                 const items = args[0];
-                this.viewComponent.script["InventoryPanelComponent"].displayItems(items);
+                const equippedMap = args[1];
+                this.viewComponent.script["InventoryPanelComponent"].displayItems(items, equippedMap);
                 this.viewComponent.enabled = true;
                 break;
         }
@@ -32,5 +34,9 @@ export class InventoryPanelMediator extends Mediator {
 
     handeReorderItem(originalIndex, newIndex) {
         this.facade.sendNotification(GameCommands.REORDER_INVETORY_ITEM, originalIndex, newIndex);
+    }
+
+    handleEquipItem(itemIndex, slotKey) {
+        this.facade.sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, itemIndex, slotKey);
     }
 }

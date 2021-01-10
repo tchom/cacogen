@@ -1,3 +1,17 @@
+
+const equipmentSlotSchema = [
+    {
+        name: 'key',
+        title: 'Equipment Slot Key',
+        type: 'string'
+    },
+    {
+        name: 'entity',
+        title: 'Equipment Slot Entity',
+        type: 'entity'
+    }
+];
+
 export const InventoryPanelComponent = pc.createScript('InventoryPanelComponent');
 import { Facade } from '@koreez/pure-mvc';
 import { GameFacade } from '../../GameFacade';
@@ -13,6 +27,8 @@ InventoryPanelComponent.attributes.add('dragIcon', { type: 'entity', title: 'Dra
 InventoryPanelComponent.attributes.add('slotWidth', { type: 'number', title: 'Slot Width', default: 320 });
 InventoryPanelComponent.attributes.add('slotHeight', { type: 'number', title: 'Slot Height', default: 44 });
 InventoryPanelComponent.attributes.add('maxSlots', { type: 'number', title: 'Max Slots', default: 12 });
+
+InventoryPanelComponent.attributes.add('equipmentSlots', { type: 'json', schema: equipmentSlotSchema, array: true, title: 'Equipment Slots' });
 
 InventoryPanelComponent.prototype.initialize = function () {
     this.facade = Facade.getInstance(GameFacade.KEY);
@@ -37,7 +53,7 @@ InventoryPanelComponent.prototype.handleDragStart = function (dragEntity, size) 
     }, this);
 
     this.entity.element.on(pc.EVENT_MOUSEUP, (evt) => {
-        this.handleMouseUp(dragEntity, size, this.localPositionFromMouseEvent(evt));
+        this.handleMouseUp(dragEntity, size, evt);
     }, this);
 }
 
@@ -67,7 +83,8 @@ InventoryPanelComponent.prototype.handleMouseMove = function (dragEntity, size, 
 
 
 
-InventoryPanelComponent.prototype.handleMouseUp = function (dragEntity, size, dragPos) {
+InventoryPanelComponent.prototype.handleMouseUp = function (dragEntity, size, evt) {
+    const dragPos = this.localPositionFromMouseEvent(evt);
     this.dragIcon.enabled = false;
     dragEntity.script['InventoryItemComponent'].expand();
     this.entity.element.off(pc.EVENT_MOUSEMOVE);
@@ -92,7 +109,29 @@ InventoryPanelComponent.prototype.handleMouseUp = function (dragEntity, size, dr
         this.entity.fire('reorderItem', originalIndex, slotIndex);
     } else {
         // Check if dropped in equip slot
+        this.checkDropOnEquipmentSlot(dragEntity, evt);
     }
+}
+
+InventoryPanelComponent.prototype.checkDropOnEquipmentSlot = function (draggingEntity, mouseEvent) {
+    for (const equipSlot of this.equipmentSlots) {
+        const equipSlotKey = equipSlot.key;
+        const equipSlotEntity = equipSlot.entity;
+        const corners = equipSlotEntity.element.screenCorners;
+        const height = this.app.graphicsDevice.height;
+        const point = { x: mouseEvent.x, y: height - mouseEvent.y };
+        const bounds = {
+            x1: corners[0].x, y1: corners[0].y,
+            x2: corners[2].x, y2: corners[2].y,
+        };
+
+        if (isInBounds(point, bounds)) {
+            const itemIndex = draggingEntity.script["InventoryItemComponent"].orderIndex;
+
+            this.entity.fire('equipItem', itemIndex, equipSlotKey);
+        }
+    }
+
 }
 
 InventoryPanelComponent.prototype.handleItemMove = function (draggingEntity, value) {
@@ -108,14 +147,13 @@ InventoryPanelComponent.prototype.handleItemMove = function (draggingEntity, val
 
 function isInBounds(point, bounds) {
     return point.x > bounds.x1 && point.x < bounds.x2 && point.y > bounds.y1 && point.y < bounds.y2;
-
 }
 
 InventoryPanelComponent.prototype.handleClose = function () {
     return this.entity.enabled = false;
 }
 
-InventoryPanelComponent.prototype.displayItems = function (items) {
+InventoryPanelComponent.prototype.displayItems = function (items, equippedMap) {
     this.clearPanel();
     const topSlotPosition = this.topSlotPosition.getLocalPosition();
     let runningIndex = 0;
@@ -130,6 +168,18 @@ InventoryPanelComponent.prototype.displayItems = function (items) {
         this.inventoryItemEntities.push(newItemComponent);
 
         this.entity.addChild(newItemComponent);
+    }
+
+    for (const equipSlot of this.equipmentSlots) {
+        const equipSlotKey = equipSlot.key;
+        const equipSlotEntity = equipSlot.entity;
+
+        if (equippedMap.has(equipSlotKey)) {
+            equipSlotEntity.script["InventoryEquippedSlotComponent"].setup(true);
+        } else {
+            equipSlotEntity.script["InventoryEquippedSlotComponent"].setup(false);
+        }
+
     }
 }
 

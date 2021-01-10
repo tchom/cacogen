@@ -6,5 +6,5 @@ export function clickInventoryButtonCommand(multitonKey, notificationName, ...ar
     const facade = Facade.getInstance(multitonKey);
     const inventoryProxy = facade.retrieveProxy(InventoryProxy.NAME);
 
-    facade.sendNotification(GameCommands.DISPLAY_INVENTORY_PANEL, inventoryProxy.inventoryItems);
+    facade.sendNotification(GameCommands.DISPLAY_INVENTORY_PANEL, inventoryProxy.inventoryItems, inventoryProxy.equipmentSlots);
 }
