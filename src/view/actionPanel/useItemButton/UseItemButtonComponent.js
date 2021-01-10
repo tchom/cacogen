@@ -30,7 +30,7 @@ UseItemButtonComponent.prototype.setDefaultIcon = function () {
 }
 
 UseItemButtonComponent.prototype.handleClick = function (evt) {
-    this.entity.fire('click:useItem', !this.highlightEntity.enabled);
+    this.entity.fire('click:useItem');
 }
 
 UseItemButtonComponent.prototype.toggleHighlight = function (isEnabled) {

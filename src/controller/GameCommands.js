@@ -91,5 +91,8 @@ export class GameCommands {
     static get EQUIP_ITEM_TO_SLOT() { return "EQUIP_ITEM_TO_SLOT" };
     static get ADD_ITEM_TO_INVENTORY() { return "ADD_ITEM_TO_INVENTORY" };
     static get DISPLAY_EQUIPPED_SLOT() { return "DISPLAY_EQUIPPED_SLOT" };
+    static get USE_EQUIPPED_ITEM() { return "USE_EQUIPPED_ITEM" };
+
+    static get SET_USE_ITEM_BUTTON_HIGHLIGHT() { return "SET_USE_ITEM_BUTTON_HIGHLIGHT" };
 
 }

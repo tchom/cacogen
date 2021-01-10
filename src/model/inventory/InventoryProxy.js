@@ -106,4 +106,7 @@ export class InventoryProxy extends Proxy {
         this.inventoryItems.push(inventoryItemData);
     }
 
+    getEquippedItem(slotKey) {
+        return this.equipmentSlots.get(slotKey);
+    }
 }

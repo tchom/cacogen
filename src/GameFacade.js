@@ -37,6 +37,7 @@ import { clickInventoryButtonCommand } from './controller/ClickInventoryButtonCo
 import { reorderInventoryItemCommand } from './controller/ReorderInventoryItemCommand';
 import { equipItemToSlotCommand } from './controller/EquipItemToSlotCommand';
 import { addItemToInventoryCommand } from './controller/AddItemtoInventoryCommand';
+import { useEquippedItemCommand } from './controller/UseEquippedItemCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -102,6 +103,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.REORDER_INVETORY_ITEM, reorderInventoryItemCommand);
         this.registerCommand(GameCommands.EQUIP_ITEM_TO_SLOT, equipItemToSlotCommand);
         this.registerCommand(GameCommands.ADD_ITEM_TO_INVENTORY, addItemToInventoryCommand);
+        this.registerCommand(GameCommands.USE_EQUIPPED_ITEM, useEquippedItemCommand);
     }
 
 }
