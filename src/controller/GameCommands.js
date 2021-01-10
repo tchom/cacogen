@@ -89,5 +89,6 @@ export class GameCommands {
     static get DISPLAY_INVENTORY_PANEL() { return "DISPLAY_INVENTORY_PANEL" };
     static get REORDER_INVETORY_ITEM() { return "REORDER_INVETORY_ITEM" };
     static get EQUIP_ITEM_TO_SLOT() { return "EQUIP_ITEM_TO_SLOT" };
+    static get ADD_ITEM_TO_INVENTORY() { return "ADD_ITEM_TO_INVENTORY" };
 
 }

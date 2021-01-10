@@ -1,0 +1,42 @@
+{
+    "weapon": {
+        "sword": {
+            "name": "Sword",
+            "description": "",
+            "equipSlot": "1hand",
+            "size": 1
+        },
+        "pistolet": {
+            "name": "Pistolet",
+            "description": "",
+            "equipSlot": "1hand",
+            "size": 1
+        },
+        "maul": {
+            "name": "Maul",
+            "description": "",
+            "equipSlot": "2hand",
+            "size": 2
+        },
+        "fusil": {
+            "name": "Fusil",
+            "description": "",
+            "equipSlot": "2hand",
+            "size": 2
+        }
+    },
+    "armour": {
+        "leatherArmour": {
+            "name": "Leather Armour",
+            "description": "",
+            "equipSlot": "armour",
+            "size": 2
+        },
+        "chainmail": {
+            "name": "Chainmail",
+            "description": "",
+            "equipSlot": "armour",
+            "size": 4
+        }
+    }
+}

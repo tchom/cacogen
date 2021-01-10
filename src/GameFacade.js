@@ -36,6 +36,7 @@ import { resolveDialogueSkillTestCommand } from './controller/ResolveDialogueSki
 import { clickInventoryButtonCommand } from './controller/ClickInventoryButtonCommand';
 import { reorderInventoryItemCommand } from './controller/ReorderInventoryItemCommand';
 import { equipItemToSlotCommand } from './controller/EquipItemToSlotCommand';
+import { addItemToInventoryCommand } from './controller/AddItemtoInventoryCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -100,6 +101,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.CLICK_INVENTORY_BUTTON, clickInventoryButtonCommand);
         this.registerCommand(GameCommands.REORDER_INVETORY_ITEM, reorderInventoryItemCommand);
         this.registerCommand(GameCommands.EQUIP_ITEM_TO_SLOT, equipItemToSlotCommand);
+        this.registerCommand(GameCommands.ADD_ITEM_TO_INVENTORY, addItemToInventoryCommand);
     }
 
 }

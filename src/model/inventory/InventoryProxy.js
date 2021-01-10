@@ -64,19 +64,13 @@ export class InventoryProxy extends Proxy {
 
     attemptToEquipItemToSlot(slotKey, itemData) {
         const existingItem = this.equipmentSlots.get(slotKey);
-
-        const inventoryIndex = this.inventoryItems.indexOf(itemData);
-        if (inventoryIndex !== -1) {
-            this.inventoryItems.splice(inventoryIndex, 1);
-        }
         this.equipmentSlots.set(slotKey, itemData);
 
-        if (existingItem) {
-            this.inventoryItems.push(existingItem)
-        }
-
-
         return true;
+    }
+
+    addInventoryItem(inventoryItemData) {
+        this.inventoryItems.push(inventoryItemData);
     }
 
 }
