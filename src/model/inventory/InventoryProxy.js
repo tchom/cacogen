@@ -26,8 +26,9 @@ export class InventoryProxy extends Proxy {
     }
 
 
-    reorderInventoryItem(originalIndex, slotIndex) {
+    reorderInventoryItem(itemUUID, slotIndex) {
         // Delete the item from it's current position
+        const originalIndex = this.inventoryItems.findIndex(item => item.uuid === itemUUID);
         const originalItem = this.inventoryItems.splice(originalIndex, 1);
         let runningIndexTotal = 0;
         let newIndex = 0;
@@ -75,6 +76,19 @@ export class InventoryProxy extends Proxy {
 
             if (itemData.equipSlot === '1hand') {
                 this.equipmentSlots.set(slotKey, itemData);
+                // make sure this isn't already equipped in the other hand
+                if (slotKey === '1hand') {
+                    const otherSlot = this.equipmentSlots.get('2hand');
+                    if (otherSlot && otherSlot.uuid === itemData.uuid) {
+                        this.equipmentSlots.delete('2hand');
+                    }
+                } else if (slotKey === '2hand') {
+                    const otherSlot = this.equipmentSlots.get('1hand');
+                    if (otherSlot && otherSlot.uuid === itemData.uuid) {
+                        this.equipmentSlots.delete('1hand');
+                    }
+                }
+
 
             } else {
                 this.equipmentSlots.set('1hand', itemData);

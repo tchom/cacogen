@@ -21,8 +21,10 @@ export function equipWeaponCommand(multitonKey, notificationName, ...args) {
     const weapon = args[1];
 
     const characterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + characterId);
-    characterProxy.equippedWeapon = weapon;
 
-    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${characterId} equips ${weapon}`);
+    if (characterProxy) {
+        characterProxy.equippedWeapon = weapon;
 
+        facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${characterId} equips ${weapon}`);
+    }
 }

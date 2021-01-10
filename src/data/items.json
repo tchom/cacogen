@@ -1,5 +1,12 @@
 {
     "weapon": {
+        "unarmed": {
+            "name": "Unarmed",
+            "description": "",
+            "equipSlot": "1hand",
+            "size": 0,
+            "icon": 40815283
+        },
         "sword": {
             "name": "Sword",
             "description": "",

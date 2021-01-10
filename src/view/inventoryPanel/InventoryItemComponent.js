@@ -7,15 +7,16 @@ InventoryItemComponent.attributes.add('slotHeight', { type: 'number', title: 'Sl
 InventoryItemComponent.attributes.add('expandedEntity', { type: 'entity', title: 'Expanded Entity' });
 
 // Display Methods
-InventoryItemComponent.prototype.setup = function (icon, name, size, orderIndex) {
-    const iconAsset = this.app.assets.get(icon);
+InventoryItemComponent.prototype.setup = function (itemData) {
+    this.icon = itemData.icon;
+    const iconAsset = this.app.assets.get(this.icon);
     this.iconEntity.element.spriteAsset = iconAsset;
-    this.icon = icon;
-    this.size = size;
-    this.labelEntity.element.text = name;
-    this.entity.element.height = this.slotHeight * size;
-    this.expandedEntity.element.height = this.slotHeight * size;
-    this.orderIndex = orderIndex;
+    this.size = itemData.size;
+    this.labelEntity.element.text = itemData.name;
+    this.entity.element.height = this.slotHeight * this.size;
+    this.expandedEntity.element.height = this.slotHeight * this.size;
+
+    this.itemData = itemData;
 }
 
 InventoryItemComponent.prototype.collapse = function () {

@@ -32,11 +32,11 @@ export class InventoryPanelMediator extends Mediator {
         }
     }
 
-    handeReorderItem(originalIndex, newIndex) {
-        this.facade.sendNotification(GameCommands.REORDER_INVETORY_ITEM, originalIndex, newIndex);
+    handeReorderItem(itemUUID, newIndex) {
+        this.facade.sendNotification(GameCommands.REORDER_INVETORY_ITEM, itemUUID, newIndex);
     }
 
-    handleEquipItem(itemIndex, slotKey) {
-        this.facade.sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, itemIndex, slotKey);
+    handleEquipItem(itemId, slotKey) {
+        this.facade.sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, itemId, slotKey);
     }
 }

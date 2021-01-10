@@ -105,8 +105,8 @@ InventoryPanelComponent.prototype.handleMouseUp = function (dragEntity, size, ev
         const cornerPos = this.localPositionFromMouseEvent(cornerScreenPos);
 
         const slotIndex = Math.max(0, Math.floor((topSlotPosition.y - cornerPos.y) / this.slotHeight));
-        const originalIndex = dragEntity.script['InventoryItemComponent'].orderIndex;
-        this.entity.fire('reorderItem', originalIndex, slotIndex);
+        const itemData = dragEntity.script['InventoryItemComponent'].itemData;
+        this.entity.fire('reorderItem', itemData.uuid, slotIndex);
     } else {
         // Check if dropped in equip slot
         this.checkDropOnEquipmentSlot(dragEntity, evt);
@@ -126,9 +126,9 @@ InventoryPanelComponent.prototype.checkDropOnEquipmentSlot = function (draggingE
         };
 
         if (isInBounds(point, bounds)) {
-            const itemIndex = draggingEntity.script["InventoryItemComponent"].orderIndex;
+            const itemData = draggingEntity.script["InventoryItemComponent"].itemData;
 
-            this.entity.fire('equipItem', itemIndex, equipSlotKey);
+            this.entity.fire('equipItem', itemData.id, equipSlotKey);
         }
     }
 
@@ -154,6 +154,8 @@ InventoryPanelComponent.prototype.handleClose = function () {
 }
 
 InventoryPanelComponent.prototype.displayItems = function (items, equippedMap) {
+    console.log(items);
+    console.log(equippedMap);
     this.clearPanel();
     const topSlotPosition = this.topSlotPosition.getLocalPosition();
     let runningIndex = 0;
@@ -162,7 +164,7 @@ InventoryPanelComponent.prototype.displayItems = function (items, equippedMap) {
         runningIndex += item.size;
 
         const newItemComponent = this.itemAsset.resource.instantiate();
-        newItemComponent.script["InventoryItemComponent"].setup(item.icon, item.name, item.size, i);
+        newItemComponent.script["InventoryItemComponent"].setup(item);
         newItemComponent.setLocalPosition(topSlotPosition.x, topSlotPosition.y - (runningIndex * this.slotHeight), 0);
 
         this.inventoryItemEntities.push(newItemComponent);
