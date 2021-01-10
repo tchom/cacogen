@@ -17,6 +17,12 @@ export class InventoryVO {
             type: 'weapon'
         };
 
+        const fusilWeapon = {
+            id: 'fusil',
+            name: 'Fusil',
+            type: 'weapon'
+        };
+
         const armour = {
             id: 'armour',
             name: 'Armour',
@@ -29,6 +35,7 @@ export class InventoryVO {
         this.addItem(bowWeapon);
         this.addItem(armour);
         this.addItem(swordWeapon);
+        this.addItem(fusilWeapon);
         this.addItem(bowWeapon);
 
     }

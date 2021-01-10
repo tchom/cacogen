@@ -23,7 +23,10 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + attackerId, defenderProxy.currentNode);
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + defenderId, attackerProxy.currentNode);
 
-    attackerScore += rollAttackSkill(attackerProxy.skill);
+    const attackerWeaponSkill = `${attackerProxy.equippedWeapon}Fighting`;
+    const attackerSkillTotal = attackerProxy.getSkillTotal(attackerWeaponSkill);
+
+    attackerScore += rollAttackSkill(attackerSkillTotal);
     defenderScore += rollAttackSkill(defenderProxy.skill);
 
     const weaponsProxy = facade.retrieveProxy(WeaponsProxy.NAME);

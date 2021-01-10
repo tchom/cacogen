@@ -15,10 +15,15 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + attackerId, defenderProxy.currentNode);
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + defenderId, attackerProxy.currentNode);
 
-    const attackerRoll = rollAttackSkill(attackerProxy.skill);
-    const defenderRoll = rollAttackSkill(defenderProxy.skill);
-
     const weaponsProxy = facade.retrieveProxy(WeaponsProxy.NAME);
+    const attackerWeaponSkill = `${attackerProxy.equippedWeapon}Fighting`;
+    const defenderWeaponSkill = `${defenderProxy.equippedWeapon}Fighting`;
+
+    const attackerSkillTotal = attackerProxy.getSkillTotal(attackerWeaponSkill);
+    const defenderSkillTotal = attackerProxy.getSkillTotal(defenderWeaponSkill);
+
+    const attackerRoll = rollAttackSkill(attackerSkillTotal);
+    const defenderRoll = rollAttackSkill(defenderSkillTotal);
 
     // Reduce actions
     attackerProxy.availableActions -= 1;
