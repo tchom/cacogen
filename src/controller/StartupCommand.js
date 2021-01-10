@@ -24,6 +24,7 @@ export function startupCommand(multitonKey, notificationName) {
 
         // Add default equipment
         Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "sword");
+        Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "pistolet");
         Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "fusil");
         Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "chainmail");
     }

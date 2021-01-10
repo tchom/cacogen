@@ -4,25 +4,29 @@
             "name": "Sword",
             "description": "",
             "equipSlot": "1hand",
-            "size": 1
+            "size": 1,
+            "icon": 40815292
         },
         "pistolet": {
             "name": "Pistolet",
             "description": "",
             "equipSlot": "1hand",
-            "size": 1
+            "size": 1,
+            "icon": 40815330
         },
         "maul": {
             "name": "Maul",
             "description": "",
             "equipSlot": "2hand",
-            "size": 2
+            "size": 2,
+            "icon": 40815331
         },
         "fusil": {
             "name": "Fusil",
             "description": "",
             "equipSlot": "2hand",
-            "size": 2
+            "size": 2,
+            "icon": 40815335
         }
     },
     "armour": {
@@ -30,13 +34,15 @@
             "name": "Leather Armour",
             "description": "",
             "equipSlot": "armour",
-            "size": 2
+            "size": 2,
+            "icon": 40815320
         },
         "chainmail": {
             "name": "Chainmail",
             "description": "",
             "equipSlot": "armour",
-            "size": 4
+            "size": 4,
+            "icon": 40815320
         }
     }
 }

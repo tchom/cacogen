@@ -63,10 +63,29 @@ export class InventoryProxy extends Proxy {
     }
 
     attemptToEquipItemToSlot(slotKey, itemData) {
-        const existingItem = this.equipmentSlots.get(slotKey);
-        this.equipmentSlots.set(slotKey, itemData);
+        // check equip weapon
+        if ((slotKey === '1hand' || slotKey === '2hand') && itemData.type === "weapon") {
+            const existingItem = this.equipmentSlots.get(slotKey);
 
-        return true;
+            // Clear both slots it last item was two-handed
+            if (existingItem && existingItem.equipSlot === '2hand') {
+                this.equipmentSlots.delete('1hand');
+                this.equipmentSlots.delete('2hand');
+            }
+
+            if (itemData.equipSlot === '1hand') {
+                this.equipmentSlots.set(slotKey, itemData);
+
+            } else {
+                this.equipmentSlots.set('1hand', itemData);
+                this.equipmentSlots.set('2hand', itemData);
+
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     addInventoryItem(inventoryItemData) {

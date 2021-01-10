@@ -162,7 +162,7 @@ InventoryPanelComponent.prototype.displayItems = function (items, equippedMap) {
         runningIndex += item.size;
 
         const newItemComponent = this.itemAsset.resource.instantiate();
-        newItemComponent.script["InventoryItemComponent"].setup(item.name, item.size, i);
+        newItemComponent.script["InventoryItemComponent"].setup(item.icon, item.name, item.size, i);
         newItemComponent.setLocalPosition(topSlotPosition.x, topSlotPosition.y - (runningIndex * this.slotHeight), 0);
 
         this.inventoryItemEntities.push(newItemComponent);
@@ -175,9 +175,10 @@ InventoryPanelComponent.prototype.displayItems = function (items, equippedMap) {
         const equipSlotEntity = equipSlot.entity;
 
         if (equippedMap.has(equipSlotKey)) {
-            equipSlotEntity.script["InventoryEquippedSlotComponent"].setup(true);
+            const equippedItem = equippedMap.get(equipSlotKey);
+            equipSlotEntity.script["InventoryEquippedSlotComponent"].setup(equippedItem.icon);
         } else {
-            equipSlotEntity.script["InventoryEquippedSlotComponent"].setup(false);
+            equipSlotEntity.script["InventoryEquippedSlotComponent"].clear();
         }
 
     }

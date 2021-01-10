@@ -12,13 +12,15 @@ export function equipItemToSlotCommand(multitonKey, notificationName, ...args) {
     const equipmentKey = args[1];
     const item = inventoryProxy.inventoryItems[itemIndex];
 
-    inventoryProxy.attemptToEquipItemToSlot(equipmentKey, item);
+    const wasEquipped = inventoryProxy.attemptToEquipItemToSlot(equipmentKey, item);
 
-    if (item.type === "weapon") {
-        facade.sendNotification(GameCommands.EQUIP_WEAPON, "player", item.id);
-
+    if (wasEquipped) {
+        if (item.type === "weapon") {
+            facade.sendNotification(GameCommands.EQUIP_WEAPON, "player", item.id);
+        }
     }
 
+    facade.sendNotification(GameCommands.DISPLAY_EQUIPPED_SLOT, inventoryProxy.equipmentSlots);
     facade.sendNotification(GameCommands.DISPLAY_INVENTORY_PANEL, inventoryProxy.inventoryItems, inventoryProxy.equipmentSlots);
 
 }

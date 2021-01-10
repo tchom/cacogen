@@ -24,6 +24,7 @@ import { DialogueChoiceComponent } from './view/dialoguePanel/DialogueChoiceComp
 import { DefaultAnimationComponent } from './view/gameCharacter/defaultAnim/DefaultAnimationComponent';
 import { DialogueTextComponent } from './view/dialoguePanel/DialogueTextComponent';
 import { AttackButtonComponent } from './view/actionPanel/attackButton/AttackButtonComponent';
+import { UseItemButtonComponent } from './view/actionPanel/useItemButton/UseItemButtonComponent';
 import { VehicleComponent } from './components/vehicle/VehicleComponent';
 import { ScreenResizeComponent } from './components/screenResize/ScreenResizeComponent';
 import { DialogueSkillTestComponent } from './view/dialoguePanel/DialogueSkillTestComponent';
@@ -31,6 +32,7 @@ import { InventoryItemComponent } from './view/inventoryPanel/InventoryItemCompo
 import { InventoryPanelComponent } from './view/inventoryPanel/InventoryPanelComponent';
 import { InventoryDragIconComponent } from './view/inventoryPanel/InventoryDragIconComponent';
 import { InventoryEquippedSlotComponent } from './view/inventoryPanel/InventoryEquippedSlotComponent';
+
 
 class Main {
     constructor() {
