@@ -105,6 +105,10 @@ export class GameCharacterProxy extends Proxy {
         return this.vo.currentStamina;
     }
 
+    set currentStamina(value) {
+        this.vo.currentStamina = value;
+    }
+
     get currentLuck() {
         return this.vo.currentStamina;
     }

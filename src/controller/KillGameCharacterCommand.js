@@ -14,6 +14,7 @@ export function killGameCharacterCommand(multitonKey, notificationName, ...args)
 
 
     if (characterProxy) {
+        characterProxy.currentStamina = 0;
         characterProxy.currentNode.occupied = false;
     }
 

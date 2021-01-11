@@ -99,6 +99,13 @@ export class InventoryProxy extends Proxy {
             return true;
         }
 
+        // Attempt to equip armour
+        if (slotKey === 'armour' && itemData.type === "armour") {
+            this.equipmentSlots.set(slotKey, itemData);
+            return true;
+        }
+
+
         return false;
     }
 

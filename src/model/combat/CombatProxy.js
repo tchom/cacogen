@@ -16,11 +16,16 @@ export class CombatProxy extends Proxy {
     }
 
     onRegister() {
-        const participants = this.vo.participants;
+        const participants = [...this.vo.participants];
         this.participantProxies = new Map();
         for (const participant of participants) {
             const participantProxy = this.facade.retrieveProxy(GameCharacterProxy.NAME + participant);
-            this.participantProxies.set(participant, participantProxy);
+            if (!participantProxy.isDead) {
+                this.participantProxies.set(participant, participantProxy);
+            } else {
+                // Already dead... move on
+                this.vo.participants = this.vo.participants.filter(e => e !== participant)
+            }
         }
     }
 
