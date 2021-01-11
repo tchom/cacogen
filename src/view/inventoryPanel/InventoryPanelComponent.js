@@ -46,13 +46,28 @@ InventoryPanelComponent.prototype.handleDragStart = function (dragEntity, size) 
     dragEntity.reparent(this.entity);
     this.dragIcon.reparent(this.entity);
 
-    this.entity.element.on(pc.EVENT_MOUSEMOVE, (evt) => {
-        this.handleMouseMove(dragEntity, size, evt);
-    }, this);
+    if (this.app.touch) {
+        this.app.touch.on(pc.EVENT_TOUCHMOVE, (evt) => {
+            if (evt.touches.length > 0) {
+                this.handleMouseMove(dragEntity, size, evt.touches[0]);
+            }
+        }, this);
 
-    this.entity.element.on(pc.EVENT_MOUSEUP, (evt) => {
-        this.handleMouseUp(dragEntity, size, evt);
-    }, this);
+        this.app.touch.on(pc.EVENT_TOUCHEND, (evt) => {
+            if (evt.changedTouches.length > 0) {
+                this.handleMouseUp(dragEntity, size, evt.changedTouches[0]);
+
+            }
+        }, this);
+    } else {
+        this.entity.element.on(pc.EVENT_MOUSEMOVE, (evt) => {
+            this.handleMouseMove(dragEntity, size, evt);
+        }, this);
+
+        this.entity.element.on(pc.EVENT_MOUSEUP, (evt) => {
+            this.handleMouseUp(dragEntity, size, evt);
+        }, this);
+    }
 }
 
 InventoryPanelComponent.prototype.localPositionFromMouseEvent = function (evt) {
@@ -87,6 +102,11 @@ InventoryPanelComponent.prototype.handleMouseUp = function (dragEntity, size, ev
     dragEntity.script['InventoryItemComponent'].expand();
     this.entity.element.off(pc.EVENT_MOUSEMOVE);
     this.entity.element.off(pc.EVENT_MOUSEUP);
+
+    if (this.app.touch) {
+        this.app.touch.off(pc.EVENT_TOUCHMOVE);
+        this.app.touch.off(pc.EVENT_TOUCHEND);
+    }
 
     const topSlotPosition = this.topSlotPosition.getLocalPosition();
     const bounds = {
@@ -145,7 +165,8 @@ function isInBounds(point, bounds) {
     return point.x > bounds.x1 && point.x < bounds.x2 && point.y > bounds.y1 && point.y < bounds.y2;
 }
 
-InventoryPanelComponent.prototype.handleClose = function () {
+InventoryPanelComponent.prototype.handleClose = function (evt) {
+    evt.event.stopImmediatePropagation();
     return this.entity.enabled = false;
 }
 
