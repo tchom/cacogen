@@ -4,6 +4,7 @@ import { StoryProxy } from '../model/storyProxy/StoryProxy';
 import { InventoryProxy } from '../model/inventory/InventoryProxy';
 import { ItemsProxy } from '../model/items/ItemsProxy';
 import { GameCommands } from './GameCommands';
+import { BotBehaviourProxy } from '../model/botBehaviour/BotBehaviourProxy';
 const { Facade } = require('@koreez/pure-mvc');
 
 export function startupCommand(multitonKey, notificationName) {
@@ -21,6 +22,7 @@ export function startupCommand(multitonKey, notificationName) {
         Facade.getInstance(multitonKey).registerProxy(new ItemsProxy(itemsData));
         Facade.getInstance(multitonKey).registerProxy(new StoryProxy());
         Facade.getInstance(multitonKey).registerProxy(new InventoryProxy());
+        Facade.getInstance(multitonKey).registerProxy(new BotBehaviourProxy());
 
         // Add default equipment
         Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "sword");
