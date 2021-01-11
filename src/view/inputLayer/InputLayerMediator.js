@@ -8,7 +8,6 @@ export class InputLayerMediator extends Mediator {
     constructor(viewComponent) {
         super(InputLayerMediator.NAME);
         this.subscribeNotification([
-            GameCommands.CHANGE_SCENE_COMPLETE
         ]);
         this.viewComponent = viewComponent;
         this.viewComponent.on('picker:gameCharacter', this.handlePickerGameCharacter, this);
@@ -23,8 +22,7 @@ export class InputLayerMediator extends Mediator {
 
     handleNotification(notificationName, ...args) {
         switch (notificationName) {
-            case GameCommands.CHANGE_SCENE_COMPLETE:
-                break;
+
         }
     }
 

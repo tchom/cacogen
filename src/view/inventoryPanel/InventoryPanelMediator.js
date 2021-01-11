@@ -14,6 +14,7 @@ export class InventoryPanelMediator extends Mediator {
         this.viewComponent = viewComponent;
         this.viewComponent.on('reorderItem', this.handeReorderItem, this);
         this.viewComponent.on('equipItem', this.handleEquipItem, this);
+        this.viewComponent.on('close', this.handleClose, this);
         this.viewComponent.enabled = false;
     }
 
@@ -38,5 +39,12 @@ export class InventoryPanelMediator extends Mediator {
 
     handleEquipItem(itemId, slotKey) {
         this.facade.sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, itemId, slotKey);
+    }
+
+    handleClose() {
+        setTimeout(() => {
+            this.viewComponent.enabled = false;
+        }, 100);
+
     }
 }

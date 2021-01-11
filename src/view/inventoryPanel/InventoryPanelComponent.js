@@ -91,10 +91,7 @@ InventoryPanelComponent.prototype.handleMouseMove = function (dragEntity, size, 
     this.dragIcon.setLocalPosition(newPosition);
 
     this.displayPotentialList(dragEntity, size, newPosition);
-
 }
-
-
 
 InventoryPanelComponent.prototype.handleMouseUp = function (dragEntity, size, evt) {
     const dragPos = this.localPositionFromMouseEvent(evt);
@@ -167,12 +164,10 @@ function isInBounds(point, bounds) {
 
 InventoryPanelComponent.prototype.handleClose = function (evt) {
     evt.event.stopImmediatePropagation();
-    return this.entity.enabled = false;
+    this.entity.fire('close');
 }
 
 InventoryPanelComponent.prototype.displayItems = function (items, equippedMap) {
-    console.log(items);
-    console.log(equippedMap);
     this.clearPanel();
     const topSlotPosition = this.topSlotPosition.getLocalPosition();
     let runningIndex = 0;
