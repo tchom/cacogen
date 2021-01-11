@@ -36,6 +36,10 @@ export class MoveTowardsTarget extends BaseNode {
                 characterProxy.currentNode = node;
 
             }
+        } else {
+            setTimeout(() => {
+                facade.sendNotification(GameCommands.DETERMINE_NEXT_ENEMY_ACTION, characterId);
+            }, 500);
         }
 
         // use up movement points
