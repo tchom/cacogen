@@ -19,7 +19,6 @@ import { InventoryPanelMediator } from './InventoryPanelMediator';
 
 InventoryPanelComponent.attributes.add('slotContainer', { type: 'entity', title: 'Slot Container' });
 InventoryPanelComponent.attributes.add('topSlotPosition', { type: 'entity', title: 'Top Slot Position' });
-InventoryPanelComponent.attributes.add('separatorHighlight', { type: 'entity', title: 'Separator Highlight' });
 InventoryPanelComponent.attributes.add('closeButton', { type: 'entity', title: 'Close Button' });
 InventoryPanelComponent.attributes.add('itemAsset', { type: 'asset', title: 'Item Asset' });
 
@@ -40,7 +39,6 @@ InventoryPanelComponent.prototype.initialize = function () {
     this.entity.on('drag:start', this.handleDragStart, this);
     this.closeButton.element.on('click', this.handleClose, this);
 
-    this.separatorHighlight.enabled = false;
     this.inventoryItemEntities = [];
 }
 
@@ -137,10 +135,8 @@ InventoryPanelComponent.prototype.checkDropOnEquipmentSlot = function (draggingE
 InventoryPanelComponent.prototype.handleItemMove = function (draggingEntity, value) {
     if (this.isInBounds(value)) {
         draggingEntity.script['InventoryItemComponent'].expand();
-        this.separatorHighlight.enabled = true;
     } else {
         draggingEntity.script['InventoryItemComponent'].collapse();
-        this.separatorHighlight.enabled = false;
     }
     this.setHighlightPosition(value);
 }
@@ -208,7 +204,6 @@ InventoryPanelComponent.prototype.displayPotentialList = function (dragEntity, s
         this.reorderListWithGap(dragEntity, dragEntity.script['InventoryItemComponent'].size, slotIndex);
 
     } else {
-        this.separatorHighlight.enabled = false;
         dragEntity.script['InventoryItemComponent'].collapse();
         this.dragIcon.enabled = true;
     }
