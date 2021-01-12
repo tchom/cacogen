@@ -40,11 +40,20 @@ function createMapFloor(app) {
         const navComp = floorEntity.script['NavigationComponent'];
         navigationComponents.push(navComp);
 
+        for (const connectedCompEntity of navComp.connectedComponents) {
+            const connectedComp = connectedCompEntity.script['NavigationComponent'];
+
+            if (!connectedComp.connectedComponents.includes(floorEntity)) {
+                connectedComp.connectedComponents.push(floorEntity);
+            }
+        }
+
         const floorGrid = createPartialGridFromFloor(floorEntity)
         navComp.setGrid(floorGrid);
     }
 
-    // Second parse - stitch together adjacent nodes in 
+
+    // Third parse - stitch together adjacent nodes in 
     // connected navigation meshes
     for (const navigationComp of navigationComponents) {
         for (const connectedCompEntity of navigationComp.connectedComponents) {

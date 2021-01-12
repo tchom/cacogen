@@ -29,6 +29,7 @@ export function startupCommand(multitonKey, notificationName) {
         Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "pistolet");
         Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "fusil");
         Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "chainmail");
+        Facade.getInstance(multitonKey).sendNotification(GameCommands.ADD_ITEM_TO_INVENTORY, "shield");
         Facade.getInstance(multitonKey).sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, "unarmed", "1hand");
         Facade.getInstance(multitonKey).sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, "unarmed", "2hand");
 

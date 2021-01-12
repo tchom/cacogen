@@ -34,6 +34,14 @@
             "equipSlot": "2hand",
             "size": 2,
             "icon": 40815335
+        },
+        "shield": {
+            "name": "Shield",
+            "description": "",
+            "equipSlot": "1hand",
+            "size": 1,
+            "armour": 1,
+            "icon": 40945005
         }
     },
     "armour": {
@@ -49,6 +57,7 @@
             "description": "",
             "equipSlot": "armour",
             "size": 4,
+            "armour": 2,
             "icon": 40815320
         }
     }
