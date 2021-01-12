@@ -1,3 +1,5 @@
+import { InventoryItem } from '../items/InventoryItem';
+
 export class GameCharacterVO {
     constructor(params) {
         this.id = params.id;
@@ -28,5 +30,13 @@ export class GameCharacterVO {
 
         this.equippedWeapon = params.equippedWeapon || "unarmed";
 
+        this.inventoryItems = [];
+        this.equipmentSlots = new Map();
+    }
+
+    addItem(itemData) {
+        this.inventoryItems.push(
+            new InventoryItem(itemData)
+        );
     }
 }

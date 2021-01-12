@@ -1,4 +1,4 @@
-import { createUUID } from '../../../utils/GUID';
+import { createUUID } from '../../utils/GUID';
 
 export class InventoryItem {
     constructor(data) {

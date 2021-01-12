@@ -1,15 +1,16 @@
 const { Facade } = require('@koreez/pure-mvc');
-import { InventoryProxy } from '../model/inventory/InventoryProxy';
 import { GameCommands } from './GameCommands';
+import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 
 export function reorderInventoryItemCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
-    const inventoryProxy = facade.retrieveProxy(InventoryProxy.NAME);
 
-    const itemUUID = args[0];
-    const newIndex = args[1];
+    const playerId = args[0];
+    const itemUUID = args[1];
+    const newIndex = args[2];
 
-    inventoryProxy.reorderInventoryItem(itemUUID, newIndex);
+    const gameCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + playerId);
 
-    facade.sendNotification(GameCommands.DISPLAY_INVENTORY_PANEL, inventoryProxy.inventoryItems, inventoryProxy.equipmentSlots);
+    gameCharacterProxy.reorderInventoryItem(itemUUID, newIndex);
+    facade.sendNotification(GameCommands.UPDATE_INVENTORY_PANEL, gameCharacterProxy.inventoryItems, gameCharacterProxy.equipmentSlots);
 }

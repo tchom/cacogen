@@ -1,22 +1,20 @@
 import { Facade } from "@koreez/pure-mvc";
-import { CombatProxy } from '../model/combat/CombatProxy';
 import { GameCharacterProxy } from '../model/gameCharacter/GameCharacterProxy';
 import { GameCommands } from './GameCommands';
-import { InventoryProxy } from '../model/inventory/InventoryProxy';
 import { ItemsProxy } from '../model/items/ItemsProxy';
-import { InventoryItem } from "../model/inventory/items/InventoryItem";
+import { InventoryItem } from "../model/items/InventoryItem";
 
 
 export function equipItemToSlotCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
-    const inventoryProxy = facade.retrieveProxy(InventoryProxy.NAME);
-    const itemId = args[0];
-    const equipmentKey = args[1];
-
-    const itemInInventory = inventoryProxy.inventoryItems.find(item => item.id === itemId);
+    const characterId = args[0];
+    const itemId = args[1];
+    const equipmentKey = args[2];
+    const gameCharacterProxy = facade.retrieveProxy(GameCharacterProxy.NAME + characterId);
+    const itemInInventory = gameCharacterProxy.inventoryItems.find(item => item.id === itemId);
 
     if (itemInInventory) {
-        const successfullyEquipped = inventoryProxy.attemptToEquipItemToSlot(equipmentKey, itemInInventory);
+        const successfullyEquipped = gameCharacterProxy.attemptToEquipItemToSlot(equipmentKey, itemInInventory);
 
         if (successfullyEquipped) {
             if (itemInInventory.type === "weapon") {
@@ -25,10 +23,9 @@ export function equipItemToSlotCommand(multitonKey, notificationName, ...args) {
         }
     } else {
         const itemsProxy = facade.retrieveProxy(ItemsProxy.NAME);
-        const inventoryProxy = facade.retrieveProxy(InventoryProxy.NAME);
         const inventoryItem = new InventoryItem(itemsProxy.getItemData(itemId));
 
-        const successfullyEquipped = inventoryProxy.attemptToEquipItemToSlot(equipmentKey, inventoryItem);
+        const successfullyEquipped = gameCharacterProxy.attemptToEquipItemToSlot(equipmentKey, inventoryItem);
 
         if (successfullyEquipped) {
             if (inventoryItem.type === "weapon") {
@@ -40,7 +37,7 @@ export function equipItemToSlotCommand(multitonKey, notificationName, ...args) {
 
 
 
-    facade.sendNotification(GameCommands.DISPLAY_EQUIPPED_SLOT, inventoryProxy.equipmentSlots);
-    facade.sendNotification(GameCommands.DISPLAY_INVENTORY_PANEL, inventoryProxy.inventoryItems, inventoryProxy.equipmentSlots);
+    facade.sendNotification(GameCommands.DISPLAY_EQUIPPED_SLOT, gameCharacterProxy.equipmentSlots);
+    facade.sendNotification(GameCommands.UPDATE_INVENTORY_PANEL, gameCharacterProxy.inventoryItems, gameCharacterProxy.equipmentSlots);
 
 }

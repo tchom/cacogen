@@ -9,7 +9,7 @@ export class InventoryPanelMediator extends Mediator {
     constructor(viewComponent) {
         super(InventoryPanelMediator.NAME);
         this.subscribeNotification([
-            GameCommands.DISPLAY_INVENTORY_PANEL
+            GameCommands.DISPLAY_INVENTORY_PANEL, GameCommands.UPDATE_INVENTORY_PANEL
         ]);
         this.viewComponent = viewComponent;
         this.viewComponent.on('reorderItem', this.handeReorderItem, this);
@@ -25,20 +25,22 @@ export class InventoryPanelMediator extends Mediator {
     handleNotification(notificationName, ...args) {
         switch (notificationName) {
             case GameCommands.DISPLAY_INVENTORY_PANEL:
+                this.viewComponent.enabled = true;
+                break;
+            case GameCommands.UPDATE_INVENTORY_PANEL:
                 const items = args[0];
                 const equippedMap = args[1];
                 this.viewComponent.script["InventoryPanelComponent"].displayItems(items, equippedMap);
-                this.viewComponent.enabled = true;
                 break;
         }
     }
 
     handeReorderItem(itemUUID, newIndex) {
-        this.facade.sendNotification(GameCommands.REORDER_INVETORY_ITEM, itemUUID, newIndex);
+        this.facade.sendNotification(GameCommands.REORDER_INVETORY_ITEM, "player", itemUUID, newIndex);
     }
 
     handleEquipItem(itemId, slotKey) {
-        this.facade.sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, itemId, slotKey);
+        this.facade.sendNotification(GameCommands.EQUIP_ITEM_TO_SLOT, "player", itemId, slotKey);
     }
 
     handleClose() {

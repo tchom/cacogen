@@ -182,6 +182,7 @@ GameCharacterComponent.prototype.postInitialize = function () {
 
     this.vehicle = this.entity.script['VehicleComponent'];
     this.entity.animation.play('idle.glb', 0.1);
+    this.entity.fire('created:gameCharacter');
 
 };
 
