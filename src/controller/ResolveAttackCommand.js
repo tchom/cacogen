@@ -39,7 +39,10 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
             // Attacker wins
             const damageTier = determineDamageTier(attackerRoll, defenderRoll);
             const damage = weaponsProxy.getDamage(attackerProxy.equippedWeapon, damageTier);
-            defenderProxy.applyDamage(damage);
+            const defenderArmour = defenderProxy.currentArmour;
+            const damageAfterArmour = Math.max(1, damage - defenderArmour);
+
+            defenderProxy.applyDamage(damageAfterArmour);
 
             facade.sendNotification(GameCommands.DISPLAY_ATTACK + attackerId);
 
@@ -47,7 +50,7 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
                 facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, defenderId);
             } else {
                 facade.sendNotification(GameCommands.DISPLAY_HIT + defenderId);
-                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damage}`);
+                facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damageAfterArmour}`);
             }
 
 
@@ -59,8 +62,10 @@ export function resolveAttackCommand(multitonKey, notificationName, ...args) {
             const damageTier = determineDamageTier(defenderRoll, attackerRoll);
             const weapon = (hasMeleeWeapon) ? defenderProxy.equippedWeapon : WeaponTypes.UNARMED;
             const damage = weaponsProxy.getDamage(weapon, damageTier);
-            attackerProxy.applyDamage(damage);
-            facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${defenderId} damages ${attackerId} for ${damage}`);
+            const attackerArmour = attackerProxy.currentArmour;
+            const damageAfterArmour = Math.max(1, damage - attackerArmour);
+            attackerProxy.applyDamage(damageAfterArmour);
+            facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${defenderId} damages ${attackerId} for ${damageAfterArmour}`);
 
             facade.sendNotification(GameCommands.DISPLAY_ATTACK + defenderId);
 

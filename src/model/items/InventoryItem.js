@@ -10,5 +10,6 @@ export class InventoryItem {
         this.type = data.type;
         this.size = data.size ?? 1;
         this.equipSlot = data.equipSlot ?? "none";
+        this.properties = data.properties ?? {};
     }
 }

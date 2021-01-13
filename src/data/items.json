@@ -40,7 +40,9 @@
             "description": "",
             "equipSlot": "1hand",
             "size": 1,
-            "armour": 1,
+            "properties": {
+                "armour": 1
+            },
             "icon": 40945005
         }
     },
@@ -50,6 +52,9 @@
             "description": "",
             "equipSlot": "armour",
             "size": 2,
+            "properties": {
+                "armour": 1
+            },
             "icon": 40815320
         },
         "chainmail": {
@@ -57,7 +62,9 @@
             "description": "",
             "equipSlot": "armour",
             "size": 4,
-            "armour": 2,
+            "properties": {
+                "armour": 2
+            },
             "icon": 40815320
         }
     }

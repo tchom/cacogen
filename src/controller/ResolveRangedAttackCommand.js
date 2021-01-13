@@ -78,14 +78,16 @@ export function resolveRangedAttackCommand(multitonKey, notificationName, ...arg
                 // Attacker wins
                 const damageTier = determineDamageTier(attackerScore, defenderScore);
                 const damage = weaponsProxy.getDamage(attackerProxy.equippedWeapon, damageTier);
-                defenderProxy.applyDamage(damage);
+                const defenderArmour = defenderProxy.currentArmour;
+                const damageAfterArmour = Math.max(1, damage - defenderArmour);
 
+                defenderProxy.applyDamage(damageAfterArmour);
 
                 if (defenderProxy.isDead) {
                     facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, defenderId);
                 } else {
                     facade.sendNotification(GameCommands.DISPLAY_HIT + defenderId);
-                    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damage}`);
+                    facade.sendNotification(GameCommands.SHOW_TOAST_MESSAGE, `${attackerId} damages ${defenderId} for ${damageAfterArmour}`);
                 }
 
 

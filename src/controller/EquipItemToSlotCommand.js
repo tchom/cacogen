@@ -39,5 +39,5 @@ export function equipItemToSlotCommand(multitonKey, notificationName, ...args) {
 
     facade.sendNotification(GameCommands.DISPLAY_EQUIPPED_SLOT, gameCharacterProxy.equipmentSlots);
     facade.sendNotification(GameCommands.UPDATE_INVENTORY_PANEL, gameCharacterProxy.inventoryItems, gameCharacterProxy.equipmentSlots);
-
+    console.log(`Currently equipped armour: ${gameCharacterProxy.currentArmour}`);
 }

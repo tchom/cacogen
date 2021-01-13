@@ -237,4 +237,15 @@ export class GameCharacterProxy extends Proxy {
         return this.vo.equipmentSlots;
     }
 
+    get currentArmour() {
+        let armour = 0;
+
+        for (const [key, value] of this.vo.equipmentSlots.entries()) {
+            if (value.properties.armour) {
+                armour += value.properties.armour;
+            }
+        }
+        return armour;
+    }
+
 }
