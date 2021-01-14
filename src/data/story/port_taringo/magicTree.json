@@ -1,0 +1,12 @@
+{
+    "version": 0.1,
+    "nodes": {
+        "entry": {
+            "steps": [
+                {
+                    "text": "This tree radiates with magical energy"
+                }
+            ]
+        }
+    }
+}

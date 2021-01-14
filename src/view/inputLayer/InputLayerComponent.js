@@ -138,6 +138,10 @@ InputLayerComponent.prototype.processInputQueue = function () {
             this.pickedPortal(highestPriorityPick.entity, highestPriorityPick.hitPosition)
         }
 
+        if (highestPriorityPick.entity.tags.has('interactionObject')) {
+            this.pickedWorldObject(highestPriorityPick.entity, highestPriorityPick.hitPosition)
+        }
+
     }
 }
 
@@ -155,7 +159,15 @@ InputLayerComponent.prototype.pickedPortal = function (pickedEntity, hitPosition
     pickedEntity.fire('picker:portal');
 }
 
+InputLayerComponent.prototype.pickedWorldObject = function (pickedEntity, hitPosition) {
+    pickedEntity.fire('picker:interactionObject');
+}
+
 function getPriority(entity) {
+    if (entity.tags.has('interactionObject')) {
+        return 4;
+    }
+
     if (entity.tags.has('gameCharacter')) {
         return 3;
     }

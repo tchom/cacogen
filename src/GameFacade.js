@@ -38,6 +38,7 @@ import { reorderInventoryItemCommand } from './controller/ReorderInventoryItemCo
 import { equipItemToSlotCommand } from './controller/EquipItemToSlotCommand';
 import { addItemToInventoryCommand } from './controller/AddItemtoInventoryCommand';
 import { useEquippedItemCommand } from './controller/UseEquippedItemCommand';
+import { navigateToInteractionObjectCommand } from './controller/NavigateToInteractionObjectCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -90,6 +91,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.NAVIGATE_THROUGH_PORTAL, navigateThroughPortalCommand);
         this.registerCommand(GameCommands.ADD_PLAYER_CHARACTER_TO_MAP, addPlayerCharacterToMapCommand);
         this.registerCommand(GameCommands.NAVIGATE_TO_CHARACTER_AND_TALK, navigateToCharacterAndTalkCommand)
+        this.registerCommand(GameCommands.NAVIGATE_TO_WORLD_OBJECT, navigateToInteractionObjectCommand)
         this.registerCommand(GameCommands.START_DIALOGUE, startDialogueCommand);
         this.registerCommand(GameCommands.CONTINUE_DIALOGUE_NODE, continueDialogueTextCommand);
         this.registerCommand(GameCommands.SELECT_DIALOGUE_CHOICE, selectDialogueChoiceCommand);

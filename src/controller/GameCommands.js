@@ -7,6 +7,7 @@ export class GameCommands {
 
     static get NAVIGATE_TO_NODE() { return "NAVIGATE_TO_NODE" };
     static get NAVIGATE_TO_WAYPOINT() { return "NAVIGATE_TO_WAYPOINT" };
+    static get NAVIGATE_TO_WORLD_OBJECT() { return "NAVIGATE_TO_WORLD_OBJECT" };
     static get NAVIGATE_THROUGH_PORTAL() { return "NAVIGATE_THROUGH_PORTAL" };
     static get COMBAT_NAVIGATE_TO_NODE() { return "COMBAT_NAVIGATE_TO_NODE" };
     static get SET_CAMERA_TARGET() { return "SET_CAMERA_TARGET" };

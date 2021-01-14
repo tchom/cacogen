@@ -18,7 +18,12 @@ export function navigateToCharacterAndTalkCommand(multitonKey, notificationName,
     const pathToTarget = navigateToCharacter(playerCharacterProxy, targetCharacterProxy);
     if (pathToTarget) {
         playerCharacterMediator.handleNavigateAlongPathWithPromise(pathToTarget).then(() => {
-            facade.sendNotification(GameCommands.START_DIALOGUE, targetCharacterId);
+            // Look at target
+            facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + "player", targetCharacterProxy.currentNode);
+            facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + targetCharacterId, playerCharacterProxy.currentNode);
+            // Start dialogue
+            const dialogueTree = targetCharacterProxy.dialogueTree;
+            facade.sendNotification(GameCommands.START_DIALOGUE, dialogueTree);
         });
     }
 }

@@ -33,6 +33,7 @@ import { InventoryPanelComponent } from './view/inventoryPanel/InventoryPanelCom
 import { InventoryDragIconComponent } from './view/inventoryPanel/InventoryDragIconComponent';
 import { InventoryEquippedSlotComponent } from './view/inventoryPanel/InventoryEquippedSlotComponent';
 import { PlayerCharacterComponent } from './view/gameCharacter/playerInit/PlayerCharacterComponent';
+import { InteractionObjectComponent } from './view/interactionObject/InteractionObjectComponent';
 
 
 class Main {
