@@ -24,7 +24,7 @@ export class OpenSpellbookButtonMediator extends Mediator {
         switch (notificationName) {
             case GameCommands.GAMEPLAY_ACTION_CHANGED:
                 const actionName = args[0];
-                if (actionName === "attack") {
+                if (actionName === "cast_spell") {
                     this.viewComponent.script['OpenSpellbookButtonComponent'].toggleHighlight(true);
                 } else {
                     this.viewComponent.script['OpenSpellbookButtonComponent'].toggleHighlight(false);

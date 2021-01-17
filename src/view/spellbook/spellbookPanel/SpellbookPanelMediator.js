@@ -12,6 +12,8 @@ export class SpellbookPanelMediator extends Mediator {
         ]);
         this.viewComponent = viewComponent;
 
+        this.viewComponent.on('click:cast', this.handleCast, this);
+
     }
 
     onRegister(notificationSubscriptionChange) {
@@ -26,5 +28,10 @@ export class SpellbookPanelMediator extends Mediator {
                 this.viewComponent.enabled = true;
                 break;
         }
+    }
+
+    handleCast(spellKey) {
+        this.facade.sendNotification(GameCommands.AWAIT_SPELL_CAST, spellKey);
+        this.viewComponent.enabled = false;
     }
 }

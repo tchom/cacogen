@@ -13,6 +13,7 @@ SpellbookPanelComponent.attributes.add('detailsCostEntity', { type: 'entity', ti
 SpellbookPanelComponent.attributes.add('detailsDescriptionEntity', { type: 'entity', title: 'Details Description Entity' });
 SpellbookPanelComponent.attributes.add('detailsIconEntity', { type: 'entity', title: 'Details Icon Entity' });
 
+SpellbookPanelComponent.attributes.add('castButton', { type: 'entity', title: 'Cast Button' });
 SpellbookPanelComponent.attributes.add('closeButton', { type: 'entity', title: 'Close Button' });
 
 
@@ -43,17 +44,22 @@ SpellbookPanelComponent.prototype.open = function (spellsDict) {
 
             if (!defaultShown) {
                 defaultShown = true;
-                this.displayDetails(spellData);
+                this.displayDetails(spellKey, spellData);
             }
 
             spellbutton.element.on('click', () => {
-                this.displayDetails(spellData);
+                this.displayDetails(spellKey, spellData);
             })
         }
     }
 }
 
-SpellbookPanelComponent.prototype.displayDetails = function (spellData) {
+SpellbookPanelComponent.prototype.displayDetails = function (spellKey, spellData) {
+    this.castButton.element.off('click');
+    this.castButton.element.on('click', () => {
+        this.handleCast(spellKey);
+    });
+
     this.detailsNameEntity.element.text = spellData.name;
     this.detailsCostEntity.element.text = spellData.stamina;
     this.detailsDescriptionEntity.element.text = spellData.description;
@@ -66,6 +72,9 @@ SpellbookPanelComponent.prototype.clearPanel = function () {
     }
 }
 
+SpellbookPanelComponent.prototype.handleCast = function (spellKey) {
+    this.entity.fire('click:cast', spellKey);
+}
 
 SpellbookPanelComponent.prototype.handleClose = function (evt) {
     this.entity.enabled = false;

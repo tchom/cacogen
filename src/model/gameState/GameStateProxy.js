@@ -28,4 +28,12 @@ export class GameStateProxy extends Proxy {
     set currentAction(value) {
         this.vo.selectedAction = value;
     }
+
+    get selectedSpellCommand() {
+        return this.vo.selectedSpellCommand;
+    }
+
+    set selectedSpellCommand(value) {
+        this.vo.selectedSpellCommand = value;
+    }
 }

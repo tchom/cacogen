@@ -10,5 +10,6 @@ export class GameStateVO {
     constructor() {
         this.gameplayMode = gameplayModeTypes.EXPLORATION;
         this.selectedAction = "none";
+        this.selectedSpellCommand = undefined;
     }
 }

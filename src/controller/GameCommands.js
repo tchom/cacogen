@@ -78,6 +78,7 @@ export class GameCommands {
     static get RESOLVE_DIALOGUE_SKILL_TEST() { return "RESOLVE_DIALOGUE_SKILL_TEST" };
     static get CLEAR_DIALOGUE_CHOICES() { return "CLEAR_DIALOGUE_CHOICES" };
     static get GO_TO_DIALOGUE_NODE() { return "GO_TO_DIALOGUE_NODE" };
+    static get HANDLE_WORLD_INPUT() { return "HANDLE_WORLD_INPUT" };
 
     static get START_DIALOGUE() { return "START_DIALOGUE" };
     static get END_DIALOGUE() { return "END_DIALOGUE" };
@@ -100,5 +101,6 @@ export class GameCommands {
     // Spells
     static get OPEN_SPELLBOOK() { return "OPEN_SPELLBOOK" };
     static get DISPLAY_SPELLBOOK() { return "DISPLAY_SPELLBOOK" };
+    static get AWAIT_SPELL_CAST() { return "AWAIT_SPELL_CAST" };
 
 }

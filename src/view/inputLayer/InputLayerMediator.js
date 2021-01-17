@@ -10,8 +10,7 @@ export class InputLayerMediator extends Mediator {
         this.subscribeNotification([
         ]);
         this.viewComponent = viewComponent;
-        this.viewComponent.on('picker:gameCharacter', this.handlePickerGameCharacter, this);
-        this.viewComponent.on('picker:navigation', this.handlePickerNavigation, this);
+        this.viewComponent.on('picker:worldInput', this.prcoessWorldInput, this);
         this.viewComponent.on('scrolling', this.handleScrolling, this);
 
     }
@@ -24,6 +23,10 @@ export class InputLayerMediator extends Mediator {
         switch (notificationName) {
 
         }
+    }
+
+    prcoessWorldInput(pickedEntity, hitPoint) {
+        this.facade.sendNotification(GameCommands.HANDLE_WORLD_INPUT, pickedEntity, hitPoint);
     }
 
     handlePickerGameCharacter(characterEntity) {

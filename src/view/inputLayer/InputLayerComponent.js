@@ -126,13 +126,14 @@ InputLayerComponent.prototype.processInputQueue = function () {
 
         this.inputQueue = [];
 
-        if (highestPriorityPick.entity.tags.has('gameCharacter')) {
+        /*if (highestPriorityPick.entity.tags.has('gameCharacter')) {
             this.pickedGameCharacter(highestPriorityPick.entity, highestPriorityPick.hitPosition)
         }
 
         if (highestPriorityPick.entity.tags.has('navigation')) {
             this.pickedNavigation(highestPriorityPick.entity, highestPriorityPick.hitPosition)
-        }
+        }*/
+        this.entity.fire('picker:worldInput', highestPriorityPick.entity, highestPriorityPick.hitPosition);
 
         if (highestPriorityPick.entity.tags.has('portal')) {
             this.pickedPortal(highestPriorityPick.entity, highestPriorityPick.hitPosition)
@@ -145,7 +146,7 @@ InputLayerComponent.prototype.processInputQueue = function () {
     }
 }
 
-InputLayerComponent.prototype.pickedGameCharacter = function (pickedEntity, hitPosition) {
+/*InputLayerComponent.prototype.pickedGameCharacter = function (pickedEntity, hitPosition) {
     this.entity.fire('picker:gameCharacter', pickedEntity);
 }
 
@@ -153,7 +154,7 @@ InputLayerComponent.prototype.pickedNavigation = function (pickedEntity, hitPosi
     const navComp = pickedEntity.script['NavigationComponent'];
     const nearestNode = navComp.getNearestNode(hitPosition);
     this.entity.fire('picker:navigation', nearestNode);
-}
+}*/
 
 InputLayerComponent.prototype.pickedPortal = function (pickedEntity, hitPosition) {
     pickedEntity.fire('picker:portal');
