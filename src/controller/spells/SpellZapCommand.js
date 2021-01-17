@@ -61,9 +61,13 @@ function resolveZapAttack(facade, attackerId, defenderId) {
         // Attacker wins
         const damageTier = determineDamageTier(attackerScore, defenderScore);
         const damage = weaponsProxy.getDamage('zap', damageTier);
-
-
         defenderProxy.applyDamage(damage);
+
+        const currentNode = defenderProxy.currentNode;
+        const targetPos = new pc.Vec3(currentNode.x, currentNode.y, currentNode.z);
+
+        facade.sendNotification(GameCommands.CREATE_FX, 'zap', targetPos);
+
 
         if (defenderProxy.isDead) {
             facade.sendNotification(GameCommands.KILL_GAME_CHARACTER, defenderId);

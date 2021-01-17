@@ -103,4 +103,6 @@ export class GameCommands {
     static get DISPLAY_SPELLBOOK() { return "DISPLAY_SPELLBOOK" };
     static get AWAIT_SPELL_CAST() { return "AWAIT_SPELL_CAST" };
 
+    static get CREATE_FX() { return "CREATE_FX" };
+
 }

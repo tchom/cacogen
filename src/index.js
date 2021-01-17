@@ -36,6 +36,8 @@ import { PlayerCharacterComponent } from './view/gameCharacter/playerInit/Player
 import { InteractionObjectComponent } from './view/interactionObject/InteractionObjectComponent';
 import { SpellbookPanelComponent } from './view/spellbook/spellbookPanel/SpellbookPanelComponent';
 import { OpenSpellbookButtonComponent } from './view/spellbook/openButton/OpenSpellbookButtonComponent';
+import { FXCreatorComponent } from './view/fxCreator/FXCreatorComponent';
+import { FXTimeoutComponent } from './view/fxCreator/FXTimeoutComponent';
 
 
 class Main {
