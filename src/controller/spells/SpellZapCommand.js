@@ -47,7 +47,6 @@ function resolveZapAttack(facade, attackerId, defenderId) {
     let defenderProxy = facade.retrieveProxy(GameCharacterProxy.NAME + defenderId);
 
     facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + attackerId, defenderProxy.currentNode);
-    facade.sendNotification(GameCommands.CHARACTER_LOOK_AT + defenderId, attackerProxy.currentNode);
 
     const attackerSpellSkill = `spellZap`;
     const attackerSkillTotal = attackerProxy.getSkillTotal(attackerSpellSkill);
