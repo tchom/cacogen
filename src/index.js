@@ -34,6 +34,8 @@ import { InventoryDragIconComponent } from './view/inventoryPanel/InventoryDragI
 import { InventoryEquippedSlotComponent } from './view/inventoryPanel/InventoryEquippedSlotComponent';
 import { PlayerCharacterComponent } from './view/gameCharacter/playerInit/PlayerCharacterComponent';
 import { InteractionObjectComponent } from './view/interactionObject/InteractionObjectComponent';
+import { SpellbookPanelComponent } from './view/spellbook/spellbookPanel/SpellbookPanelComponent';
+import { OpenSpellbookButtonComponent } from './view/spellbook/openButton/OpenSpellbookButtonComponent';
 
 
 class Main {

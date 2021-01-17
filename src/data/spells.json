@@ -1,0 +1,39 @@
+{
+    "zap": {
+        "name": "Zap",
+        "description": "Do a zapping spell.",
+        "targets": [
+            "gameCharacter"
+        ],
+        "stamina": 1,
+        "command": "SPELL_ZAP"
+    },
+    "fireball": {
+        "name": "Fireball",
+        "description": "Cast a big ball of fire.",
+        "targets": [
+            "gameCharacter",
+            "ground"
+        ],
+        "stamina": 3,
+        "command": "SPELL_FIREBALL"
+    },
+    "speak_animal": {
+        "name": "Speak to animal",
+        "description": "Talk to an animal",
+        "targets": [
+            "gameCharacter"
+        ],
+        "stamina": 1,
+        "command": "SPELL_SPEAK_TO_ANIMAL"
+    },
+    "speak_dead": {
+        "name": "Spirit Medium",
+        "description": "Talk to dead person",
+        "targets": [
+            "interactionObject"
+        ],
+        "stamina": 1,
+        "command": "SPELL_SPEAK_DEAD"
+    }
+}

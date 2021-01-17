@@ -97,4 +97,8 @@ export class GameCommands {
 
     static get SET_USE_ITEM_BUTTON_HIGHLIGHT() { return "SET_USE_ITEM_BUTTON_HIGHLIGHT" };
 
+    // Spells
+    static get OPEN_SPELLBOOK() { return "OPEN_SPELLBOOK" };
+    static get DISPLAY_SPELLBOOK() { return "DISPLAY_SPELLBOOK" };
+
 }
