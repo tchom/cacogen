@@ -1,11 +1,7 @@
 const path = require("path");
 
-module.exports = {
-    entry: "./src/index.js",
-    output: {
-        path: path.resolve(__dirname, "build"),
-        filename: "main.js"
-    },
+var config = {
+    // TODO: Add common Configuration
     devtool: 'inline-source-map',
     devServer: {
         contentBase: './build',
@@ -20,3 +16,14 @@ module.exports = {
         }
     },
 };
+
+var gameOutputConfig = Object.assign({}, config, {
+    entry: "./src/index.js",
+    output: {
+        path: path.resolve(__dirname, "build"),
+        filename: "main.js"
+    },
+
+});
+
+module.exports = [gameOutputConfig];

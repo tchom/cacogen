@@ -9,7 +9,8 @@
     "start": "cross-env NODE_ENV=development webpack --config webpack.config.js && cross-env UPLOAD=no NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8081 --inline --hot",
     "https": "cross-env NODE_ENV=development webpack --config webpack.config.js && cross-env UPLOAD=no NODE_ENV=development webpack-dev-server --config webpack.config.js --port 8081 --inline --hot --https",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js && yarn upload-playcanvas",
-    "upload-playcanvas": "node ./lib/playcanvas-upload.node.js"
+    "upload-playcanvas": "node ./lib/playcanvas-upload.node.js",
+    "devServer": "webpack serve"
   },
   "dependencies": {
     "@createjs/tweenjs": "^2.0.0-beta.4",
@@ -28,7 +29,7 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "uuid": "^8.3.1",
     "webpack": "^5.2.0",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^3.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
