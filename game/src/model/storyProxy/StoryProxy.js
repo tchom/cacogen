@@ -64,16 +64,16 @@ export class StoryProxy extends Proxy {
         this.currentStepIndex = 0;
     }
 
-    startDialogueTree(treeId) {
+    startDialogueTree(treeId, startingNode) {
         this.currentTree = treeId;
-        this.currentNode = "entry";
+        this.currentNode = startingNode ?? "entry";
         this.currentStepIndex = 0;
 
         const tree = this.getTree(this.currentTree);
         if (!tree) {
             throw Error(`Cannot start dialogue: Tree ${this.currentTree} not found`);
         } else if (!this.getNode(tree, this.currentNode)) {
-            throw Error(`Cannot start dialogue: no "entry" node defined on ${treeId}`);
+            throw Error(`Cannot start dialogue: no "${this.currentNode}" node defined on ${treeId}`);
         }
 
         return tree;

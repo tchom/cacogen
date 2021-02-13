@@ -8,10 +8,11 @@ export function startDialogueCommand(multitonKey, notificationName, ...args) {
     const facade = Facade.getInstance(multitonKey);
     const gamestateProxy = facade.retrieveProxy(GameStateProxy.NAME);
     const dialogueTree = args[0];
+    const startingNode = args[1] ?? undefined;
 
     const storyProxy = facade.retrieveProxy(StoryProxy.NAME);
 
-    const storyTree = storyProxy.startDialogueTree(dialogueTree);
+    const storyTree = storyProxy.startDialogueTree(dialogueTree, startingNode);
 
     gamestateProxy.updateGameStateType(gameplayModeTypes.DIALOGUE);
 

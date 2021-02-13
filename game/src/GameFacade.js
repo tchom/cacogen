@@ -44,6 +44,7 @@ import { awaitSpellCastCommand } from './controller/spells/AwaitSpellCastCommand
 import { handleWorldInputCommand } from './controller/HandleWorldInputCommand';
 import { SpellCommands } from './controller/spells/SpellCommands';
 import { spellZapCommand } from './controller/spells/SpellZapCommand';
+import { spellSpeakToPlantCommand } from './controller/spells/SpellSpeakToPlantCommand';
 
 export class GameFacade extends Facade {
     static getInstance(key) {
@@ -117,6 +118,7 @@ export class GameFacade extends Facade {
         this.registerCommand(GameCommands.OPEN_SPELLBOOK, openSpellbookCommand);
         this.registerCommand(GameCommands.AWAIT_SPELL_CAST, awaitSpellCastCommand);
         this.registerCommand(SpellCommands.ZAP, spellZapCommand);
+        this.registerCommand(SpellCommands.SPEAK_PLANTS, spellSpeakToPlantCommand);
     }
 
 }

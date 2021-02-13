@@ -7,6 +7,18 @@
                     "text": "This tree radiates with magical energy"
                 }
             ]
+        },
+        "speak_plants": {
+            "steps": [
+                {
+                    "text": "A face begins to form on the trunk of the tree.",
+                    "once": true
+                },
+                {
+                    "title": "Tree",
+                    "text": "\"Oh, you can speak to trees. That's interesting\""
+                }
+            ]
         }
     }
 }

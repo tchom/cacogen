@@ -140,7 +140,7 @@ InputLayerComponent.prototype.processInputQueue = function () {
         }
 
         if (highestPriorityPick.entity.tags.has('interactionObject')) {
-            this.pickedWorldObject(highestPriorityPick.entity, highestPriorityPick.hitPosition)
+            // this.pickedWorldObject(highestPriorityPick.entity, highestPriorityPick.hitPosition)
         }
 
     }

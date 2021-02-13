@@ -7,6 +7,7 @@ export function navigateToInteractionObjectCommand(multitonKey, notificationName
     const facade = Facade.getInstance(multitonKey);
     const standingPosition = args[0];
     const dialogueTreeId = args[1];
+    const startNode = args[2] ?? undefined;
 
     const gameMapProxy = facade.retrieveProxy(GameMapProxy.NAME);
     const standingNode = gameMapProxy.findNearestNode(standingPosition);
@@ -14,6 +15,6 @@ export function navigateToInteractionObjectCommand(multitonKey, notificationName
 
     playerMediator.moveToNodeWithPromise(standingNode)
         .then(() => {
-            facade.sendNotification(GameCommands.START_DIALOGUE, dialogueTreeId);
+            facade.sendNotification(GameCommands.START_DIALOGUE, dialogueTreeId, startNode);
         });
 }

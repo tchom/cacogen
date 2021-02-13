@@ -39,6 +39,10 @@ function handleDefault(facade, pickedEntity, hitPosition) {
         handleGameCharacter(facade, pickedEntity, hitPosition);
     }
 
+    if (pickedEntity.tags.has('interactionObject')) {
+        handleInteractionObject(facade, pickedEntity, hitPosition);
+    }
+
     if (pickedEntity.tags.has('navigation')) {
         handleNavigation(facade, pickedEntity, hitPosition);
     }
@@ -46,6 +50,10 @@ function handleDefault(facade, pickedEntity, hitPosition) {
 
 function handleGameCharacter(facade, pickedEntity, hitPosition) {
     facade.sendNotification(GameCommands.SELECT_GAME_CHARACTER, pickedEntity);
+}
+
+function handleInteractionObject(facade, pickedEntity, hitPosition) {
+    pickedEntity.fire('picker:interactionObject');
 }
 
 function handleNavigation(facade, pickedEntity, hitPosition) {
