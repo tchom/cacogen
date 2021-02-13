@@ -53,7 +53,7 @@ app.post('/createStory', jsonParser, function (req, res) {
     console.log(req.body);
     res.type('text/plain');
     res.end();
-    storeData({ entry: {} }, `../data/${req.body.storyName}.json`);
+    storeData({ nodes: { entry: {} } }, `../data/${req.body.storyName}.json`);
 });
 
 app.post('/deleteStory', jsonParser, function (req, res) {
